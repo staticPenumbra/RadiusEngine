@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--/*----------------------------------------------------------------------------------------------------------
+::“Copyright 2013 Clayton Burnett” 
+::This program is distributed under the terms of the GNU General Public License
+------------------------------------------------------------------------------------------------------------*/-->
+<html lang="en">
+
+<head>
+	<!-- Settings for Mobile Browsers / Disable Scaling Render at full size-->
+    <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+    <link rel="stylesheet" type="text/css" href="TVZ.css" />
+    <title>Resource Manager and Database Test Bed</title>
+    <script src="Stage.js" charset="utf-8"></script>
+	<script src="ResourceManager.js" charset="utf-8"></script>
+	<script src="Trigger.js" charset="utf-8"></script>
+    <script>
+    
+	window.onload = function(){
+		//-----------Preloading Resources-----------------------------------------
+		this.FileRoot = location.href.substring(0,location.href.lastIndexOf("/")+1);
+		//Bind Event Handlers and Inputs
+		this.BindHandlers();
+		setInterval(GameLoop, 1000/30);
+    }
+    //The Main Game Loop fuction
+    function GameLoop(){
+		//-----------MAIN TEST LOOP-----------------------
+		//-----------DATABASE TEST BED--------------------
+		alert("Atomic Test");
+		var TestDB = new Stage("Page1", this.FileRoot);
+		if(TestDB instanceof Stage){
+			alert("CREATION SUCCESS");
+		}else{
+			alert("CREATION FAILED!!");
+		}
+		//-----------LOADING TEST-------------------------
+		alert("LOADING PAGE1");
+		TestDB.Load();
+		alert("Page Dimensions = " + TestDB.GetDimensions()[0] + " X " + TestDB.GetDimensions()[1]);
+		alert("LOAD SUCCESSFUL");
+		//-----------RETRIEVAL TEST------------------------
+		alert("RETRIEVING AUDIO DATA");
+		alert("Installed Audio Path: " + TestDB.Retrieve("Audio", "Installed"));
+		alert("RETRIEVING IMAGE DATA");
+		alert("Installed Image Path: " + TestDB.Retrieve("Image", "Installed"));
+		alert("RETRIEVING DOM DATA");
+		alert("Menu1 Data " + TestDB.Retrieve("DOM", "Menu1"));
+		alert("RETRIEVING ENTITY DATA");
+		alert("Player1 Data " + TestDB.Retrieve("Entity", "Player1"));
+		alert("SUCCESS");
+		//-----------CACHE RETRIEVAL TEST------------------
+		alert("CACHE TEST");
+		alert("Loading Install Audio into Cache: " + TestDB.CacheRetrieve("Audio", "Installed"));
+		alert("Retrieving Install from Cache: " + TestDB.CacheRetrieve("Audio", "Installed"));
+		alert("SUCCESS");
+		//----------RELOAD TEST-----------------------------
+		alert("RESET DB");
+		TestDB.ResetDatabase();
+		alert("SET PAGE NAME TO LOAD");
+		TestDB.SetPageName("Page1");
+		alert("LOAD PAGE");
+		TestDB.Load();
+		alert("Retrieve Loaded: " + TestDB.CacheRetrieve("Image", "Installed"));
+		//--------------------END DB TESTS----------------------------------------------
+		alert("BEGINNING RESOURCE MANAGER TESTING");
+		//--------------------ATOMIC TEST----------------------------------------------
+		alert("TESTING CREATION");
+		var RSManager = new ResourceManager(this.FileRoot);
+		//--------------------BACKGROUND LOAD TEST------------------------------------
+		alert("CREATION SUCCESSFUL -- TESTING LOAD");
+		var i = RSManager.LoadBackgrounds(1);
+		alert(i[0]);
+		alert("LOADED");
+		//-------------------AUDIO LOAD TEST------------------------------------------
+		alert("TESTING AUDIO LOAD");
+		alert(RSManager.LoadPageAudio(1));
+		alert("LOAD SUCCESSFUL");
+		//-------------------RETRIEVAL TESTS------------------------------------------
+		alert("TESTING RETRIEVAL: PAGE 1 TITLE FLAG");
+		alert(RSManager.IsTitleScreen(1));
+		alert("TESTING RETRIEVAL: PLAYER1 DATA");
+		alert(RSManager.GetEntityData(1, "Player1"));
+		//-------------------TRIGGER LOAD TEST----------------------------------------
+		alert("TESTING TRIGGER LOADING");
+		var Trigs = RSManager.LoadTriggers(1);
+		alert("SUCCESS");	
+    }
+    function BindHandlers(){
+		//Keyboard
+		window.addEventListener('keydown', kDown, false);
+		window.addEventListener('keyup', kUp, false);  
+		//Mouse
+		GetFrontCanvas().addEventListener('mousemove', mMove, false);
+		GetRearCanvas().addEventListener('mousemove', mMove, false);
+		GetFrontCanvas().addEventListener('click', mClick, false);
+		GetRearCanvas().addEventListener('click', mClick, false);
+    }
+	function mClick(e){
+
+	}
+	function mMove(e){
+
+	}
+    function kDown(e){
+
+    }
+    function kUp(e){
+
+    }  
+	function GetAudioDevice(){
+		var a = document.getElementById('AudioController1');
+		var b = document.getElementById('AudioController2');
+		var c = document.getElementById('AudioController3');
+		var d = document.getElementById('AudioController4');
+		var e = document.getElementById('AudioController5');
+		var f = document.getElementById('AudioController6');
+		var ABC = new Array();
+		ABC.push(a);
+		ABC.push(b);
+		ABC.push(c);
+		ABC.push(d);
+		ABC.push(e);
+		ABC.push(f);
+		return(ABC);
+	}
+	function GetFrontCanvas(){
+		var c = document.getElementById('FrontScreen');
+		return(c);
+    }
+    function GetFrontCanvasContext(){
+		var ctx = GetFrontCanvas().getContext('2d');
+		return(ctx);
+    }    
+    function GetRearCanvas(){
+		var c = document.getElementById('RearScreen');
+		return(c);
+    }
+    function GetRearCanvasContext(){
+		var bctx = GetRearCanvas().getContext('2d');
+		return(bctx);
+    }    
+    
+    </script>
+</head>
+   
+<body>
+	<audio id ="AudioController1" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController2" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+    <audio id ="AudioController3" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController4" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController5" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController6" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<canvas id="FrontScreen" width="1400" height="600" style="visibility: hidden;">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+	<canvas id="RearScreen" width="1400" height="600">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+</body>
+
+</html>
