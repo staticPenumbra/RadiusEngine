@@ -2,6 +2,7 @@
 ::“Copyright 2013 Clayton Burnett” 
 ::This program is distributed under the terms of the GNU General Public License
 ------------------------------------------------------------------------------------------------------------*/
+/**
  * @fileOverview
  *
  * This file contains an Input object representing a player controller
