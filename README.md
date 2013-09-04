@@ -1,7 +1,7 @@
-StarlightEngine
+Application Engine
 ===============
 
-The latest open starlight HTML5 application engine 
+The latest open HTML5 application engine 
 
 
 							ENGINE DEBUGGING(Using Firefox)
