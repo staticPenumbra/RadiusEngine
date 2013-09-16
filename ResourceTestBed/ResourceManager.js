@@ -29,8 +29,66 @@ var ResourceManager = function(Root) {
 	this.Pages = new Array(new Stage("Page1", Root));
 	this.Pages[0].Load();
 	this.ResourceRoot = Root;
+	/*-------------------DATABASE CACHE---------------------------*/
+	this.L2DOMCache = new Array();
+	this.L2ImageCache= new Array();
+	this.L2AudioCache = new Array();
 }
 //-----------------------------------------------------Get Accessors----------------------------------------------
+//Initialize or Reset the L2 Cache to Page defaults
+/**
+* @param {Integer} PageIndex The page to load from
+*/
+ResourceManager.prototype.CacheInit = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+	//Init DOM
+		this.L2DOMCache = this.GetDOMDefault(PageIndex);
+	//Init Images
+		this.L2ImageCache = this.LoadBackgrounds(PageIndex);
+	//Init Audio
+		this.L2AudioCache = this.LoadPageAudio(PageIndex);
+	}
+}
+//Return the Current DOM
+/**
+* @param {Integer} PageIndex The page to load from
+* @return {Array[]} Returns an array of DOM elements
+*/
+ResourceManager.prototype.GetDOM = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.L2DOMCache);
+	}
+}
+//Return the Current Images
+/**
+* @param {Integer} PageIndex The page to load from
+* @return {Image[]} Returns an array of Image elements
+*/
+ResourceManager.prototype.GetImages = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.L2ImageCache);
+	}
+}
+//Return the Current Audio
+/**
+* @param {Integer} PageIndex The page to load from
+* @return {Audio[]} Returns an array of Audio elements
+*/
+ResourceManager.prototype.GetAudio = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.L2AudioCache);
+	}
+}
+//Return the starting position of the specified DOM Entity of the specified type
+/**
+* @param {Integer} PageIndex The page to load from
+* @return {Integer[]} Returns an array of DOM elements
+*/
+ResourceManager.prototype.GetDOMDefault = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.Pages[PageIndex-1].DOMData);
+	}
+}
 //Return the starting position of the specified Entity of the specified type
 /**
 * @param {Integer} PageIndex The page to load from

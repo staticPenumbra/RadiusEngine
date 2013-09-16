@@ -182,26 +182,28 @@ Stage.prototype.Page1 = function(){
 	this.DOMKeys = new Array();
 	this.DOMData = new Array();
 	 /*--------------------------------------------GENERAL------------------------------------------------------*/
-    this.Title = "Page1";
+    this.Title = "Home";
    	this.ScreenWidth = 1400;
 	this.ScreenHeight = 600;
 	this.TitleFlag = true;
 	//Main background rendering order
-	this.Backgrounds.push("Installed");
+	this.Backgrounds.push("Installed.png", "BG.png");
 	this.Triggers.push("CornerDialogueTrigger");
     /*----------------------------------------Music------------------------------------------------------------*/
-	this.AudioKeys.push("Installed");
+	this.AudioKeys.push("Installed.ogg");
 	this.AudioData.push(this.ResourceRoot + 'Audio/Music/Stage1/Installed.ogg');
 	/*--------------------------------------Backgrounds--------------------------------------------------------*/
-	this.ImageKeys.push("Installed");
-	this.ImageData.push(this.ResourceRoot + 'Installed.png');
+	this.ImageKeys.push("Installed.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Installed.png');
+	this.ImageKeys.push("BG.png");
+	this.ImageData.push(this.ResourceRoot + 'img/BG.png');
 	/*--------------------------------------Menu Backgrounds---------------------------------------------------*/
-	this.ImageKeys.push("MenuBackground");
+	this.ImageKeys.push("MenuBackground.png");
 	this.ImageData.push(this.ResourceRoot + 'img/Backgrounds/MainBack.png');
 	/*-------------------------------------Player Sprite Sheet-------------------------------------------------*/
-    this.ImageKeys.push("Player1");
+    this.ImageKeys.push("Player1.png");
 	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player1.png');
-	this.ImageKeys.push("Player2");
+	this.ImageKeys.push("Player2.png");
 	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player2.png');
 	/*-------------------------------------Entity Starting Data------------------------------------------------*/
 	this.EntityKeys.push("Player1");
@@ -212,10 +214,21 @@ Stage.prototype.Page1 = function(){
 	//Type, FireOnce, Position, Dimensions
 	this.EntityData.push(new Array("dialogue", true, 200, 200, 50, 50));
 	/*------------------------------------Stage Menu Configuration---------------------------------------------*/
-	this.DOMKeys.push("Menu1");
-	this.DOMData.push(new Array(20,20,640,522, new Array("Resume Application", "Options", "Exit"),"Main Menu", "italic bold 24px Verdana", 15));
-	this.ImageKeys.push("MenuCursor");
-	this.ImageData.push(this.ResourceRoot + 'img/Backgrounds/hand.png');
+	this.DOMKeys.push("Link1");
+	//Origin x, y, dimx, dimy, text, font
+	this.DOMData.push(new Array(50, 100, 100, 100, "Blog", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link2");
+	this.DOMData.push(new Array(50, 150, 100, 100, "YouTube", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link3");
+	this.DOMData.push(new Array(50, 200, 100, 100, "Web Avant", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link4");
+	this.DOMData.push(new Array(50, 250, 100, 100, "Git Repository", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link5");
+	this.DOMData.push(new Array(50, 300, 100, 100, "Games", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Text1");
+	this.DOMData.push(new Array(880, 100, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "white"));
+	this.DOMKeys.push("Text2");
+	this.DOMData.push(new Array(880, 150, 100, 100, "We like cats....", "bold 20px Verdana", "white"));
 	/*------------------------------------Trigger Definitions--------------------------------------------------*/
 	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
 	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));

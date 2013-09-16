@@ -44,9 +44,9 @@
 		alert("LOAD SUCCESSFUL");
 		//-----------RETRIEVAL TEST------------------------
 		alert("RETRIEVING AUDIO DATA");
-		alert("Installed Audio Path: " + TestDB.Retrieve("Audio", "Installed"));
+		alert("Installed Audio Path: " + TestDB.Retrieve("Audio", "Installed.ogg"));
 		alert("RETRIEVING IMAGE DATA");
-		alert("Installed Image Path: " + TestDB.Retrieve("Image", "Installed"));
+		alert("Installed Image Path: " + TestDB.Retrieve("Image", "Installed.png"));
 		alert("RETRIEVING DOM DATA");
 		alert("Menu1 Data " + TestDB.Retrieve("DOM", "Menu1"));
 		alert("RETRIEVING ENTITY DATA");
@@ -54,8 +54,8 @@
 		alert("SUCCESS");
 		//-----------CACHE RETRIEVAL TEST------------------
 		alert("CACHE TEST");
-		alert("Loading Install Audio into Cache: " + TestDB.CacheRetrieve("Audio", "Installed"));
-		alert("Retrieving Install from Cache: " + TestDB.CacheRetrieve("Audio", "Installed"));
+		alert("Loading Install Audio into Cache: " + TestDB.CacheRetrieve("Audio", "Installed.ogg"));
+		alert("Retrieving Install from Cache: " + TestDB.CacheRetrieve("Audio", "Installed.ogg"));
 		alert("SUCCESS");
 		//----------RELOAD TEST-----------------------------
 		alert("RESET DB");
@@ -64,7 +64,7 @@
 		TestDB.SetPageName("Page1");
 		alert("LOAD PAGE");
 		TestDB.Load();
-		alert("Retrieve Loaded: " + TestDB.CacheRetrieve("Image", "Installed"));
+		alert("Retrieve Loaded: " + TestDB.CacheRetrieve("Image", "Installed.png"));
 		//--------------------END DB TESTS----------------------------------------------
 		alert("BEGINNING RESOURCE MANAGER TESTING");
 		//--------------------ATOMIC TEST----------------------------------------------
@@ -87,7 +87,21 @@
 		//-------------------TRIGGER LOAD TEST----------------------------------------
 		alert("TESTING TRIGGER LOADING");
 		var Trigs = RSManager.LoadTriggers(1);
-		alert("SUCCESS");	
+		alert("SUCCESS");
+		//-------------------CACHE INIT TEST----------------------------------------
+		alert("TESTING CACHE INIT");
+		RSManager.CacheInit(1);
+		alert("SUCCESS");
+		//-------------------CACHE RETRIEVAL TEST-----------------------------------
+		alert("TESTING DOM RETRIEVE");
+		var i = RSManager.GetDOM(1);
+		alert(i);
+		alert("TESTING IMAGE RETRIEVE");
+		i = RSManager.GetImages(1);
+		alert(i);
+		alert("TESTING AUDIO RETRIEVE");
+		i = RSManager.GetAudio(1);
+		alert(i);
     }
     function BindHandlers(){
 		//Keyboard
