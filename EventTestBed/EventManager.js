@@ -265,7 +265,7 @@ EventManager.prototype.RenderToScreen = function(){
 	//ScreenMap, EntityManager, EventManager.GetCurrentStage()
 	//ScreenMap.Clear();
 	//this.ScreenMap.SetBackgrounds(GetCurrentBackgrounds(this.CurrentStage));
-	this.ScreenMap.RenderCycle(this.EntityManager.GetEntities());
+	this.ScreenMap.RenderCycle(this.EntityManager.GetEntities(), this.ResourceManager.GetDOM(this.CurrentStage));
 }
 //------------------------------------PROCESSING FUNCTIONS------------------------------------
 //Cycles through the list of events and tries running each of the procedures then removes them from the update list
@@ -454,8 +454,35 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 				switch(Type){
 					case "Click":
 						var MousePos = this.UserInputs[i].GetMousePosition();
-						this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
-						alert("X: " + MousePos[0] + " Y: " + MousePos[1]);
+						//AudioController.prototype.PlayAudio = function(Type, Track, AudioElements, Repeat){
+						//this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
+						//alert("X: " + MousePos[0] + " Y: " + MousePos[1]);
+						var elements = this.ResourceManager.GetDOM(this.CurrentStage);
+						for(var i=0; i<=elements.length-1; i++){
+							var eletemp = elements[i];
+							var mouse = new Array(new Array(MousePos[0], MousePos[1]), new Array(MousePos[0]+1, MousePos[1]), new Array(MousePos[0], MousePos[1]+1), new Array(MousePos[0]+1, MousePos[1]+1));
+							var text = new Array(new Array(eletemp[0], eletemp[1]), new Array(eletemp[0]+eletemp[2], eletemp[1]), new Array(eletemp[0], eletemp[1]+eletemp[3]), new Array(eletemp[0]+eletemp[2], eletemp[1]+eletemp[3]));
+							//UL,UR,LL, LR
+							if(this.EntityManager.CollisionCheck(mouse, text) == true){
+								switch(i){
+									case 0:
+									window.location = "http://tvzdev.blogspot.com";
+									break;
+									case 1:
+									window.location = "http://www.youtube.com/user/C120vv";
+									break;
+									case 2:
+									window.location = "http://www.webavant.com";
+									break;
+									case 3:
+									window.location = "https://github.com/staticPenumbra/RadiusEngine";
+									break;
+									case 4:
+									this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "white"));
+									break;
+								}
+							}
+						}
 					break;
 					case "Move":
 						//Grab the canvas bounding rectangle and subtract the click area

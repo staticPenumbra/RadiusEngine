@@ -33,6 +33,7 @@ var ResourceManager = function(Root) {
 	this.L2DOMCache = new Array();
 	this.L2ImageCache= new Array();
 	this.L2AudioCache = new Array();
+	this.CacheInit(1);
 }
 //-----------------------------------------------------Get Accessors----------------------------------------------
 //Initialize or Reset the L2 Cache to Page defaults
@@ -47,6 +48,15 @@ ResourceManager.prototype.CacheInit = function(PageIndex){
 		this.L2ImageCache = this.LoadBackgrounds(PageIndex);
 	//Init Audio
 		this.L2AudioCache = this.LoadPageAudio(PageIndex);
+	}
+}
+//Add a DOM element to L2 Application cache
+/**
+* @param {Array} Value The Array of DOM data for that element
+*/
+ResourceManager.prototype.AddDOMElement = function(Value){
+	if(Value != null){
+		this.L2DOMCache.push(Value);
 	}
 }
 //Return the Current DOM
