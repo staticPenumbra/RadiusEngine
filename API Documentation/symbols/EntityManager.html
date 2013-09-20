@@ -1,0 +1,1637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - EntityManager</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+	width: 800px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px solid #7F8FB1;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px dashed #ccc;
+}
+
+#index
+{
+	margin-top: 24px;
+	float: left;
+	width: 160px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content
+{
+	margin-left: 190px;
+	width: 600px;
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #7F8FB1;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #777;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/AIController.html">AIController</a></li>
+	
+	<li><a href="../symbols/ApplicationMenu.html">ApplicationMenu</a></li>
+	
+	<li><a href="../symbols/Audio.html">Audio</a></li>
+	
+	<li><a href="../symbols/AudioController.html">AudioController</a></li>
+	
+	<li><a href="../symbols/EngineEvent.html">EngineEvent</a></li>
+	
+	<li><a href="../symbols/Entity.html">Entity</a></li>
+	
+	<li><a href="../symbols/EntityManager.html">EntityManager</a></li>
+	
+	<li><a href="../symbols/EventManager.html">EventManager</a></li>
+	
+	<li><a href="../symbols/Input.html">Input</a></li>
+	
+	<li><a href="../symbols/ResourceManager.html">ResourceManager</a></li>
+	
+	<li><a href="../symbols/ScreenMap.html">ScreenMap</a></li>
+	
+	<li><a href="../symbols/Stage.html">Stage</a></li>
+	
+	<li><a href="../symbols/Trigger.html">Trigger</a></li>
+	
+	<li><a href="../symbols/Updater.html">Updater</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class EntityManager
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				
+			
+				
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/C__Users_Snuggles_Desktop_RadiusEngine_COREBUILD_EntityManager.js.html">EntityManager.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class EntityManager.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/EntityManager.html#constructor">EntityManager</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class EntityManager.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#AddEntity">AddEntity</a></b>(TVZ_Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#CheckAllCollisions">CheckAllCollisions</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#CheckBounds">CheckBounds</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#CheckDead">CheckDead</a></b>(Names)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#CheckTriggers">CheckTriggers</a></b>(Triggers)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#CollisionCheck">CollisionCheck</a></b>(Object1, Object2)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#DoDamage">DoDamage</a></b>(Weapon, Victim)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#EntityCHWeapon">EntityCHWeapon</a></b>(PlayerOrNPC, args)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#EntityMove">EntityMove</a></b>(PlayerOrNPC, args)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#EntityShoot">EntityShoot</a></b>(PlayerOrNPC, args)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#EntityStop">EntityStop</a></b>(PlayerOrNPC, args)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#GetCornerPoints">GetCornerPoints</a></b>(Entity1)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#GetEntities">GetEntities</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#KillBullets">KillBullets</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#KillDoors">KillDoors</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#LoadEntities">LoadEntities</a></b>(Stage, ResourceManager, Inputs)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#LoadEntity">LoadEntity</a></b>(EntityType, AIType, Controller, StageIndex, ImageIndex, EntityIndex)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#PlayerState">PlayerState</a></b>(Entity, Facing)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#RemoveEntity">RemoveEntity</a></b>(TVZ_Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#SetOpen">SetOpen</a></b>(A)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#SetResourceManager">SetResourceManager</a></b>(A)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#SetSnug">SetSnug</a></b>(Mover, Obstacle, MoverLocation)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#Shoot">Shoot</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#StopEntity">StopEntity</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EntityManager.html#UpdatePosition">UpdatePosition</a></b>(Entity)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>EntityManager</b>()
+				</div>
+				
+				<div class="description">
+					
+					
+				</div>
+				
+				
+				
+				
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="AddEntity"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>AddEntity</b>(TVZ_Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>TVZ_Entity</b>
+									
+								</dt>
+								<dd>The Entity to add to the list of active entities</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="CheckAllCollisions"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>CheckAllCollisions</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to check</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> The number of killed entities</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="CheckBounds"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>CheckBounds</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to check bounds on</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> The number of killed objects</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="CheckDead"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>CheckDead</b>(Names)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String[]}</span> <b>Names</b>
+									
+								</dt>
+								<dd>An array of entity type name strings to check</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Boolean}</span> Flag indicating whether an instance of the name was found or not</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="CheckTriggers"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/Trigger.html">Trigger</a>[]}</span>
+					<b>CheckTriggers</b>(Triggers)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Trigger.html">Trigger</a>[]}</span> <b>Triggers</b>
+									
+								</dt>
+								<dd>A reference to an array of triggers to test</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/Trigger.html">Trigger</a>[]}</span> A reference to an array of all the fired triggers in this application cycle</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="CollisionCheck"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>CollisionCheck</b>(Object1, Object2)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Array[]}</span> <b>Object1</b>
+									
+								</dt>
+								<dd>A reference to the colliding array of box points UL,UR,LL, LR</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array[]}</span> <b>Object2</b>
+									
+								</dt>
+								<dd>A reference to the stationary array of box points UL,UR,LL, LR</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="DoDamage"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>DoDamage</b>(Weapon, Victim)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Weapon</b>
+									
+								</dt>
+								<dd>Colliding/Damaging Entity</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Victim</b>
+									
+								</dt>
+								<dd>The Victim taking damage</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> Integer representing the number of killed Entities</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="EntityCHWeapon"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>EntityCHWeapon</b>(PlayerOrNPC, args)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>PlayerOrNPC</b>
+									
+								</dt>
+								<dd>States whether player type or NPC type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>args</b>
+									
+								</dt>
+								<dd>Keymapping args</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="EntityMove"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>EntityMove</b>(PlayerOrNPC, args)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>PlayerOrNPC</b>
+									
+								</dt>
+								<dd>flag indicating whether the moving entity is 0 Player or 1 NPC</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>args</b>
+									
+								</dt>
+								<dd>Preprocessed arguments indicating the key that was pressed</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="EntityShoot"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>EntityShoot</b>(PlayerOrNPC, args)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>PlayerOrNPC</b>
+									
+								</dt>
+								<dd>States whether player type or NPC type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>args</b>
+									
+								</dt>
+								<dd>Keymapping args</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="EntityStop"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>EntityStop</b>(PlayerOrNPC, args)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{boolean}</span> <b>PlayerOrNPC</b>
+									
+								</dt>
+								<dd>flag indicating whether the moving entity is 0 Player or 1 NPC</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>args</b>
+									
+								</dt>
+								<dd>Preprocessed arguments indicating the key that was pressed</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="GetCornerPoints"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Array[]}</span>
+					<b>GetCornerPoints</b>(Entity1)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity1</b>
+									
+								</dt>
+								<dd>The Entity to process</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Array[]}</span> Returns the array of x,y points [Upper Left, Upper Right, Lower Left, Lower Right]</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="GetEntities"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/Entity.html">Entity</a>[]}</span>
+					<b>GetEntities</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>[]}</span> A reference to an array of current Entities</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="KillBullets"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>KillBullets</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to check for bullet syndrome</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> Flag integer indicating whether the bullet was killed 1 or not 0</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="KillDoors"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>KillDoors</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to check for door syndrome</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> Flag integer indicating whether the door was killed 1 or not 0</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="LoadEntities"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>LoadEntities</b>(Stage, ResourceManager, Inputs)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>Stage</b>
+									
+								</dt>
+								<dd>The stage number to load</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/ResourceManager.html">ResourceManager</a>}</span> <b>ResourceManager</b>
+									
+								</dt>
+								<dd>A handle to the running instance of the resource manager</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Input.html">Input</a>[]}</span> <b>Inputs</b>
+									
+								</dt>
+								<dd>An array of the current player input devices</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="LoadEntity"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/Entity.html">Entity</a>}</span>
+					<b>LoadEntity</b>(EntityType, AIType, Controller, StageIndex, ImageIndex, EntityIndex)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>EntityType</b>
+									
+								</dt>
+								<dd>The type of entity to add: Zombie, Player, Wall, Door etc.</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>AIType</b>
+									
+								</dt>
+								<dd>The AI type controlling the entity null for player</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Input.html">Input</a>}</span> <b>Controller</b>
+									
+								</dt>
+								<dd>The Current Input object to register to the entity(player only)</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>StageIndex</b>
+									
+								</dt>
+								<dd>Index of the stage to load resources from</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>ImageIndex</b>
+									
+								</dt>
+								<dd>Database index of the entity Image</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Integer}</span> <b>EntityIndex</b>
+									
+								</dt>
+								<dd>Database index of the entity</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> A handle to the loaded entity</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="PlayerState"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>PlayerState</b>(Entity, Facing)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The entity to modify</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>Facing</b>
+									
+								</dt>
+								<dd>A string indicating the travel direction to change to</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="RemoveEntity"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>RemoveEntity</b>(TVZ_Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>TVZ_Entity</b>
+									
+								</dt>
+								<dd>The Entity to remove from the Entity list</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="SetOpen"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>SetOpen</b>(A)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>[]}</span> <b>A</b>
+									
+								</dt>
+								<dd>reference to an array of current Entities</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="SetResourceManager"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>SetResourceManager</b>(A)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/ResourceManager.html">ResourceManager</a>}</span> <b>A</b>
+									
+								</dt>
+								<dd>reference to an array of current Entities</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="SetSnug"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>SetSnug</b>(Mover, Obstacle, MoverLocation)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Mover</b>
+									
+								</dt>
+								<dd>The Moving Entity</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Obstacle</b>
+									
+								</dt>
+								<dd>The Entity to avoid collison with</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>MoverLocation</b>
+									
+								</dt>
+								<dd>The Direction the Mover is from the obstacle.  Valid: n, ne, e, se, s, sw, w, nw</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="Shoot"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>Shoot</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>the Shooting Entity</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="StopEntity"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>StopEntity</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to stop</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="UpdatePosition"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Integer}</span>
+					<b>UpdatePosition</b>(Entity)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Entity.html">Entity</a>}</span> <b>Entity</b>
+									
+								</dt>
+								<dd>The Entity to update</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Integer}</span> The number of removed entities</dd>
+							
+							</dl>
+						
+						
+						
+
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 20 2013 16:40:27 GMT-0700 (PDT)
+		</div>
+	</body>
+</html>

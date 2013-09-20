@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--“Copyright 2013 Clayton Burnett”--> 
+<!--this program is distributed under the terms of the GNU General Public License-->
+<html lang="en">
+
+<head>
+	<!-- Settings for Mobile Browsers / Disable Scaling Render at full size-->
+    <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+	
+	
+    <link rel="stylesheet" type="text/css" href="STYLE.css" />
+    <title>STARLIGHT ENGINE v0.6</title>
+    <script src="AIController.js" charset="utf-8"></script>
+    <script src="Audio.js" charset="utf-8"></script>
+    <script src="Entity.js" charset="utf-8"></script>
+    <script src="Error.js" charset="utf-8"></script>
+    <script src="Event.js" charset="utf-8"></script>
+    <script src="Input.js" charset="utf-8"></script>
+    <script src="Menu.js" charset="utf-8"></script>
+    <script src="Updater.js" charset="utf-8"></script>
+    <script src="ScreenMap.js" charset="utf-8"></script>
+    <script src="Stage.js" charset="utf-8"></script>
+	<script src="EntityManager.js" charset="utf-8"></script>
+	<script src="EventManager.js" charset="utf-8"></script>
+	<script src="ResourceManager.js" charset="utf-8"></script>
+	<script src="Trigger.js" charset="utf-8"></script>
+	<script src="AudioController.js" charset="utf-8"></script>
+    
+    <script>
+    var EngineHandle = null;
+    window.onload = function(){
+    //-----------Preloading Resources-----------------------------------------
+    var FileRoot = location.href.substring(0,location.href.lastIndexOf("/")+1);
+    //-----------Start Main Game Engine on Stage 1---------------------------------------
+    EngineHandle = new EventManager(this.GetFrontCanvas(), this.GetFrontCanvasContext(), this.GetRearCanvas(), this.GetRearCanvasContext(), FileRoot, this.GetAudioDevice(), window);
+	EngineHandle.StartEngine();
+    //Bind Event Handlers and Inputs
+    this.BindHandlers();
+    setInterval(EngineLoop, 1000/30);
+    }
+    //The Main Game Loop fuction
+    function EngineLoop(){
+		//-----------MAIN APPLICATION LOOP-----------------------------------------------
+		EngineHandle.RunCycle();
+    }
+    function BindHandlers(){
+		//Keyboard
+		window.addEventListener('keydown', kDown, false);
+		window.addEventListener('keyup', kUp, false);  
+		//Mouse
+		GetFrontCanvas().addEventListener('mousemove', mMove, false);
+		GetRearCanvas().addEventListener('mousemove', mMove, false);
+		GetFrontCanvas().addEventListener('click', mClick, false);
+		GetRearCanvas().addEventListener('click', mClick, false);
+    }
+	function mClick(e){
+		EngineHandle.mouseClick(e);
+	}
+	function mMove(e){
+		EngineHandle.mouseMove(e);
+	}
+    function kDown(e){
+		EngineHandle.keyDown(e.keyCode);
+    }
+    function kUp(e){
+		EngineHandle.keyUp(e.keyCode);
+    }  
+	function GetAudioDevice(){
+		var a = document.getElementById('AudioController1');
+		var b = document.getElementById('AudioController2');
+		var c = document.getElementById('AudioController3');
+		var d = document.getElementById('AudioController4');
+		var e = document.getElementById('AudioController5');
+		var f = document.getElementById('AudioController6');
+		var ABC = new Array();
+		ABC.push(a);
+		ABC.push(b);
+		ABC.push(c);
+		ABC.push(d);
+		ABC.push(e);
+		ABC.push(f);
+		return(ABC);
+	}
+	function GetFrontCanvas(){
+		var c = document.getElementById('FrontScreen');
+		return(c);
+    }
+    function GetFrontCanvasContext(){
+		var ctx = GetFrontCanvas().getContext('2d');
+		return(ctx);
+    }    
+    function GetRearCanvas(){
+		var c = document.getElementById('RearScreen');
+		return(c);
+    }
+    function GetRearCanvasContext(){
+		var bctx = GetRearCanvas().getContext('2d');
+		return(bctx);
+    }    
+    
+    </script>
+</head>
+   
+<body>
+	<audio id ="AudioController1" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController2" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+    <audio id ="AudioController3" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController4" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController5" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController6" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<canvas id="FrontScreen" width="1400" height="600" style="visibility: hidden;">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+	<canvas id="RearScreen" width="1400" height="600">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+</body>
+
+</html>
