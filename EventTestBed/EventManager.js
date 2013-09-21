@@ -25,8 +25,6 @@
  * @constructor
  */
 var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCanvasContext, ResourceRoot, AudioDevice, Window) {
-    //Default Constructor
-	//Design contains
 	this.WindowHandle = Window;
 	this.FrontCanvas = FrontCanvas;
 	this.FrontCanvasContext = FrontCanvasContext;
@@ -52,8 +50,8 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.EntityManager.SetResourceManager(this.ResourceManager);
 }
 //---------------------------------------------------------------------GET ACCESSORS--------------------------------------------------
-//returns the current stage
 /**
+* Returns the current stage
 * @return {Stage} Returns a reference to the current stage
 */
 EventManager.prototype.GetCurrentStage = function(){
@@ -62,8 +60,8 @@ EventManager.prototype.GetCurrentStage = function(){
 	}
 }
 //---------------------------------------------------------------------SET ACCESSORS--------------------------------------------------
-//Sets the current usable Inputs
 /**
+* Sets the current usable Inputs
 * @param {Input[]} Inputs Array of user Inputs to apply
 */
 EventManager.prototype.SetUserInputs = function(Inputs) {
@@ -71,7 +69,9 @@ EventManager.prototype.SetUserInputs = function(Inputs) {
 		this.UserInputs = Inputs;
 	}
 }
-//Sets the current controls for the specified stage
+/**
+* Sets the current controls for the specified stage
+*/
 EventManager.prototype.SetStartingInputs = function(){
 	//PLAYER1 INPUT CONFIG
 	var Player1 = new Input("WASD");
@@ -83,14 +83,16 @@ EventManager.prototype.SetStartingInputs = function(){
 	this.UserInputs = new Array(Player1, Player2, MouseControl);
 }
 //---------------------------------------------------------------------UTILITY FUNCTIONS----------------------------------------------
-//When all parameters are set then attempt to start the application with this function
+/**
+* When all parameters are set then attempt to start the application with this function
+*/
 EventManager.prototype.StartEngine = function(){
 	this.AudioController.SetAvailableChannels(this.AudioPlayers);
 	this.ChangeStage(1);
 	this.SetStartingInputs();
 }
-//Changes The current scope of the application and starts a different stage
 /**
+* Changes The current scope of the application and starts a different stage
 * @param {Integer} EntryNumber Stage number to change to
 */
 EventManager.prototype.ChangeStage = function(EntryNumber){
@@ -120,45 +122,50 @@ EventManager.prototype.ChangeStage = function(EntryNumber){
 	this.ScreenMap.SetBackgrounds(this.ResourceManager.LoadBackgrounds(EntryNumber));
 	this.LoadMusic(EntryNumber);
 }
-//Removes the Menu Layer
+/**
+* Removes the Menu Layer
+*/
 EventManager.prototype.CloseMenu = function(){
 	this.MenuMode = false;
 	this.ScreenMap.SetMenuSystem(null);
 	this.Updater.SetPaused(false);
 }
-
-//Function to display the current system menu
+/**
+* Function to display the current system menu
+*/
 EventManager.prototype.ShowTitleMenu = function(){
 	this.MenuMode = true;
 	this.ScreenMap.SetMenuSystem(this.ResourceManager.LoadMainMenu())
 	this.Updater.SetPaused(true);
 }
-//Handler for a key release event
 /**
+* Handler for a key release event
 * @param {KeyEvent} e KeyEvent object passed by the event handler 
 */
 EventManager.prototype.keyUp = function(e) {
     this.AddKeyEvent(e, "keyUp");
 }
-//Mouseclick event
+/**
+* Mouseclick event handler
+*/
 EventManager.prototype.mouseClick = function(e){
-	//Add Mouse Event
 	this.AddMouseEvent(e, "Click");
 }
-//Mousemove event
+/**
+* Mousemove event handler
+*/
 EventManager.prototype.mouseMove = function(e){
-	//Add Mouse Event
 	this.AddMouseEvent(e, "Move");
 }
-//Handler for a keydown event
 /**
+* Handler for a keydown event
 * @param {KeyEvent} e KeyEvent object passed by the event handler 
 */
 EventManager.prototype.keyDown = function(e){
     this.AddKeyEvent(e, "keyDown");
 }
-//Opens the In-application menu
 /**
+* Opens the In-application menu
 * @param {Stage} Stage Stage object to open the menu from
 */
 EventManager.prototype.OpenMenu = function(Stage){
@@ -169,8 +176,8 @@ EventManager.prototype.OpenMenu = function(Stage){
 	this.MenuMode = true;
 	this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
 }
-//Loads the current stage sound clips 
 /**
+* Loads the current stage sound clips 
 * @param {Stage} Stage Stage object to load the music from
 */
 EventManager.prototype.LoadMusic = function(Stage){
@@ -183,8 +190,8 @@ EventManager.prototype.LoadMusic = function(Stage){
 		this.AudioController.PlayAudio("Music", 0, this.LoadedAudio, true);
 	}
 }
-//Cache the triggers for the specified stage or the current stage if null
 /**
+* Cache the triggers for the specified stage or the current stage if null
 * @param {Stage} Stage Stage object to load the triggers from
 */
 EventManager.prototype.CacheTriggers = function(Stage){
@@ -194,11 +201,13 @@ EventManager.prototype.CacheTriggers = function(Stage){
 		this.Triggers = this.ResourceManager.LoadTriggers(this.CurrentStage);
 	}
 }
-//Function to load Sound effects
+/**
+* Function to load Sound effects
+*/
 EventManager.prototype.LoadSounds = function(Stage){
 }
-//Helper function to add keymappings
 /**
+* Helper function to add keymappings
 * @param {String} Player The identifying string for the player to load
 * @param {String} Type String representing the control type to switch to
 * @param {String} UpOrDown String indicating either keyup or keydown
@@ -233,8 +242,8 @@ EventManager.prototype.Codes = function(Player, Type, UpOrDown, KeyCode){
 		break;
      }
 }
-//Handles Menu Selection routine
 /**
+* Handles Menu Selection routine
 * @param {Integer} PointerPosition Selected option of the on screen pointer
 * @param {Menu} Menu Reference to the current Menu 
 */
@@ -259,8 +268,9 @@ EventManager.prototype.MenuHandler = function(PointerPosition, Menu) {
 		}
 	}
 }
-
-//Function to take application parameters and call the appropriate rendering routine
+/**
+* Function to take application parameters and call the appropriate rendering routine
+*/
 EventManager.prototype.RenderToScreen = function(){
 	//ScreenMap, EntityManager, EventManager.GetCurrentStage()
 	//ScreenMap.Clear();
@@ -268,8 +278,10 @@ EventManager.prototype.RenderToScreen = function(){
 	this.ScreenMap.RenderCycle(this.EntityManager.GetEntities(), this.ResourceManager.GetDOM(this.CurrentStage));
 }
 //------------------------------------PROCESSING FUNCTIONS------------------------------------
-//Cycles through the list of events and tries running each of the procedures then removes them from the update list
 //*********************LOOK OVER THIS*******************************************
+/**
+* Cycles through the list of events and tries running each of the procedures then removes them from the update list
+*/
 EventManager.prototype.RunEvents = function() {
         //Make sure to preprocess event priorities and pause updates prior to running
         this.Preprocess();
@@ -388,8 +400,8 @@ EventManager.prototype.RunEvents = function() {
            
 	   }
 }
-//Creates a fired trigger event and returns a handle
 /**
+* Creates a fired trigger event and returns a handle
 * @param {Trigger} Trigger Reference to the trigger tripped
 * @return {TVZ_Event} Created Event
 */
@@ -397,7 +409,9 @@ EventManager.prototype.CreateTriggerEvent = function(Trigger){
 	var CreatedEvent = new TVZ_Event("trigger", Trigger);
 	return(CreatedEvent);
 }
-//Preprocess the list of current updates to fix backup/interrupt and priority changes
+/**
+* Preprocess the list of current updates to fix backup/interrupt and priority changes
+*/
 EventManager.prototype.Preprocess = function(){
 	//Check triggers
 	var FiredTriggers = this.EntityManager.CheckTriggers(this.Triggers);
@@ -405,7 +419,6 @@ EventManager.prototype.Preprocess = function(){
 	for(var i = 0; i < FiredTriggers.length; i++){
 		this.CurrentEvents.push(this.CreateTriggerEvent(FiredTriggers[i]));
 	}
-
     //Make sure there are events to process
      if(this.CurrentEvents != null && this.CurrentEvents.length != 0){
         //-----------------------BACKUP FOR APPLICATION PAUSE-------------------------
@@ -435,14 +448,16 @@ EventManager.prototype.Preprocess = function(){
 		}
      }
 }
-//Runs the main application loop
+/**
+* Runs the main application loop
+*/
 EventManager.prototype.RunCycle = function(){
 	if(this.Updater != null){
 		this.Updater.ProcessCycle(this, this.EntityManager, this.ScreenMap, this.ResourceManager, this.AudioController);
 	}
 }
-//Function to package a mouse event into an event object
 /**
+* Function to package a mouse event into an event object
 * @param {Integer} KeyCode Mouse Event object code passed
 * @param {String} Type Either Click or Move
 */
@@ -497,9 +512,8 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 		}
 	}	
 }
-
-//Function to package a keypress event into an event object
 /**
+* Function to package a keypress event into an event object
 * @param {Integer} KeyCode KeyEvent object keycode passed by the event handler 
 * @param {String} UpOrDown keyUp or keyDown event type passed by the event handler 
 */
@@ -568,9 +582,8 @@ EventManager.prototype.AddKeyEvent = function(KeyCode, UpOrDown){
         }
     }
 }
-
-//Function to add an event to the event queue
 /**
+* Function to add an event to the event queue
 * @param {TVZ_Event} TVZ_Event The event to add to the event processing queue
 */
 EventManager.prototype.AddEvent = function(TVZ_Event) {
@@ -605,8 +618,8 @@ EventManager.prototype.AddEvent = function(TVZ_Event) {
         }
     }
 }
-//Removes an event from the list of current updates
 /**
+* Removes an event from the list of current updates
 * @param {Integer} EventIndex The integer index of the item to be removed
 */
 EventManager.prototype.DeleteEvent = function(EventIndex) {

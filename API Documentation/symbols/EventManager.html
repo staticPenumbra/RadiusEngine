@@ -289,7 +289,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#AddEvent">AddEvent</a></b>(TVZ_Event)
 								</div>
-								<div class="description"></div>
+								<div class="description">Function to add an event to the event queue</div>
 							</td>
 						</tr>
 					
@@ -298,7 +298,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#AddKeyEvent">AddKeyEvent</a></b>(KeyCode, UpOrDown)
 								</div>
-								<div class="description"></div>
+								<div class="description">Function to package a keypress event into an event object</div>
 							</td>
 						</tr>
 					
@@ -307,7 +307,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#AddMouseEvent">AddMouseEvent</a></b>(KeyCode, Type)
 								</div>
-								<div class="description"></div>
+								<div class="description">Function to package a mouse event into an event object</div>
 							</td>
 						</tr>
 					
@@ -316,7 +316,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#CacheTriggers">CacheTriggers</a></b>(Stage)
 								</div>
-								<div class="description"></div>
+								<div class="description">Cache the triggers for the specified stage or the current stage if null</div>
 							</td>
 						</tr>
 					
@@ -325,7 +325,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#ChangeStage">ChangeStage</a></b>(EntryNumber)
 								</div>
-								<div class="description"></div>
+								<div class="description">Changes The current scope of the application and starts a different stage</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#CloseMenu">CloseMenu</a></b>()
+								</div>
+								<div class="description">Removes the Menu Layer</div>
 							</td>
 						</tr>
 					
@@ -334,7 +343,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#Codes">Codes</a></b>(Player, Type, UpOrDown, KeyCode)
 								</div>
-								<div class="description"></div>
+								<div class="description">Helper function to add keymappings</div>
 							</td>
 						</tr>
 					
@@ -343,7 +352,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#CreateTriggerEvent">CreateTriggerEvent</a></b>(Trigger)
 								</div>
-								<div class="description"></div>
+								<div class="description">Creates a fired trigger event and returns a handle</div>
 							</td>
 						</tr>
 					
@@ -352,7 +361,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#DeleteEvent">DeleteEvent</a></b>(EventIndex)
 								</div>
-								<div class="description"></div>
+								<div class="description">Removes an event from the list of current updates</div>
 							</td>
 						</tr>
 					
@@ -361,7 +370,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#GetCurrentStage">GetCurrentStage</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Returns the current stage</div>
 							</td>
 						</tr>
 					
@@ -370,7 +379,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#keyDown">keyDown</a></b>(e)
 								</div>
-								<div class="description"></div>
+								<div class="description">Handler for a keydown event</div>
 							</td>
 						</tr>
 					
@@ -379,7 +388,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#keyUp">keyUp</a></b>(e)
 								</div>
-								<div class="description"></div>
+								<div class="description">Handler for a key release event</div>
 							</td>
 						</tr>
 					
@@ -388,7 +397,16 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#LoadMusic">LoadMusic</a></b>(Stage)
 								</div>
-								<div class="description"></div>
+								<div class="description">Loads the current stage sound clips</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#LoadSounds">LoadSounds</a></b>(Stage)
+								</div>
+								<div class="description">Function to load Sound effects</div>
 							</td>
 						</tr>
 					
@@ -397,7 +415,25 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#MenuHandler">MenuHandler</a></b>(PointerPosition, Menu)
 								</div>
-								<div class="description"></div>
+								<div class="description">Handles Menu Selection routine</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#mouseClick">mouseClick</a></b>(e)
+								</div>
+								<div class="description">Mouseclick event handler</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#mouseMove">mouseMove</a></b>(e)
+								</div>
+								<div class="description">Mousemove event handler</div>
 							</td>
 						</tr>
 					
@@ -406,7 +442,52 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#OpenMenu">OpenMenu</a></b>(Stage)
 								</div>
-								<div class="description"></div>
+								<div class="description">Opens the In-application menu</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#Preprocess">Preprocess</a></b>()
+								</div>
+								<div class="description">Preprocess the list of current updates to fix backup/interrupt and priority changes</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#RenderToScreen">RenderToScreen</a></b>()
+								</div>
+								<div class="description">Function to take application parameters and call the appropriate rendering routine</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#RunCycle">RunCycle</a></b>()
+								</div>
+								<div class="description">Runs the main application loop</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#RunEvents">RunEvents</a></b>()
+								</div>
+								<div class="description">Cycles through the list of events and tries running each of the procedures then removes them from the update list</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#SetStartingInputs">SetStartingInputs</a></b>()
+								</div>
+								<div class="description">Sets the current controls for the specified stage</div>
 							</td>
 						</tr>
 					
@@ -415,7 +496,25 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/EventManager.html#SetUserInputs">SetUserInputs</a></b>(Inputs)
 								</div>
-								<div class="description"></div>
+								<div class="description">Sets the current usable Inputs</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#ShowTitleMenu">ShowTitleMenu</a></b>()
+								</div>
+								<div class="description">Function to display the current system menu</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/EventManager.html#StartEngine">StartEngine</a></b>()
+								</div>
+								<div class="description">When all parameters are set then attempt to start the application with this function</div>
 							</td>
 						</tr>
 					
@@ -522,7 +621,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Function to add an event to the event queue
 						
 						
 					</div>
@@ -558,7 +657,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Function to package a keypress event into an event object
 						
 						
 					</div>
@@ -600,7 +699,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Function to package a mouse event into an event object
 						
 						
 					</div>
@@ -642,7 +741,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Cache the triggers for the specified stage or the current stage if null
 						
 						
 					</div>
@@ -678,7 +777,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Changes The current scope of the application and starts a different stage
 						
 						
 					</div>
@@ -706,6 +805,31 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="CloseMenu"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>CloseMenu</b>()
+					
+					</div>
+					<div class="description">
+						Removes the Menu Layer
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="Codes"> </a>
 					<div class="fixedFont">
 					
@@ -714,7 +838,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Helper function to add keymappings
 						
 						
 					</div>
@@ -768,7 +892,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Creates a fired trigger event and returns a handle
 						
 						
 					</div>
@@ -811,7 +935,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Removes an event from the list of current updates
 						
 						
 					</div>
@@ -847,7 +971,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Returns the current stage
 						
 						
 					</div>
@@ -879,7 +1003,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Handler for a keydown event
 						
 						
 					</div>
@@ -915,7 +1039,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Handler for a key release event
 						
 						
 					</div>
@@ -951,7 +1075,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Loads the current stage sound clips
 						
 						
 					</div>
@@ -979,6 +1103,42 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="LoadSounds"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>LoadSounds</b>(Stage)
+					
+					</div>
+					<div class="description">
+						Function to load Sound effects
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>Stage</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="MenuHandler"> </a>
 					<div class="fixedFont">
 					
@@ -987,7 +1147,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Handles Menu Selection routine
 						
 						
 					</div>
@@ -1021,6 +1181,78 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="mouseClick"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>mouseClick</b>(e)
+					
+					</div>
+					<div class="description">
+						Mouseclick event handler
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="mouseMove"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>mouseMove</b>(e)
+					
+					</div>
+					<div class="description">
+						Mousemove event handler
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>e</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="OpenMenu"> </a>
 					<div class="fixedFont">
 					
@@ -1029,7 +1261,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Opens the In-application menu
 						
 						
 					</div>
@@ -1057,6 +1289,131 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="Preprocess"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>Preprocess</b>()
+					
+					</div>
+					<div class="description">
+						Preprocess the list of current updates to fix backup/interrupt and priority changes
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="RenderToScreen"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>RenderToScreen</b>()
+					
+					</div>
+					<div class="description">
+						Function to take application parameters and call the appropriate rendering routine
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="RunCycle"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>RunCycle</b>()
+					
+					</div>
+					<div class="description">
+						Runs the main application loop
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="RunEvents"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>RunEvents</b>()
+					
+					</div>
+					<div class="description">
+						Cycles through the list of events and tries running each of the procedures then removes them from the update list
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="SetStartingInputs"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>SetStartingInputs</b>()
+					
+					</div>
+					<div class="description">
+						Sets the current controls for the specified stage
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="SetUserInputs"> </a>
 					<div class="fixedFont">
 					
@@ -1065,7 +1422,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Sets the current usable Inputs
 						
 						
 					</div>
@@ -1091,6 +1448,56 @@ ul.inheritsList
 						
 						
 
+					<hr />
+				
+					<a name="ShowTitleMenu"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>ShowTitleMenu</b>()
+					
+					</div>
+					<div class="description">
+						Function to display the current system menu
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="StartEngine"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>StartEngine</b>()
+					
+					</div>
+					<div class="description">
+						When all parameters are set then attempt to start the application with this function
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
 					
 				
 			
@@ -1105,7 +1512,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 20 2013 16:40:27 GMT-0700 (PDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Sep 20 2013 17:08:30 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>
