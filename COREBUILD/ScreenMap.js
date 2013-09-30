@@ -34,6 +34,7 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.BackgroundImages = new Array(); //The Current array of background Images
 	this.ZoomLevel = null;		//Current screen magnification level 
 	this.MenuSystem = new Array(); //Array of Menu layouts for the stage
+	this.DOM = new Array();
 }
 
 //-----------------------------------------------------Get Methods-----------------------------------
@@ -109,6 +110,34 @@ ScreenMap.prototype.Blit = function(){
 		this.ctx.putImageData(offscreen_data, 0, 0);
 	}
 }
+/**
+* Function to wrap the loaded text
+* @param {CanvasContext} context the current Canvas context to display to
+* @param {String} text The text to display within the DOM element
+* @param {Integer} x The starting x position in pixels
+* @param {Integer} y The starting y position in pixels
+* @param {Integer} maxWidth The maximum width to use before wrap
+* @param {Integer} lineHeight The height of the display text
+*/
+ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeight){
+	var words = text.split(' ');
+	var line = '';
+	for(var n = 0; n < words.length; n++) {
+		var testLine = line + words[n] + ' ';
+		var metrics = context.measureText(testLine);
+		var testWidth = metrics.width;
+		if (testWidth > maxWidth && n > 0) {
+			context.fillText(line, x, y);
+			line = words[n] + ' ';
+			y += lineHeight;
+		}
+		else {
+			line = testLine;
+		}
+	}
+	context.fillText(line, x, y);
+}
+
 //Function to render the map to the background canvas and blit
 ScreenMap.prototype.RenderToCanvas = function(){
        this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
@@ -117,6 +146,16 @@ ScreenMap.prototype.RenderToCanvas = function(){
 	   }
        //Render Entities
        //Make sure there are entities
+	   if(this.DOM != null){
+		 for(var i = 0; i <= this.DOM.length - 1; i++){
+           //ALL LINKS FOR NOW
+		    this.bctx.fillStyle = "white";
+			this.bctx.font = this.DOM[i][5];
+			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
+			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
+        } 
+	   }
+	   
        if(this.Entities != null){
         for(var i = 0; i <= this.Entities.length - 1; i++){
             if(this.Entities[i].SpriteSheet != null){
@@ -142,9 +181,11 @@ ScreenMap.prototype.RenderToCanvas = function(){
 //Render Event; Updates Entities and renders to canvas
 /**
 * @param {Entity[]} EntityList Updated Entity List to process
+* @param {Array[]} DOMList Updated DOM List to process
 */
-ScreenMap.prototype.RenderCycle = function(EntityList) {
-    this.UpdateEntities(EntityList);
+ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
+    this.UpdateDOM(DOMList);
+	this.UpdateEntities(EntityList);
     this.RenderToCanvas();
 }
 //Function to draw a specified Entity on the background canvas for blitting
@@ -243,13 +284,16 @@ ScreenMap.prototype.CalculateSlots = function(){
     }
 }
 /**
+* @param {Array[]} DOMList Updates the list of DOM Elements
+*/
+ScreenMap.prototype.UpdateDOM = function(DOMList){
+    this.DOM = DOMList;
+}
+/**
 * @param {TVZ_Entity[]} EntityList Updates the list of entities in the ScreenMap from a supplied Entity list
 */
 ScreenMap.prototype.UpdateEntities = function(EntityList){
-    //Disassociate the old Map and recreate
-    this.CurrentMap = null;
     this.Entities = EntityList;
-    //this.CreateMap();
 }
 //Function to animate an entity and draw the correct animation frame 
 /**

@@ -34,8 +34,8 @@ var Audio = function(TVZ_AudioFile, TVZ_Repeating, TVZ_Volume, TVZ_Duration, TVZ
 	this.Controller = null;	
 }
 //-------------------------------------------------------------SET METHODS---------------------------
-//Set Repeat
 /**
+* Set Repeat flag 
 * @param {Boolean} Repeat Sets the Audio clip to either repeat or not repeat
 */
 Audio.prototype.SetRepeating = function(Repeat){
@@ -43,15 +43,15 @@ Audio.prototype.SetRepeating = function(Repeat){
        this.RepeatingFlag = Repeat;
 	}
 }
-//SetController: Sets the current controller of the Audio object takes in an <audio> tag id string
 /**
+* Sets the current controller of the Audio object takes in an <audio> tag id string
 * @param {AudioTagHandle} Controller Handle to the current HTML5 audio element 
 */
 Audio.prototype.SetController = function(Controller){
         this.Controller = Controller;
 }
-//Set Timeout
 /**
+* Set Timeout
 * @param {Array[]} MinutesAndSeconds Sets the Audio clip timeout
 */
 Audio.prototype.SetClipTimeout = function(MinutesAndSeconds){
@@ -60,8 +60,8 @@ Audio.prototype.SetClipTimeout = function(MinutesAndSeconds){
 	}
 }
 //----------------------------------------------------------GET METHODS-------------------------------
-//Get Timeout
 /**
+* Get Timeout
 * @returns {Array[]} Gets the Audio clip timeout
 */
 Audio.prototype.GetClipTimeout = function(){
@@ -69,15 +69,15 @@ Audio.prototype.GetClipTimeout = function(){
        return(this.Duration);
 	}
 }
-//Get the Audio file string
 /**
+* Get the Audio file string
 * @returns {String} Returns the AudioFile path contained in the audio object
 */
 Audio.prototype.GetFilePath = function(){
         return(this.AudioFile);
 }
-//GetController: Gets the current controller of the Audio object 
 /**
+* Gets the current controller of the Audio object 
 * @returns {AudioController} The controller registered with the current Audio object
 */
 Audio.prototype.GetController = function(){
@@ -86,13 +86,17 @@ Audio.prototype.GetController = function(){
     }
 }
 //-----------------------------------------------------------UTILITY METHODS----------------------------------
-//Pauses the current audio associated with the audio object
+/**
+* Pauses the current audio associated with the audio object
+*/
 Audio.prototype.Pause = function() {
     if(this.Controller != null){   
 		this.Controller.pause();
 	}
 }
-//Play: Plays the current audio associated with the audio object
+/**
+* Plays the current audio associated with the audio object
+*/
 Audio.prototype.Play = function() {
     if(this.Controller != null){   
         if(this.RepeatingFlag == true){
@@ -105,8 +109,8 @@ Audio.prototype.Play = function() {
 	this.Controller.play();
 	}
 }
-//Stop: Stops audio associated with the object on the associated controller
 /**
+* Stops audio associated with the object on the associated controller
 * @param {AudioTagHandle} Controller Handle to the current HTML5 audio element 
 */
 Audio.prototype.Stop = function(Controller) {
@@ -114,16 +118,16 @@ Audio.prototype.Stop = function(Controller) {
 	document.getElementById(this.Controller).pause();
 	}
 }
-
-//Repeat: Restarts the playing audio associated with the object on the current controller
+/**
+* Restarts the playing audio associated with the object on the current controller
+*/
 Audio.prototype.Repeat = function() {
     if(this.Controller != null){
     document.getElementById(this.Controller).currentTime = 0;
     }
 }
-
-//SkipTo: Skips to the current time value in seconds given by "Value"
 /**
+* Skips to the current time value in seconds given by "Value"
 * @param {Float} Value The track starting position in seconds
 */
 Audio.prototype.SkipTo = function(Value) {
