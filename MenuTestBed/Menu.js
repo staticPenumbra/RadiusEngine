@@ -25,7 +25,6 @@
  * @constructor
  */
 var ApplicationMenu = function(Origin, Dimensions, MenuItems, Title, Font) {
-    //Default Constructor
 	this.MenuOptions = MenuItems;//Optional element so add with a function
 	this.OptionCoordinates = new Array(); //location of each Menu Item
 	this.Background = null;//Optional element so add with a function
@@ -46,16 +45,16 @@ var ApplicationMenu = function(Origin, Dimensions, MenuItems, Title, Font) {
 }
 
 //--------------------------------------------------------------------------GET ACCESSORS---------------------------------------------
-//Returns the selected menu item
 /**
+* Returns the selected menu item
 * @return {Integer} The currently selected menu item
 */
 ApplicationMenu.prototype.GetCursorPosition = function(){
 	return(this.SelectedItem);
 }
 //--------------------------------------------------------------------------SET ACCESSORS---------------------------------------------
-//Sets the Cursor Image for the Menu
 /**
+* Sets the Cursor Image for the Menu
 * @param {String} CursorFile filepath of the cursor Image
 */
 ApplicationMenu.prototype.SetCursorImage = function(CursorFile){
@@ -64,8 +63,8 @@ ApplicationMenu.prototype.SetCursorImage = function(CursorFile){
 		this.CursorImage.src = CursorFile;
 	}
 }
-//Sets the font properties of the Menu
 /**
+* Sets the font properties of the Menu
 * @param {String} FontName The name of the system font to set
 * @param {Integer} Size The text size 
 */
@@ -75,8 +74,8 @@ ApplicationMenu.prototype.SetTextFont = function(FontName, Size){
 		this.TextSize = Size;
 	}
 }
-//Function to set the Menu background
 /**
+* Function to set the Menu background
 * @param {String} BackgroundFile File path to the background file
 */
 ApplicationMenu.prototype.SetBackground = function(BackgroundFile){
@@ -89,18 +88,17 @@ ApplicationMenu.prototype.SetBackground = function(BackgroundFile){
 		}
 	}
 }
-//Set the menu shape eg Circle, Square
 /**
+* Set the menu shape eg Circle, Square (Currently only supporting square)
 * @param {String} Shape Text string indicating the shape of the menu
 */
 ApplicationMenu.prototype.SetShape = function(Shape){
-	//Currently only supporting square
 	if(Shape != null && Shape == "Square"){
 	this.type = Shape;
 	}
 }
-//Change Selected Menu Item
 /**
+* Change Selected Menu Item
 * @param {Integer} MenuOption Array element number of the menu selection
 */
 ApplicationMenu.prototype.ChangeCursorPosition = function(MenuOption) {
@@ -109,12 +107,13 @@ ApplicationMenu.prototype.ChangeCursorPosition = function(MenuOption) {
 	}
 }
 //---------------------------------------------------------------------------------UTILITY FUNCTIONS----------------------------------
-//Function to make the "tick" sound effect when changing menu elements
-ApplicationMenu.prototype.Tick = function(elapsed){
-	
-}
-//Function to display the menu on screen
 /**
+* Function to make the "tick" sound effect when changing menu elements
+*/
+ApplicationMenu.prototype.Tick = function(elapsed){	
+}
+/**
+* Function to display the menu on screen
 * @param {CanvasContext} ctx Handle to the current canvas context
 */
 ApplicationMenu.prototype.Display = function(ctx) {
