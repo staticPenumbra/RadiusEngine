@@ -9,7 +9,6 @@
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
- 
 /**
  * ###############################################################################################################
  *                                              EntityManager
@@ -22,11 +21,10 @@
  * All in-application Entities are registered with the Entity Manager
  **/
  /**
+ * Specifies an in application entity manager
  * @constructor
  */
-//Specifies an in application entity manager
 var EntityManager = function() {
-    //Default Constructor
 	this.Entities = new Array();
 	this.AIManager = new AIController(this.Entities);
 	this.CurrentGUID = 0;
@@ -35,8 +33,8 @@ var EntityManager = function() {
 	this.ResourceManager = null;
 }
 //------------------------------------------------------------------------GET ACCESSORS---------------------------------------------
-//Returns the set of current application entities
 /**
+* Returns the set of current application entities
 * @return {Entity[]} A reference to an array of current Entities
 */
 EntityManager.prototype.GetEntities = function(){
@@ -45,8 +43,8 @@ EntityManager.prototype.GetEntities = function(){
 	}
 }
 //------------------------------------------------------------------------SET ACCESSORS---------------------------------------------
-//Sets the ResourceManager
 /**
+* Sets the ResourceManager
 * @param {ResourceManager} A reference to an array of current Entities
 */
 EntityManager.prototype.SetResourceManager = function(Manager){
@@ -54,8 +52,8 @@ EntityManager.prototype.SetResourceManager = function(Manager){
 		this.ResourceManager = Manager;
 	}
 }
-//Sets a Door to the open position
 /**
+* Sets a Door to the open position
 * @param {Entity[]} A reference to an array of current Entities
 */
 EntityManager.prototype.SetOpen = function(Door){
@@ -65,16 +63,18 @@ EntityManager.prototype.SetOpen = function(Door){
 	}
 }
 //------------------------------------------------------------------------UTILITY FUNCTIONS-----------------------------------------
-
-//Function to reset the Entity manager when the stage is switched
+/**
+* Function to reset the Entity manager when the stage is switched
+* @param {Entity[]} A reference to an array of current Entities
+*/
 EntityManager.prototype.Reset = function(){
 	this.Entities = new Array();
 	this.AIManager = new AIController(this.Entities);
 	this.CurrentGUID = 0;
 	this.NumPlayers = 0;
 }
-//Function to Load stage entities from the resource manager
 /**
+* Function to Load stage entities from the resource manager
 * @param {Integer} Stage The stage number to load
 * @param {ResourceManager} ResourceManager A handle to the running instance of the resource manager
 * @param {Input[]} Inputs An array of the current player input devices
@@ -120,8 +120,8 @@ EntityManager.prototype.LoadEntities = function(StageIndex, ResourceManager, Inp
 		}
 	}*/
 }
-//Helper function for collision algorithm takes two point arrays
 /**
+* Helper function for collision algorithm takes two point arrays
 * @param {Array[]} Object1 A reference to the colliding array of box points UL,UR,LL, LR
 * @param {Array[]} Object2 A reference to the stationary array of box points UL,UR,LL, LR
 */
@@ -139,8 +139,8 @@ EntityManager.prototype.CollisionCheck = function(Object1, Object2){
 		return(true);
 		}
 }
-//Checks to make sure an entity hasn't tripped a trigger returns an array of fired triggers
 /**
+* Checks to make sure an entity hasn't tripped a trigger returns an array of fired triggers
 * @param {Trigger[]} Triggers A reference to an array of triggers to test
 * @return {Trigger[]} A reference to an array of all the fired triggers in this application cycle
 */
@@ -173,8 +173,8 @@ EntityManager.prototype.CheckTriggers = function(Triggers){
 		return(FiredTriggers);
 	}
 }
-//Helper function to change an entities travel direction
 /**
+* Helper function to change an entities travel direction
 * @param {Entity} Entity The entity to modify
 * @param {String} Facing A string indicating the travel direction to change to
 */
@@ -186,6 +186,7 @@ EntityManager.prototype.PlayerState = function(Entity, Facing){
       }
 }
 /**
+* Loads and adds an Entity to the Entity manager
 * @param {String} EntityType The type of entity to add: Zombie, Player, Wall, Door etc.
 * @param {String} AIType The AI type controlling the entity null for player
 * @param {Input} Controller The Current Input object to register to the entity(player only)
@@ -194,7 +195,6 @@ EntityManager.prototype.PlayerState = function(Entity, Facing){
 * @param {Integer} EntityIndex Database index of the entity
 * @return {Entity} A handle to the loaded entity
 */
-//Loads and adds an Entity to the Entity manager
 EntityManager.prototype.LoadEntity = function(EntityType, AIType, Controller, StageIndex, ImageIndex, EntityIndex){
 	//this.LoadEntity("Player", "none", Inputs[i], StageIndex);
 	//this.LoadEntity("Zombie", "zombie", "none", StageIndex);
@@ -238,8 +238,8 @@ EntityManager.prototype.LoadEntity = function(EntityType, AIType, Controller, St
     alert(err.toString() + "101(47z Error: Couldn't Add " + EntityType + " to Application");
     }
 }
-//Function to shoot the current weapon in the current direction
 /**
+* Function to shoot the current weapon in the current direction
 * @param {Entity} Entity the Shooting Entity
 */
 EntityManager.prototype.Shoot = function(Entity){
@@ -270,8 +270,8 @@ EntityManager.prototype.Shoot = function(Entity){
         break;
     }
 }
-//Function to add an Entity to the Application
 /**
+* Function to add an Entity to the Application
 * @param {Entity} TVZ_Entity The Entity to add to the list of active entities 
 */
 EntityManager.prototype.AddEntity = function(TVZ_Entity) {
@@ -279,8 +279,8 @@ EntityManager.prototype.AddEntity = function(TVZ_Entity) {
         this.Entities.push(TVZ_Entity);
     }
 }
-//Function to remove an out of bounds bullet
 /**
+* Function to remove an out of bounds bullet
 * @param {Entity} Entity The Entity to check for bullet syndrome
 * @return {Integer} Flag integer indicating whether the bullet was killed 1 or not 0
 */
@@ -293,8 +293,8 @@ EntityManager.prototype.KillBullets = function(Entity){
     }
 	return(0);
 }
-//Function to remove a door
 /**
+* Function to remove a door
 * @param {Entity} Entity The Entity to check for door syndrome
 * @return {Integer} Flag integer indicating whether the door was killed 1 or not 0
 */
@@ -307,8 +307,8 @@ EntityManager.prototype.KillDoors = function(Entity){
     }
 	return(0);
 }
-//Remove the given Entity from the Entity list
 /**
+* Remove the given Entity from the Entity list
 * @param {Entity} TVZ_Entity The Entity to remove from the Entity list
 */
 EntityManager.prototype.RemoveEntity = function(Entity) {
@@ -321,8 +321,8 @@ EntityManager.prototype.RemoveEntity = function(Entity) {
         }
     }
 }
-//Function to change the current entity weapon
 /**
+* Function to change the current entity weapon
 * @param {String} PlayerOrNPC States whether player type or NPC type
 * @param {String} args Keymapping args
 */
@@ -347,8 +347,8 @@ EntityManager.prototype.EntityCHWeapon = function(PlayerOrNPC, args){
         }
     }   
 }
-//Function to shoot the current weapon in the current direction
 /**
+* Function to shoot the current weapon in the current direction
 * @param {String} PlayerOrNPC States whether player type or NPC type
 * @param {String} args Keymapping args
 */
@@ -373,8 +373,8 @@ EntityManager.prototype.EntityShoot = function(PlayerOrNPC, args){
         }
     }   
 }
-//Function to check for the death of an entity takes in an array of names
 /**
+* Function to check for the death of an entity takes in an array of names
 * @param {String[]} Names An array of entity type name strings to check
 * @return {Boolean} Flag indicating whether an instance of the name was found or not
 */
@@ -395,8 +395,11 @@ EntityManager.prototype.CheckDead = function(Names){
 	return(true);
 	}
 }
-
-//Function to update all of the Entity positions every cycle
+/**
+* Function to update all of the Entity positions every cycle
+* @param {String[]} Names An array of entity type name strings to check
+* @return {Boolean} Flag indicating whether an instance of the name was found or not
+*/
 EntityManager.prototype.UpdateEntities = function(){
     if(this.Entities != null && this.Entities.length > 0){
     //We have entities to update
@@ -437,8 +440,8 @@ EntityManager.prototype.UpdateEntities = function(){
         this.AIManager.UpdateEntities(this.Entities);    
     }
 }
-//Returns an array of 4 coordinate points UpperL, UpperR, LowerL, LowerR
 /**
+* Returns an array of 4 coordinate points UpperL, UpperR, LowerL, LowerR
 * @param {Entity} Entity1 The Entity to process
 * @returns {Array[]} Returns the array of x,y points [Upper Left, Upper Right, Lower Left, Lower Right]
 */
@@ -456,8 +459,8 @@ EntityManager.prototype.GetCornerPoints = function(Entity){
         return(new Array(UL, UR, LL, LR));
     }
 }
-//Applies Damage and returns the number of killed entities
 /**
+* Applies Damage and returns the number of killed entities
 * @param {Entity} Weapon Colliding/Damaging Entity
 * @param {Entity} Victim The Victim taking damage
 * @return {Integer} Integer representing the number of killed Entities
@@ -510,8 +513,8 @@ EntityManager.prototype.DoDamage = function(Weapon, Victim){
 		return(killed);
 	}
 }
-//Function to fix the orientation of 2 colliding entities
 /**
+* Function to fix the orientation of 2 colliding entities
 * @param {Entity} Mover The Moving Entity
 * @param {Entity} Obstacle The Entity to avoid collison with
 * @param {String} MoverLocation The Direction the Mover is from the obstacle.  Valid: n, ne, e, se, s, sw, w, nw 
@@ -554,8 +557,8 @@ EntityManager.prototype.SetSnug = function(Mover, Obstacle, MoverLocation){
     break;
     }                            
 }
-//Function to stop an entity
 /**
+* Function to stop an entity
 * @param {Entity} Entity The Entity to stop 
 */
 EntityManager.prototype.StopEntity = function(Entity){
@@ -599,13 +602,12 @@ EntityManager.prototype.StopEntity = function(Entity){
 		break;
 	}	
 }
-//Function to check an entity for collision against all other application entities
 /**
+* Function to check an entity for collision against all other application entities
 * @param {Entity} Entity The Entity to check 
 * @returns {Integer} The number of killed entities
 */
 EntityManager.prototype.CheckAllCollisions = function(Entity){
-	//Make sure we are passed valid Input
 	if(Entity != null){
 		var E1Corners = Entity.GetCorners();
 		var Entity1UL = E1Corners[0];
@@ -713,8 +715,8 @@ EntityManager.prototype.CheckAllCollisions = function(Entity){
 		return(killed);
 	}
 }
-//Function to check if an entity is within screen bounds and stop it if it is going over
 /**
+* Function to check if an entity is within screen bounds and stop it if it is going over
 * @param {Entity} Entity The Entity to check bounds on
 * @returns {Integer} The number of killed objects
 */
@@ -748,8 +750,8 @@ EntityManager.prototype.CheckBounds = function(Entity){
 		return(killed);
     }
 }
-//Function to update an entity based on its component Vector
 /**
+* Function to update an entity based on its component Vector
 * @param {Entity} Entity The Entity to update
 * @returns {Integer} The number of removed entities
 */
@@ -798,8 +800,8 @@ EntityManager.prototype.UpdatePosition = function(Entity){
 		return(removed);
     }
 }
-//Handler to create an entity move event
 /**
+* Handler to create an entity move event
 * @param {boolean} PlayerOrNPC flag indicating whether the moving entity is 0 Player or 1 NPC
 * @param {String} args Preprocessed arguments indicating the key that was pressed   
 */
@@ -871,8 +873,8 @@ EntityManager.prototype.EntityMove = function(PlayerOrNPC, args){
         }
     } 
 }
-//Handler to stop entity movement in a direction
 /**
+* Handler to stop entity movement in a direction
 * @param {boolean} PlayerOrNPC flag indicating whether the moving entity is 0 Player or 1 NPC
 * @param {String} args Preprocessed arguments indicating the key that was pressed   
 */

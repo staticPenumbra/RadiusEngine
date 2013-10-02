@@ -9,7 +9,6 @@
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
- 
 /**
  * ###############################################################################################################
  *                                              EventManager
@@ -493,7 +492,7 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 									window.location = "https://github.com/staticPenumbra/RadiusEngine";
 									break;
 									case 4:
-									this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "white"));
+									this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
 									break;
 								}
 							}

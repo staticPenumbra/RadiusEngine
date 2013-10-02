@@ -9,7 +9,6 @@
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
- 
 /**
  * ###############################################################################################################
  *                                              Entity
@@ -24,11 +23,7 @@
  /**
  * @constructor
  */
-//Danger global variable -- not happy with this, to be replaced later
-//var GUID = 1;
 var Entity = function(TVZ_CreatureType, TVZ_AIType, PosX, PosY, TVZ_Faction, GUID) {
-
-    //Default Constructor
     this.GUID = GUID;
     this.CreatureType = TVZ_CreatureType; //String name of the current creature type 
     this.ReferenceName = null; //Reference name of the current object
@@ -68,12 +63,11 @@ var Entity = function(TVZ_CreatureType, TVZ_AIType, PosX, PosY, TVZ_Faction, GUI
 	this.Damage = 0;
 	this.FiredBy = null;
 	this.CurrentTarget = null; //Target that the current Entity is looking at
-    
     this.Setup();
 }
 //--------------------------------------------------------SET METHODS------------------------------------------------------
-//Function to set the Entities currently watched Target
 /**
+* Function to set the Entities currently watched Target
 * @param {Boolean} Bool True or False indicating what to set it to
 */
 Entity.prototype.SetOpen = function(Bool){
@@ -81,8 +75,8 @@ Entity.prototype.SetOpen = function(Bool){
 		this.Open = Bool;
 	}
 }
-//Function to set the Entities currently watched Target
 /**
+* Function to set the Entities currently watched Target
 * @param {Entity} Target Reference to a target Entity
 */
 Entity.prototype.SetCurrentTarget = function(Target){
@@ -90,8 +84,8 @@ Entity.prototype.SetCurrentTarget = function(Target){
 		this.CurrentTarget = Target;
 	}
 }
-//Function to set width of the Entity image **will default to type value if not specified
 /**
+* Function to set width of the Entity image **will default to type value if not specified
 * @param {Integer} Value Width value to set 
 */
 Entity.prototype.SetImageWidth = function(Value){
@@ -99,8 +93,8 @@ Entity.prototype.SetImageWidth = function(Value){
 		this.ImageWidth = Value;
 	}
 }
-//Function to set the height of the Entity image **will default to type value if not specified
 /**
+* Function to set the height of the Entity image **will default to type value if not specified
 * @param {Integer} Value Height value to set
 */
 Entity.prototype.SetImageHeight = function(Value){
@@ -108,8 +102,8 @@ Entity.prototype.SetImageHeight = function(Value){
 		this.ImageHeight = Value;
 	}
 }
-//Function to set the weapon of an entity
 /**
+* Function to set the weapon of an entity
 * @param {String} Weapon weapon to switch to 
 */
 Entity.prototype.SetCurrentWeapon = function(Weapon){
@@ -117,8 +111,8 @@ Entity.prototype.SetCurrentWeapon = function(Weapon){
 		this.Weapon = Weapon;
 	}
 }
-//Function to set the current entities sight radius
 /**
+* Function to set the current entities sight radius
 * @param {Integer} Radius Radius value to set
 */
 Entity.prototype.SetSightRadius = function(Radius){
@@ -126,8 +120,8 @@ Entity.prototype.SetSightRadius = function(Radius){
 		this.SightRadius = Radius;
 	}
 }
-//Sets the Entity that fired the current entity 
 /**
+* Sets the Entity that fired the current entity 
 * @param {Entity} Entity Reference to the entity to set
 */
 Entity.prototype.SetFiredBy = function(Entity){
@@ -135,35 +129,38 @@ Entity.prototype.SetFiredBy = function(Entity){
 		this.FiredBy = Entity;
 	}
 }
+/**
+* Sets the Moving flag for an entity
+*/
 Entity.prototype.SetMoving = function(Boolean){
 	if(Boolean != null){
 		this.IsMoving=Boolean;
 	}
 }
-//Function to set the current frame
 /**
-*@param {Integer} frameNumber the current frame number in the sequence
+* Function to set the current frame
+* @param {Integer} frameNumber the current frame number in the sequence
 */	 
 Entity.prototype.SetFrame = function(frameNumber){
         this.currentFrame = frameNumber;    
 }
 //--------------------------------------------------------------GET ACCESSORS-----------------------------------------
-//Function to return the Entities currently watched Target
 /**
+* Function to return the Entities currently watched Target
 * @return {Entity} Returns a reference to the Entities current Target
 */
 Entity.prototype.GetCurrentTarget = function(){
 		return(this.CurrentTarget);
 }
-//Function to return the number of hitpoints for the current entity
 /**
+* Function to return the number of hitpoints for the current entity
 * @return {Integer} Returns the number of hitpoints for the current entity
 */
 Entity.prototype.GetHitpoints = function() {
     return(this.HitPoints);
 }
-//Function to return the cell values for the current Entity
 /**
+* Function to return the cell values for the current Entity
 * @return {Array[]} Dimensions x, y of the 2D image square
 * @param {Entity} Entity Reference to the entity to set
 */
@@ -200,8 +197,8 @@ Entity.prototype.GetCells = function(Direction){
 		}
 	}
 }
-//Changes the current AI focus of the Entity
 /**
+* Changes the current AI focus of the Entity
 * @param {Entity} Reference Entity reference to focus on
 */
 Entity.prototype.GetReferenceName = function() {
@@ -209,16 +206,15 @@ Entity.prototype.GetReferenceName = function() {
 		return(this.ReferenceName);
 	}
 }
-//Returns whether the current Entity is animating or not
 /**
+* Returns whether the current Entity is animating or not
 * @return {Boolean} True; the entity is animating, false; the entity is not animating
 */
 Entity.prototype.IsAnimating = function(){
 	return(this.IsMoving);
 }
-
-//Function to return who fired the entity
 /**
+* Function to return who fired the entity
 * @return {Entity} Reference to the firing Entity
 */
 Entity.prototype.GetFiredBy = function(){
@@ -226,8 +222,8 @@ Entity.prototype.GetFiredBy = function(){
 		return(this.FiredBy);
 	}
 }
-//Calculates each corner point for the entity and returns the whole as an array of points
 /**
+* Calculates each corner point for the entity and returns the whole as an array of points
 * @return {Array[]} Array of corner points x, y for the current entity
 */
 Entity.prototype.GetCorners = function(){
@@ -237,8 +233,8 @@ Entity.prototype.GetCorners = function(){
 	var LR = new Array(UL[0] + this.ImageWidth, UL[1] + this.ImageHeight);
 	return(new Array(UL, UR, LL, LR));
 }
-//Returns the external damage potential of the entity
 /**
+* Returns the external damage potential of the entity
 * @return {Integer} Number representing the amount of damage a collision with the entity will cause
 */
 Entity.prototype.GetDamage = function(){
@@ -246,44 +242,46 @@ Entity.prototype.GetDamage = function(){
 	return(this.Damage);
 	}
 }
-//Returns an array of the Sprite directional cell order
 /**
+* Returns an array of the Sprite directional cell order
 * @return {Array[]} Array of Integers indicating the sprite directional cell order
 */
 Entity.prototype.GetCellOrder = function(){
 	return(this.CellOrder);
 }
-//Gets the current frame in the sequence 
+/**
+* Gets the current frame in the sequence
+* @return {Integer} Date object indicating the previous timestamp
+*/ 
 Entity.prototype.GetTimestamp = function(){
         return(this.LastUpdate);   
 }
-//Function to get the current frame
 /**
-*@return {Integer} Returns the current Frame
+* Function to get the current frame
+* @return {Integer} Returns the current Frame
 */	
-//Gets the current frame in the sequence 
 Entity.prototype.GetFrame = function(){
         return(this.currentFrame);   
 }
-//Function to return the current sprite image depending on sprite factors
 /**
-*@return {Image} Returns an Image for the current spritesheet
+* Function to return the current sprite image depending on sprite factors
+* @return {Image} Returns an Image for the current spritesheet
 */	 
 Entity.prototype.GetSpriteSheet = function(){
     if(this.SpriteSheet != null){
         return(this.SpriteSheet);    
     }
 }
-//Function to return the facing direction for the current Entity
 /**
-*@return {String} Returns a string for the travel direction n e s w
+* Function to return the facing direction for the current Entity
+* @return {String} Returns a string for the travel direction n e s w
 */	 
 Entity.prototype.GetFacing = function(){
     return(this.TravelDirection);
 }
-//Function to return the associated image dimensions
 /**
-*@return {Integer[]} Returns the current width and height dimensions for the image
+* Function to return the associated image dimensions
+* @return {Integer[]} Returns the current width and height dimensions for the image
 */	
 Entity.prototype.GetImageDimensions = function(){
     //Test for null values
@@ -291,32 +289,32 @@ Entity.prototype.GetImageDimensions = function(){
         return(new Array(this.ImageWidth, this.ImageHeight));
     }
 }
-//Function to return the current Entities weapon
 /**
-*@return {String} Returns a string for the current weapon
+* Function to return the current Entities weapon
+* @return {String} Returns a string for the current weapon
 */	 
 Entity.prototype.GetWeapon = function(){
     return(this.Weapon);
 }
-//Function to return the Velocity vector of the Entity 
-//direction[0], magnitude[1]; directon can be c, u, d, l, r(center, up, down, left,right)
 /**
-*@return {Array[]} Returns velocity vector of the current Entity Direction[0] Magnitude[1]
+* Function to return the Speed of the Entity 
+* direction[0], magnitude[1]; directon can be c, u, d, l, r(center, up, down, left,right)
+* @return {Array[]} Returns velocity vector of the current Entity Direction[0] Magnitude[1]
 */	 
 Entity.prototype.GetSpeed = function(){
     return(this.Speed);
 }
-//Function to return the Velocity vector of the Entity 
-//direction[0], magnitude[1]; directon can be c, u, d, l, r(center, up, down, left,right)
 /**
-*@return {Array[]} Returns velocity vector of the current Entity Direction[0] Magnitude[1]
+* Function to return the Velocity vector of the Entity 
+* direction[0], magnitude[1]; directon can be c, u, d, l, r(center, up, down, left,right)
+* @return {Array[]} Returns velocity vector of the current Entity Direction[0] Magnitude[1]
 */	 
 Entity.prototype.GetVelocity = function(){
     return(this.VelocityVector);
 }
-//Function to return the current position of the Entity as an x, y array
 /**
-*@return {Integer[]} Returns the current X and Y position of the Entity as an array
+* Function to return the current position of the Entity as an x, y array
+* @return {Integer[]} Returns the current X and Y position of the Entity as an array
 */	
 Entity.prototype.GetPosition = function(){
     if(this.XPos > -1 && this.YPos > -1){
@@ -332,17 +330,22 @@ Entity.prototype.GetType = function(){
     return(this.CreatureType);
     }
 }
-//Function to return the current AI entity sight radius
+/**
+* Function to return the current AI entity sight radius
+* @return {Integer} Returns an integer value specifying the current sight radius of the entity
+*/	
 Entity.prototype.GetSightRadius = function(){
     return(this.SightRadius);
 }
-//Updates the spritechange timestamp
+/**
+* Updates the sprite change timestamp
+*/	
 Entity.prototype.UpdateModified = function(){
 	this.LastUpdate = Math.round(new Date().getTime());
 }
 //-----------------------------------------------------------------------------------UTILITY METHODS-----------------------
-//Function to apply a velocity to an Entity
 /**
+* Function to apply a velocity to an Entity
 * @param {String} Direction The current 2 character string indicating the direction to apply the force
 * @param {Integer} Magnitude The Integer magnitude to apply
 */
@@ -354,8 +357,8 @@ Entity.prototype.ApplyVelocity = function(Direction, Magnitude){
         }
     }   
 }
-//Removes the specified entity from the current entities inventory
 /**
+* Removes the specified entity from the current entities inventory
 * @param {Entity} Entity Entity to remove from the current Entities inventory
 */
 Entity.prototype.RemoveFromInventory = function(Entity) {
@@ -369,8 +372,8 @@ Entity.prototype.RemoveFromInventory = function(Entity) {
         }
     }	
 }
-//Adds the specified entity to the current entities inventory
 /**
+* Adds the specified entity to the current entities inventory
 * @param {Entity} ATOI Entity to add to the current Entities inventory
 */
 Entity.prototype.AddToInventory = function(ATOI) {
@@ -381,8 +384,8 @@ Entity.prototype.AddToInventory = function(ATOI) {
     alert(err + "Trouble adding to inventory");
     }	
 }
-//Sets the type of weapon for the current entity
 /**
+* Sets the type of weapon for the current entity
 * @param {Entity} GunType Inventory gun to change to
 */
 Entity.prototype.ChangeWeapon = function(GunType) {
@@ -410,8 +413,8 @@ Entity.prototype.ChangeWeapon = function(GunType) {
 	   alert(this.ReferenceName + "Error: 101(47z: Could not change the current weapon"); 
 	}
 }
-//Changes the direction the sprite is facing
 /**
+* Changes the direction the sprite is facing
 * @param {String} Direction The 2 character direction string to change to
 */
 Entity.prototype.ChangeFacing = function(Direction) {
@@ -423,10 +426,9 @@ Entity.prototype.ChangeFacing = function(Direction) {
     catch(err){
         alert(this.ReferenceName + "Error 101(47z: " + "Could not change Facing Direction"); 
     }
-	
 }
-//Changes the current AI focus of the Entity
 /**
+* Changes the current AI focus of the Entity
 * @param {Entity} Reference Entity reference to focus on
 */
 Entity.prototype.AIFocusOn = function(Reference) {
@@ -437,8 +439,8 @@ Entity.prototype.AIFocusOn = function(Reference) {
 	   alert(this.ReferenceName + "Error: 101(47z " + "Could not change or set AI focus");
 	}
 }
-//Function to set the current position of the Entity
 /**
+* Function to set the current position of the Entity
 * @param {Integer} posX X position to move to
 * @param {Integer} posY Y position to move to
 */
@@ -446,8 +448,8 @@ Entity.prototype.Move = function(posX, posY) {
     this.XPos = posX;
     this.YPos = posY;
 }
-//Sets the flag for solid
 /**
+* Sets the flag for solid
 * @param {Boolean} Solid Solid on or off
 */
 Entity.prototype.ToggleSolid = function(Solid){
@@ -465,8 +467,8 @@ Entity.prototype.ToggleSolid = function(Solid){
         }
     }
 }
-//Sets the player input
 /**
+* Sets the player input
 * @param {Input} Input Player input to link to this entity
 */
 Entity.prototype.setPlayer = function(Input){  
@@ -477,8 +479,8 @@ Entity.prototype.setPlayer = function(Input){
         alert(err + "Could not set Input for  " + this.ReferenceName);
     }
 }
-//Set number of animation cells from sprite sheet
 /**
+* Set number of animation cells from sprite sheet
 * @param {Integer} frameCount The number of frames to set
 */
 Entity.prototype.setFrames = function(frameCount) {
@@ -487,8 +489,8 @@ Entity.prototype.setFrames = function(frameCount) {
         this.frames = frameCount;
 	}
 }
-//Set the current sprite sheet for the Entity
 /**
+* Set the current sprite sheet for the Entity
 * @param {String | Image} src Either the path string to an image to set or the Image object
 */
 Entity.prototype.setSpritesheet = function(src) {
@@ -503,12 +505,15 @@ Entity.prototype.setSpritesheet = function(src) {
 }
 
 //--------------------------------------------Default Constructors for different Entity types--------------------------------------
-
-//Default Configuration -- Sets up an ambiguous Entity
+/**
+* Default Configuration -- Sets up an ambiguous Entity
+*/
 Entity.prototype.DefaultConfiguration = function(){
 alert("Error: Default Entity Configuration Called");
 }
-//PlayerConfigurtion -- Sets up a plain player Entity with creation rules defined inline
+/**
+* PlayerConfigurtion -- Sets up a plain player Entity with creation rules defined inline
+*/
 Entity.prototype.PlayerConfiguration = function(){
     try{
         this.AIType = "none";
@@ -531,7 +536,9 @@ Entity.prototype.PlayerConfiguration = function(){
     alert(err + "Could not set up Player");
     }
 }
-//ZombieConfigurtion -- Sets up a plain zombie Entity with creation rules defined inline
+/**
+* ZombieConfigurtion -- Sets up a plain zombie Entity with creation rules defined inline
+*/
 Entity.prototype.ZombieConfiguration = function(){
     try{
         this.HitPoints = 5; 
@@ -554,6 +561,9 @@ Entity.prototype.ZombieConfiguration = function(){
     alert(err + "Could not set up Zombie");
     }
 }
+/**
+* Pistol Bullet Configuration
+*/
 Entity.prototype.PistolBConfig = function(){
     try{
         this.HitPoints = 1;
@@ -574,6 +584,9 @@ Entity.prototype.PistolBConfig = function(){
     alert(err + "Could not set up Pistol Bullet");
     }
 }
+/**
+* Shotgun Bullet Configuration
+*/
 Entity.prototype.ShotgunBConfig = function(){
     try{
         this.HitPoints = 1;
@@ -595,6 +608,9 @@ Entity.prototype.ShotgunBConfig = function(){
     alert(err + "Could not set up Shotgun Bullet");
     }
 }
+/**
+* Rifle Bullet Configuration
+*/
 Entity.prototype.RifleBConfig = function(){
     try{
         this.HitPoints = 1; 
@@ -616,6 +632,9 @@ Entity.prototype.RifleBConfig = function(){
     alert(err + "Could not set up Rifle Bullet");
     }
 }
+/**
+* Wall Configuration
+*/
 Entity.prototype.WallConfig = function(){
     try{
         this.HitPoints = 100; 
@@ -636,6 +655,9 @@ Entity.prototype.WallConfig = function(){
     alert(err + "Could not set up Wall Object");
     }
 }
+/**
+* Door Configuration
+*/
 Entity.prototype.DoorConfig = function(){
 	 try{
         this.HitPoints = 100; 
@@ -656,42 +678,36 @@ Entity.prototype.DoorConfig = function(){
     alert(err + "Could not set up Wall Object");
     }
 }
-//Function to set up a unique GUID on Entity creation
+/**
+* Function to set up a unique GUID on Entity creation
+*/
 Entity.prototype.Setup = function(){
     try{
         switch(this.CreatureType){
 		case "Door":
 			this.DoorConfig();
-			break;
-			
+			break;			
 		case "Wall":
 			this.WallConfig();
-			break;
-			
+			break;		
         case "zombie":
             this.ZombieConfiguration();
             break;
-    
         case "player1":
             this.PlayerConfiguration();
-            break;
-            
+            break; 
         case "player2":
             this.PlayerConfiguration();
-            break;
-            
+            break; 
         case "TVZ_pistolBullet":
             this.PistolBConfig();
-            break;
-            
+            break;  
         case "TVZ_shotgunBullet":
             this.ShotgunBConfig();
             break;
-            
         case "TVZ_rifleBullet":
             this.RifleBConfig();
             break;
-    
         default:
             this.DefaultConfiguration();
             break;
@@ -701,10 +717,9 @@ Entity.prototype.Setup = function(){
     alert(err + " Could not switch based on Creature type");
     }
 }
-
 //---------------------------------------------Action Methods---------------------------------------------------------------
-//Animates the appropriate sprite sheet for the Entity
 /**
+* Animates the appropriate sprite sheet for the Entity
 * @param {CanvasContext} CanvasContext The canvas context to animate on
 * @param {Timer} Timer The timer object
 */
@@ -728,10 +743,11 @@ Entity.prototype.Animate = function(CanvasContext, Timer) {
             else 
             {this.currentFrame++;}
 	   }  
-    }
-	
+    }	
 }
-//Cycles to the next weapon in the players inventory
+/**
+* Cycles to the next weapon in the players inventory
+*/
 Entity.prototype.NextWeapon = function() {
 	if(this.Inventory != null){
 		var WeaponList = new Array();
@@ -780,8 +796,8 @@ Entity.prototype.NextWeapon = function() {
 		}
 	}
 }
-//Fires the specified weapon in the specified direction from the current position of the Entity
 /**
+* Fires the specified weapon in the specified direction from the current position of the Entity
 * @param {String} Direction The 2 character direction to shoot
 * @param {String} GunType The gun type to shoot with
 */
@@ -815,7 +831,6 @@ Entity.prototype.Shoot = function(Direction, GunType) {
         default:
         break;
     }
-    
     try{
         switch(GunType){
             case "Pistol":
@@ -862,8 +877,8 @@ Entity.prototype.Shoot = function(Direction, GunType) {
         }
     }
 }
-//Does damage to the entity and returns 1 for alive and 0 for dead
 /**
+* Does damage to the entity and returns 1 for alive and 0 for dead
 * @param {Integer} PointValue Integer value representing the number of damage points to apply
 * @return {Integer} An Integer flag for either 1 (alive after damage) or 0 (dead after damage)
 */
