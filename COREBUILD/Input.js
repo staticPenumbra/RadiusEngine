@@ -25,7 +25,6 @@
 * @constructor
 */
 var Input = function(TVZ_ControlType) {
-    //Default Constructor
 	this.ControlType = TVZ_ControlType;
 	this.UP = null;
 	this.DOWN = null;
@@ -36,14 +35,11 @@ var Input = function(TVZ_ControlType) {
 	this.MousePositionX = null;
 	this.MousePositionY = null;
 	this.CHWEAPON = null; //Change Weapon
-
-	//this.CheckKeyEvent();
-	//this.CheckMagnitude();
     this.SetMappings();	
 }
 //---------------------------------------------------------------------MOUSE---------------------------------------------------
-//Returns the Mouse position 
 /**
+* Returns the Mouse position 
 * @return {Array[]} Returns the current 2D mouse position 
 */
 Input.prototype.GetMousePosition = function(canvas, e){
@@ -51,8 +47,9 @@ Input.prototype.GetMousePosition = function(canvas, e){
 		return(new Array(this.MousePositionX, this.MousePositionY));
 	}
 }
-
-//Sets the current Mouse position
+/**
+* Sets the current Mouse position
+*/
 Input.prototype.SetMousePosition = function(PosX, PosY){
 	if(PosX != null && PosY != null){
 		this.MousePositionX = PosX;
@@ -60,15 +57,15 @@ Input.prototype.SetMousePosition = function(PosX, PosY){
 	}
 }
 //---------------------------------------------------------------------GET ACCESSORS-------------------------------------------
-//Returns the current control type
 /**
+* Returns the current control type
 * @return {String} Returns the current control type string
 */
 Input.prototype.GetControlType = function(){
     return(this.ControlType);
 }
-//Event handler for key presses
 /**
+* Event handler for key presses
 * @return {Array[]} Returns the current Input object
 */
 Input.prototype.GetMappings = function() {
@@ -76,9 +73,10 @@ Input.prototype.GetMappings = function() {
     return(Map);
 }
 //---------------------------------------------------------------------SET ACCESSORS---------------------------------------------
-
 //---------------------------------------------------------------------UTILITY FUNCTIONS-----------------------------------------
-//Sets the key mappings based upon provided type schema
+/**
+* Sets the key mappings based upon provided type schema
+*/
 Input.prototype.SetMappings = function(){
     switch(this.ControlType){
 		case "Mouse":
@@ -99,6 +97,9 @@ Input.prototype.SetMappings = function(){
     }
 }
 //--------------------------------------------------------------------MOUSE CONTROL DEFINITIONS----------------------------------------
+/**
+* Mouse Key Mappings
+*/
 Input.prototype.Mouse = function(){
 	this.LEFT = 65;
 	this.RIGHT = 68;
@@ -110,7 +111,9 @@ Input.prototype.Mouse = function(){
 	this.SELECT = 13 //Enter
 }
 //--------------------------------------------------------------------KEYMAP CONTROL DEFINITIONS---------------------------------------
-//Definition for Arrow Input type
+/**
+* Definition for Arrow Input type
+*/
 Input.prototype.Arrow = function(){
     this.LEFT = 37;
     this.RIGHT = 39;
@@ -119,7 +122,9 @@ Input.prototype.Arrow = function(){
     this.SHOOT = 17;
     //this.MENU = 27; //Escape Key
 }
-//Definition for WASD Input type
+/**
+* Definition for WASD Input type
+*/
 Input.prototype.WASD = function(){
     this.UP = 87;
     this.DOWN = 83;
@@ -130,6 +135,9 @@ Input.prototype.WASD = function(){
     this.MENU = 27; //Escape Key
 	this.SELECT = 13; //Enter Key
 }
+/**
+* Definition for IJKL Input type
+*/
 Input.prototype.IJKL = function(){
 	this.UP = 73;
     this.DOWN = 75;

@@ -30,8 +30,8 @@ var Updater = function() {
 	this.ApplicationSpeedThrottle = 0; //Application speed throttle, 0 is uninhibited
 }
 //------------------------------------------------GET METHODS-----------------------------------------
-//Returns returns true if the Application is paused false otherwise
 /**
+* Returns returns true if the Application is paused false otherwise
 * @returns {Boolean} Returns whether the engine is paused or not
 */
 Updater.prototype.IsPaused = function() {
@@ -40,8 +40,8 @@ Updater.prototype.IsPaused = function() {
 	}
 }
 //-----------------------------------------------SET METHODS------------------------------------------
-//Sets the Application engine pause flag for interrupt events
 /**
+* Sets the Application engine pause flag for interrupt events
 * @param {Boolean} Flag Whether to set the engine to paused or unpaused
 */
 Updater.prototype.SetPaused = function(Flag) {
@@ -50,8 +50,8 @@ Updater.prototype.SetPaused = function(Flag) {
 	}
 }
 //----------------------------------------------API Methods------------------------------------------
-//Checks to see whether it is time for a new cycle and then runs the next iteration of events
 /**
+* Checks to see whether it is time for a new cycle and then runs the next iteration of events
 * @param {EventManager} EventManager Handle to the event manager managing Application events
 * @param {EntityManager} EntityManager Handle to the entity manager managing Application entities
 * @param {ScreenMap} ScreenMap handle to the current display interface
@@ -74,16 +74,16 @@ Updater.prototype.ProcessCycle = function(EventManager, EntityManager, ScreenMap
 	}
 }
 //-------------------------------------UTILITY FUNCTIONS-------------------------------
-//Function to return the time in milliseconds
 /**
-*@return {float} Returns the system time in milliseconds
+* Function to return the time in milliseconds
+* @return {float} Returns the system time in milliseconds
 */	
 Updater.prototype.getMilliseconds = function() {
 	return this.Cycle.getTime();
 }
-//Function to return the time in seconds
 /**
-*@return {float} Returns the system time in seconds
+* Function to return the time in seconds
+* @return {float} Returns the system time in seconds
 */	
 Updater.prototype.getSeconds = function() {
 	return Math.round(this.Cycle.getTime() / 1000);

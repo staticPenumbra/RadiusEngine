@@ -9,7 +9,6 @@
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
- 
 /**
  * ###############################################################################################################
  *                                              ScreenMap
@@ -25,7 +24,6 @@
 * @constructor
 */
 var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanvasContext) {
-    //Default Constructor
 	this.bctx = RearCanvasContext; //The canvas context for the background screen buffer
 	this.ctx = FrontCanvasContext; //The canvas context for the foreground screen buffer
 	this.XResolution = ResolutionX; //Screen resolution X value in integer format
@@ -36,18 +34,17 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.MenuSystem = new Array(); //Array of Menu layouts for the stage
 	this.DOM = new Array();
 }
-
 //-----------------------------------------------------Get Methods-----------------------------------
-//Function to get the state of the menu option pointer
 /**
-*@return {Integer} Returns an integer value for the state of the menu pointer
+* Function to get the state of the menu option pointer
+* @return {Integer} Returns an integer value for the state of the menu pointer
 */	
 ScreenMap.prototype.GetMenuPointerPosition = function(){
 	return(this.MenuSystem[0].GetCursorPosition());
 }
-//Function to return the first Menu in the menu system
 /**
-*@return {ApplicationMenu} Returns the first menu in the list of current stage menus
+* Function to return the first Menu in the menu system
+* @return {ApplicationMenu} Returns the first menu in the list of current stage menus
 */	
 ScreenMap.prototype.GetMenu = function(){
 	if(this.MenuSystem[0] != null){
@@ -55,8 +52,8 @@ ScreenMap.prototype.GetMenu = function(){
 	}
 }
 //-----------------------------------------------------Set Methods-----------------------------------
-//Function to set the state of the menu option pointer
 /**
+* Function to set the state of the menu option pointer
 * @param {Integer} Option The menu option to switch the cursor to
 */
 ScreenMap.prototype.SetMenuPointerPosition = function(Option){
@@ -64,8 +61,8 @@ ScreenMap.prototype.SetMenuPointerPosition = function(Option){
 		this.MenuSystem[0].ChangeCursorPosition(Option);
 	}
 }
-//Sets the current Menu system
 /**
+* Sets the current Menu system
 * @param {ApplicationMenu} Menu Adds the specified menu to the menu system for the stage, if passed null stops displaying the menu
 */
 ScreenMap.prototype.SetMenuSystem = function(Menu){
@@ -77,8 +74,8 @@ ScreenMap.prototype.SetMenuSystem = function(Menu){
 		this.MenuSystem = new Array();
 	}
 }
-//Sets the current screen background image
 /**
+* Sets the current screen background image
 * @param {Image} BG An instance of the background image to set
 */
 ScreenMap.prototype.SetBackgrounds = function(BG){
@@ -86,8 +83,8 @@ ScreenMap.prototype.SetBackgrounds = function(BG){
 		this.BackgroundImages = BG;
 	}
 }
-//Function to set the screenmap resolution
 /**
+* Function to set the screenmap resolution
 * @param {Integer} ResolutionX The value for the x component of the display resolution
 * @param {Integer} ResolutionY The value for the y component of the display resolution
 */
@@ -98,12 +95,15 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
     }
 }
 //----------------------------------------------------Render Functions----------------------------------
-
-//Clears the current screen not needed with blitting
+/**
+* Clears the current screen not needed with blitting
+*/
 ScreenMap.prototype.Clear = function(){
 	this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
 }
-//Function to flip the displayed screens by swapping video buffer
+/**
+* Function to flip the displayed screens by swapping video buffer
+*/
 ScreenMap.prototype.Blit = function(){
 	if(this.bctx != null && this.ctx != null){
 		var offscreen_data = this.bctx.getImageData(0, 0, this.XResolution, this.YResolution);
@@ -137,8 +137,9 @@ ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeigh
 	}
 	context.fillText(line, x, y);
 }
-
-//Function to render the map to the background canvas and blit
+/**
+* Function to render the map to the background canvas and blit
+*/
 ScreenMap.prototype.RenderToCanvas = function(){
        this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
 	   if(this.BackgroundImages.length > 1){
@@ -149,7 +150,7 @@ ScreenMap.prototype.RenderToCanvas = function(){
 	   if(this.DOM != null){
 		 for(var i = 0; i <= this.DOM.length - 1; i++){
            //ALL LINKS FOR NOW
-		    this.bctx.fillStyle = "white";
+		    this.bctx.fillStyle = "black";
 			this.bctx.font = this.DOM[i][5];
 			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
 			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
@@ -178,8 +179,8 @@ ScreenMap.prototype.RenderToCanvas = function(){
 	//Blit the image to screen
 	this.Blit();
 }
-//Render Event; Updates Entities and renders to canvas
 /**
+* Render Event; Updates Entities and renders to canvas
 * @param {Entity[]} EntityList Updated Entity List to process
 * @param {Array[]} DOMList Updated DOM List to process
 */
@@ -188,8 +189,8 @@ ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
 	this.UpdateEntities(EntityList);
     this.RenderToCanvas();
 }
-//Function to draw a specified Entity on the background canvas for blitting
 /**
+* Function to draw a specified Entity on the background canvas for blitting
 * @param {CanvasContext} bctx Canvas context reference to the background canvas
 * @param {Entity} Entity A reference to the entity to render
 */
@@ -273,9 +274,9 @@ ScreenMap.prototype.DrawSprite = function(bctx, Entity){
     }
 }
 //-----------------------------------------------Private Utility Functions-------------------------------
-//Function to caluculate the number of Entity positions on the map
 /**
-*@return {Integer} Returns the number of entity slots in the current ScreenMap
+* Function to caluculate the number of Entity positions on the map
+* @return {Integer} Returns the number of entity slots in the current ScreenMap
 */	
 ScreenMap.prototype.CalculateSlots = function(){
     if(this.NumCells != null && this.XResolution != null && this.YResolution != null){
@@ -295,8 +296,8 @@ ScreenMap.prototype.UpdateDOM = function(DOMList){
 ScreenMap.prototype.UpdateEntities = function(EntityList){
     this.Entities = EntityList;
 }
-//Function to animate an entity and draw the correct animation frame 
 /**
+* Function to animate an entity and draw the correct animation frame 
 * @param {String} Direction String indicating the walking animation direction
 * @param {Entity} Entity A reference to the entity to render
 * @param {Entity} bctx A reference to the background canvas context
