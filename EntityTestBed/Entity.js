@@ -510,6 +510,25 @@ Entity.prototype.setSpritesheet = function(src) {
 */
 Entity.prototype.DefaultConfiguration = function(){
 alert("Error: Default Entity Configuration Called");
+ try{
+        this.HitPoints = 100; 
+    	this.Speed = 0;
+        this.SightRadius = 0;
+        this.ImageWidth = 32;
+        this.ImageHeight = 32;
+        this.DestroySounds = null;
+        this.MoveSounds = null;
+        this.AttackSounds = null;
+       	this.Weapon = null;
+   		this.Inventory = null;
+   		this.TravelDirection = "center";
+        this.ReferenceName = "Ball";
+		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
+		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2);
+		this.ApplyVelocity('e', 5);
+    }catch(err){
+    alert(err + "Could not set up Ball Object");
+    }
 }
 /**
 * PlayerConfigurtion -- Sets up a plain player Entity with creation rules defined inline
@@ -537,128 +556,9 @@ Entity.prototype.PlayerConfiguration = function(){
     }
 }
 /**
-* ZombieConfigurtion -- Sets up a plain zombie Entity with creation rules defined inline
+* Ball Configuration
 */
-Entity.prototype.ZombieConfiguration = function(){
-    try{
-        this.HitPoints = 5; 
-    	this.Speed = 6;
-    	this.VelocityVector = new Array('c', this.Speed);
-        this.SightRadius = 320;
-        this.ImageWidth = 32;
-        this.ImageHeight = 32;
-        this.DestroySounds = null;
-        this.MoveSounds = null;
-        this.AttackSounds = null;
-       	this.Weapon = "claw";
-   		this.Inventory = ["claw", "rags"];
-   		this.TravelDirection = "center";
-        this.ReferenceName = "Zombie";
-		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
-		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2);
-		this.Damage = 1;
-    }catch(err){
-    alert(err + "Could not set up Zombie");
-    }
-}
-/**
-* Pistol Bullet Configuration
-*/
-Entity.prototype.PistolBConfig = function(){
-    try{
-        this.HitPoints = 1;
-		this.Damage = 1;
-    	this.Speed = 20;
-        this.SightRadius = 5;
-        this.ImageWidth = 32;
-        this.ImageHeight = 32;
-        this.DestroySounds = null;
-        this.MoveSounds = null;
-        this.AttackSounds = null;
-       	this.Weapon = null;
-   		this.Inventory = null;
-        this.ReferenceName = "Pistol";
-		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
-		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2);
-    }catch(err){
-    alert(err + "Could not set up Pistol Bullet");
-    }
-}
-/**
-* Shotgun Bullet Configuration
-*/
-Entity.prototype.ShotgunBConfig = function(){
-    try{
-        this.HitPoints = 1;
-		this.Damage = 2;
-    	this.Speed = 5;
-        this.SightRadius = 5;
-        this.ImageWidth = 32;
-        this.ImageHeight = 32;
-        this.DestroySounds = null;
-        this.MoveSounds = null;
-        this.AttackSounds = null;
-       	this.Weapon = null;
-   		this.Inventory = null;
-   		this.TravelDirection = "center";
-        this.ReferenceName = "Shotgun";
-		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
-		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2);   	
-    }catch(err){
-    alert(err + "Could not set up Shotgun Bullet");
-    }
-}
-/**
-* Rifle Bullet Configuration
-*/
-Entity.prototype.RifleBConfig = function(){
-    try{
-        this.HitPoints = 1; 
-    	this.Speed = 15;
-		this.Damage = 3;
-        this.SightRadius = 5;
-        this.ImageWidth = 32;
-        this.ImageHeight = 32;
-        this.DestroySounds = null;
-        this.MoveSounds = null;
-        this.AttackSounds = null;
-       	this.Weapon = null;
-   		this.Inventory = null;
-   		this.TravelDirection = "center";
-        this.ReferenceName = "Rifle";
-		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
-		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2); 	
-    }catch(err){
-    alert(err + "Could not set up Rifle Bullet");
-    }
-}
-/**
-* Wall Configuration
-*/
-Entity.prototype.WallConfig = function(){
-    try{
-        this.HitPoints = 100; 
-    	this.Speed = 0;
-        this.SightRadius = 0;
-        this.ImageWidth = 32;
-        this.ImageHeight = 32;
-        this.DestroySounds = null;
-        this.MoveSounds = null;
-        this.AttackSounds = null;
-       	this.Weapon = null;
-   		this.Inventory = null;
-   		this.TravelDirection = "center";
-        this.ReferenceName = "Wall";
-		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
-		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2); 	
-    }catch(err){
-    alert(err + "Could not set up Wall Object");
-    }
-}
-/**
-* Door Configuration
-*/
-Entity.prototype.DoorConfig = function(){
+Entity.prototype.BallConfiguration = function(){
 	 try{
         this.HitPoints = 100; 
     	this.Speed = 0;
@@ -671,11 +571,11 @@ Entity.prototype.DoorConfig = function(){
        	this.Weapon = null;
    		this.Inventory = null;
    		this.TravelDirection = "center";
-        this.ReferenceName = "Door";
+        this.ReferenceName = "Ball";
 		this.TravelCells = new Array(4, 4, 6, 4, 4, 4, 6, 4);
 		this.CellOrder = new Array(5, 0, 6, 1, 4, 3, 7, 2); 	
     }catch(err){
-    alert(err + "Could not set up Wall Object");
+    alert(err + "Could not set up Ball Object");
     }
 }
 /**
@@ -684,31 +584,16 @@ Entity.prototype.DoorConfig = function(){
 Entity.prototype.Setup = function(){
     try{
         switch(this.CreatureType){
-		case "Door":
-			this.DoorConfig();
-			break;			
-		case "Wall":
-			this.WallConfig();
-			break;		
-        case "zombie":
-            this.ZombieConfiguration();
-            break;
-        case "player1":
+			case "player1":
             this.PlayerConfiguration();
             break; 
-        case "player2":
+			case "player2":
             this.PlayerConfiguration();
-            break; 
-        case "TVZ_pistolBullet":
-            this.PistolBConfig();
-            break;  
-        case "TVZ_shotgunBullet":
-            this.ShotgunBConfig();
             break;
-        case "TVZ_rifleBullet":
-            this.RifleBConfig();
-            break;
-        default:
+			case "Ball":
+			this.BallConfiguration();
+			break;
+			default:
             this.DefaultConfiguration();
             break;
         }

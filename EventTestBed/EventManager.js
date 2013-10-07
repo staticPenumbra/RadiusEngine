@@ -497,6 +497,7 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 								}
 							}
 						}
+					this.Entities[0].ApplyVelocity(this.Entities[0].GetVelocity()[0], this.Entities[0].GetVelocity()[1] - 1);
 					break;
 					case "Move":
 						//Grab the canvas bounding rectangle and subtract the click area

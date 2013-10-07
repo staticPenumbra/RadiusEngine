@@ -224,6 +224,9 @@ ScreenMap.prototype.DrawSprite = function(bctx, Entity){
 			case "Door":
 				bctx.drawImage(Sprite, xcord, ycord, width, height);
 			break;
+			case "Default":
+				bctx.drawImage(Sprite, xcord, ycord, width, height);
+			break;
 			default:
 				if(EntType == "player1" || EntType == "player2" || EntType == "zombie"){
 					//Display a different image based upon the direction of travel

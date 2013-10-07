@@ -45,6 +45,8 @@ Stage.prototype.ResetDatabase = function(){
 	this.TimeLimit = null;
 	this.TitleFlag = null;
 	this.Backgrounds = new Array();
+	this.Sprites = new Array();
+	this.Entities = new Array();
 	this.Triggers = new Array();
 	/*-------------------DATABASE CACHE---------------------------*/
 	this.CacheKeys = new Array();
@@ -83,8 +85,17 @@ Stage.prototype.GetDimensions = function(){
 Stage.prototype.Load = function(){
 	if(this.Name != null){
 		switch(this.Name){
-			case "Page1":
-			this.Page1();
+			case "Index":
+			this.Index();
+			break;
+			case "About":
+			this.About();
+			break;
+			case "Games":
+			this.Games();
+			break;
+			case "Research":
+			this.Research();
 			break;
 			default:
 			alert(this.Name + " is undefined");
@@ -165,7 +176,7 @@ Stage.prototype.Retrieve = function(RootContainer, Key){
 	return(null);
 	}
 }
-Stage.prototype.Page1 = function(){
+Stage.prototype.Research = function(){
 	/*----------------------------------------Define Database Structure----------------------------------------*/
 	// Database shall enforce a maximum depth of 1
 	// Application should utilize caching for efficiency
@@ -186,7 +197,7 @@ Stage.prototype.Page1 = function(){
    	this.ScreenWidth = 1400;
 	this.ScreenHeight = 600;
 	this.TitleFlag = true;
-	//Main background rendering order
+	/*---------------------------------------------CATEGORY GROUPINGS------------------------------------------*/
 	this.Backgrounds.push("Installed.png", "BG.png");
 	this.Triggers.push("CornerDialogueTrigger");
     /*----------------------------------------Music------------------------------------------------------------*/
@@ -229,6 +240,222 @@ Stage.prototype.Page1 = function(){
 	this.DOMData.push(new Array(880, 100, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "white"));
 	this.DOMKeys.push("Text2");
 	this.DOMData.push(new Array(880, 150, 100, 100, "We like cats....", "bold 20px Verdana", "white"));
+	/*------------------------------------Trigger Definitions--------------------------------------------------*/
+	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
+	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));
+}
+Stage.prototype.Games = function(){
+	/*----------------------------------------Define Database Structure----------------------------------------*/
+	// Database shall enforce a maximum depth of 1
+	// Application should utilize caching for efficiency
+	/*---------------------------------------------------------------------------------------------------------*/	
+	this.EntityKeys = new Array();
+	this.EntityData = new Array();
+	
+	this.AudioKeys = new Array();
+	this.AudioData = new Array();
+	
+	this.ImageKeys = new Array();
+	this.ImageData = new Array();
+	
+	this.DOMKeys = new Array();
+	this.DOMData = new Array();
+	 /*--------------------------------------------GENERAL------------------------------------------------------*/
+    this.Title = "Home";
+   	this.ScreenWidth = 1400;
+	this.ScreenHeight = 600;
+	this.TitleFlag = true;
+	/*---------------------------------------------CATEGORY GROUPINGS------------------------------------------*/
+	this.Backgrounds.push("Installed.png", "BG.png");
+	this.Triggers.push("CornerDialogueTrigger");
+    /*----------------------------------------Music------------------------------------------------------------*/
+	this.AudioKeys.push("Installed.ogg");
+	this.AudioData.push(this.ResourceRoot + 'Audio/Music/Stage1/Installed.ogg');
+	/*--------------------------------------Backgrounds--------------------------------------------------------*/
+	this.ImageKeys.push("Installed.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Installed.png');
+	this.ImageKeys.push("BG.png");
+	this.ImageData.push(this.ResourceRoot + 'img/BG.png');
+	/*--------------------------------------Menu Backgrounds---------------------------------------------------*/
+	this.ImageKeys.push("MenuBackground.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Backgrounds/MainBack.png');
+	/*-------------------------------------Player Sprite Sheet-------------------------------------------------*/
+    this.ImageKeys.push("Player1.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player1.png');
+	this.ImageKeys.push("Player2.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player2.png');
+	/*-------------------------------------Entity Starting Data------------------------------------------------*/
+	this.EntityKeys.push("Player1");
+	this.EntityData.push(new Array(10,10));
+	this.EntityKeys.push("Player2");
+	this.EntityData.push(new Array(10, 80));
+	this.EntityKeys.push("CornerDialogueTrigger");
+	//Type, FireOnce, Position, Dimensions
+	this.EntityData.push(new Array("dialogue", true, 200, 200, 50, 50));
+	/*------------------------------------Stage Menu Configuration---------------------------------------------*/
+	this.DOMKeys.push("Link1");
+	//Origin x, y, dimx, dimy, text, font
+	this.DOMData.push(new Array(50, 100, 100, 100, "Blog", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link2");
+	this.DOMData.push(new Array(50, 150, 100, 100, "YouTube", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link3");
+	this.DOMData.push(new Array(50, 200, 100, 100, "Web Avant", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link4");
+	this.DOMData.push(new Array(50, 250, 100, 100, "Git Repository", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link5");
+	this.DOMData.push(new Array(50, 300, 100, 100, "Games", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Text1");
+	this.DOMData.push(new Array(880, 100, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "white"));
+	this.DOMKeys.push("Text2");
+	this.DOMData.push(new Array(880, 150, 100, 100, "We like cats....", "bold 20px Verdana", "white"));
+	/*------------------------------------Trigger Definitions--------------------------------------------------*/
+	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
+	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));
+}
+Stage.prototype.About = function(){
+	/*----------------------------------------Define Database Structure----------------------------------------*/
+	// Database shall enforce a maximum depth of 1
+	// Application should utilize caching for efficiency
+	/*---------------------------------------------------------------------------------------------------------*/	
+	this.EntityKeys = new Array();
+	this.EntityData = new Array();
+	
+	this.AudioKeys = new Array();
+	this.AudioData = new Array();
+	
+	this.ImageKeys = new Array();
+	this.ImageData = new Array();
+	
+	this.DOMKeys = new Array();
+	this.DOMData = new Array();
+	 /*--------------------------------------------GENERAL------------------------------------------------------*/
+    this.Title = "Home";
+   	this.ScreenWidth = 1400;
+	this.ScreenHeight = 600;
+	this.TitleFlag = true;
+	/*---------------------------------------------CATEGORY GROUPINGS------------------------------------------*/
+	this.Backgrounds.push("Installed.png", "BG.png");
+	this.Triggers.push("CornerDialogueTrigger");
+    /*----------------------------------------Music------------------------------------------------------------*/
+	this.AudioKeys.push("Installed.ogg");
+	this.AudioData.push(this.ResourceRoot + 'Audio/Music/Stage1/Installed.ogg');
+	/*--------------------------------------Backgrounds--------------------------------------------------------*/
+	this.ImageKeys.push("Installed.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Installed.png');
+	this.ImageKeys.push("BG.png");
+	this.ImageData.push(this.ResourceRoot + 'img/BG.png');
+	/*--------------------------------------Menu Backgrounds---------------------------------------------------*/
+	this.ImageKeys.push("MenuBackground.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Backgrounds/MainBack.png');
+	/*-------------------------------------Player Sprite Sheet-------------------------------------------------*/
+    this.ImageKeys.push("Player1.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player1.png');
+	this.ImageKeys.push("Player2.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player2.png');
+	/*-------------------------------------Entity Starting Data------------------------------------------------*/
+	this.EntityKeys.push("Player1");
+	this.EntityData.push(new Array(10,10));
+	this.EntityKeys.push("Player2");
+	this.EntityData.push(new Array(10, 80));
+	this.EntityKeys.push("CornerDialogueTrigger");
+	//Type, FireOnce, Position, Dimensions
+	this.EntityData.push(new Array("dialogue", true, 200, 200, 50, 50));
+	/*------------------------------------Stage Menu Configuration---------------------------------------------*/
+	this.DOMKeys.push("Link1");
+	//Origin x, y, dimx, dimy, text, font
+	this.DOMData.push(new Array(50, 100, 100, 100, "Blog", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link2");
+	this.DOMData.push(new Array(50, 150, 100, 100, "YouTube", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link3");
+	this.DOMData.push(new Array(50, 200, 100, 100, "Web Avant", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link4");
+	this.DOMData.push(new Array(50, 250, 100, 100, "Git Repository", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Link5");
+	this.DOMData.push(new Array(50, 300, 100, 100, "Games", "italic bold 24px Verdana", "white"));
+	this.DOMKeys.push("Text1");
+	this.DOMData.push(new Array(880, 100, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "white"));
+	this.DOMKeys.push("Text2");
+	this.DOMData.push(new Array(880, 150, 100, 100, "We like cats....", "bold 20px Verdana", "white"));
+	/*------------------------------------Trigger Definitions--------------------------------------------------*/
+	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
+	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));
+}
+Stage.prototype.Index = function(){
+	/*----------------------------------------Define Database Structure----------------------------------------*/
+	// Database shall enforce a maximum depth of 1
+	// Application should utilize caching for efficiency
+	/*---------------------------------------------------------------------------------------------------------*/	
+	this.EntityKeys = new Array();
+	this.EntityData = new Array();
+	
+	this.AudioKeys = new Array();
+	this.AudioData = new Array();
+	
+	this.ImageKeys = new Array();
+	this.ImageData = new Array();
+	
+	this.DOMKeys = new Array();
+	this.DOMData = new Array();
+	 /*--------------------------------------------GENERAL------------------------------------------------------*/
+    this.Title = "Home";
+   	this.ScreenWidth = 1400;
+	this.ScreenHeight = 600;
+	this.TitleFlag = true;
+	/*---------------------------------------------CATEGORY GROUPINGS(Starting Elements)------------------------------*/
+	this.Entities.push("Ball");
+	this.Backgrounds.push("RadiusLogo.png");
+	this.Sprites.push("Spinny.png");
+	//this.Triggers.push("CornerDialogueTrigger");
+    /*----------------------------------------Music------------------------------------------------------------*/
+	this.AudioKeys.push("Installed.ogg");
+	this.AudioData.push(this.ResourceRoot + 'Audio/Music/Stage1/Installed.ogg');
+	/*--------------------------------------Backgrounds--------------------------------------------------------*/
+	this.ImageKeys.push("RadiusLogo.png");
+	this.ImageData.push(this.ResourceRoot + 'img/RadiusLogo.png');
+	/*--------------------------------------Menu Backgrounds---------------------------------------------------*/
+	this.ImageKeys.push("MenuBackground.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Backgrounds/MainBack.png');
+	/*-------------------------------------Player Sprite Sheet-------------------------------------------------*/
+    this.ImageKeys.push("Spinny.png");
+	this.ImageData.push(this.ResourceRoot + 'img/websitespinny.png');
+	this.ImageKeys.push("Player1.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player1.png');
+	this.ImageKeys.push("Player2.png");
+	this.ImageData.push(this.ResourceRoot + 'img/Sprites/Player2.png');
+	/*-------------------------------------Entity Starting Data------------------------------------------------*/
+	//this.EntityKeys.push("Player1");
+	//this.EntityData.push(new Array(10,10));
+	//this.EntityKeys.push("Player2");
+	//this.EntityData.push(new Array(10, 80));
+	this.EntityKeys.push("Ball");
+	this.EntityData.push(new Array(100,100));
+	//this.EntityKeys.push("CornerDialogueTrigger");
+	//Type, FireOnce, Position, Dimensions
+	//this.EntityData.push(new Array("dialogue", true, 200, 200, 50, 50));
+	/*------------------------------------Stage Menu Configuration---------------------------------------------*/
+	this.DOMKeys.push("Link1");
+	//Origin x, y, dimx, dimy, text, font
+	this.DOMData.push(new Array(50, 100, 100, 100, "Blog", "italic bold 24px Verdana", "black"));
+	this.DOMKeys.push("Link2");
+	this.DOMData.push(new Array(50, 150, 100, 100, "YouTube", "italic bold 24px Verdana", "black"));
+	this.DOMKeys.push("Link3");
+	this.DOMData.push(new Array(50, 200, 100, 100, "Web Avant", "italic bold 24px Verdana", "black"));
+	this.DOMKeys.push("Link4");
+	this.DOMData.push(new Array(50, 250, 100, 100, "Git Repository", "italic bold 24px Verdana", "black"));
+	this.DOMKeys.push("Link5");
+	this.DOMData.push(new Array(50, 450, 100, 100, "New Stuff:", "italic bold 20px Verdana", "black"));
+	this.DOMKeys.push("Text0");
+	this.DOMData.push(new Array(50, 300, 100, 100, "Games", "italic bold 24px Verdana", "black"));
+	this.DOMKeys.push("Text1");
+	this.DOMData.push(new Array(400, 50, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "black"));
+	this.DOMKeys.push("Text2");
+	this.DOMData.push(new Array(800, 150, 100, 100, "NEWS AREA", "bold italic 20px Verdana", "black"));
+	this.DOMKeys.push("Text3");
+	this.DOMData.push(new Array(800, 200, 100, 100, "10/3/2013 - Webhost is hijacking the page.  The radius project is in the process of porting to a new hosting company due to the pop up ads that have been written into the page without permission.  There's no need to expect any delays or interruptions.  The process should be fairly seamless when everything switches over, thanks to everyone for your support!", "bold 12px Verdana", "black"));
+	this.DOMKeys.push("Text4");
+	this.DOMData.push(new Array(50, 500, 100, 100, "Memristors!", "italic bold 15px Verdana", "black"));
+	this.DOMKeys.push("Text5");
+	this.DOMData.push(new Array(200, 500, 100, 100, "Cybernetics", "italic bold 15px Verdana", "black"));
 	/*------------------------------------Trigger Definitions--------------------------------------------------*/
 	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
 	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));
