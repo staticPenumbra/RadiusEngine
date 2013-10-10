@@ -150,7 +150,7 @@ ScreenMap.prototype.RenderToCanvas = function(){
 	   if(this.DOM != null){
 		 for(var i = 0; i <= this.DOM.length - 1; i++){
            //ALL LINKS FOR NOW
-		    this.bctx.fillStyle = "black";
+		    this.bctx.fillStyle = this.DOM[i][6];
 			this.bctx.font = this.DOM[i][5];
 			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
 			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
