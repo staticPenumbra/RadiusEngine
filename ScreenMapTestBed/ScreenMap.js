@@ -96,6 +96,21 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
 }
 //----------------------------------------------------Render Functions----------------------------------
 /**
+* Function to resize the canvas to fit the window
+*/
+ScreenMap.prototype.Resize = function() {
+	this.ctx.textBaseline = 'top';
+	this.bctx.textBaseline = 'top';
+	var height = window.innerHeight;
+	//Using the canvas context to get the canvas element and change the style
+	var ratio = this.bctx.canvas.width/this.bctx.canvas.height;
+	var width = height * ratio;
+	this.bctx.canvas.style.width = width+'px';
+	this.bctx.canvas.style.height = height+'px';
+	this.ctx.canvas.style.width = width+'px';
+	this.ctx.canvas.style.height = height+'px';
+}
+/**
 * Clears the current screen not needed with blitting
 */
 ScreenMap.prototype.Clear = function(){
@@ -185,7 +200,8 @@ ScreenMap.prototype.RenderToCanvas = function(){
 * @param {Array[]} DOMList Updated DOM List to process
 */
 ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
-    this.UpdateDOM(DOMList);
+    this.Resize();
+	this.UpdateDOM(DOMList);
 	this.UpdateEntities(EntityList);
     this.RenderToCanvas();
 }

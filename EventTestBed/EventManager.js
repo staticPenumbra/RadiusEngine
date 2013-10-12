@@ -47,6 +47,11 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.MenuMode = false;
 	this.LoadedAudio = new Array();
 	this.EntityManager.SetResourceManager(this.ResourceManager);
+	//Fill Screen
+	//FrontCanvas.width = window.innerWidth;
+	//FrontCanvas.height = window.innerHeight;
+	//RearCanvas.width = window.innerWidth;
+	//RearCanvas.height = window.innerHeight;
 }
 //---------------------------------------------------------------------GET ACCESSORS--------------------------------------------------
 /**
@@ -87,6 +92,8 @@ EventManager.prototype.SetStartingInputs = function(){
 */
 EventManager.prototype.StartEngine = function(){
 	this.AudioController.SetAvailableChannels(this.AudioPlayers);
+	//Set the canvas to fit the screen
+	this.ScreenMap.Resize();
 	this.ChangeStage(1);
 	this.SetStartingInputs();
 }
@@ -486,13 +493,17 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 									window.location = "http://www.youtube.com/user/C120vv";
 									break;
 									case 2:
-									window.location = "http://www.webavant.com";
-									break;
-									case 3:
 									window.location = "https://github.com/staticPenumbra/RadiusEngine";
 									break;
-									case 4:
-									this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
+									case 3:
+									alert("Game Code Coming soon!");
+									//this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
+									break;
+									case 13:
+									window.location = "http://html5test.com/";
+									break;
+									case 14:
+									window.location = "http://html5test.com/";
 									break;
 								}
 							}

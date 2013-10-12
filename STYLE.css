@@ -3,7 +3,6 @@ html {
 	min-width: 480px;
 	min-height: 320px;
 }
-
 body { 
 	margin: 0px; 
 	padding: 0px;
@@ -19,6 +18,8 @@ canvas {
 	left:0; 
 	visibility: visible;
 	z-index: 30;
+	display: block;
+	margin: 0 auto;
 }
 video{
 	z-index: 50;
