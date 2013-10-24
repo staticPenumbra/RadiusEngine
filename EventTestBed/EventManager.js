@@ -156,6 +156,7 @@ EventManager.prototype.keyUp = function(e) {
 */
 EventManager.prototype.mouseClick = function(e){
 	this.AddMouseEvent(e, "Click");
+	this.AudioController.PlayAudio(0, false);
 }
 /**
 * Mousemove event handler
@@ -183,17 +184,15 @@ EventManager.prototype.OpenMenu = function(Stage){
 	this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
 }
 /**
-* Loads the current stage sound clips 
-* @param {Stage} Stage Stage object to load the music from
+* Loads the Indicated pages sound clips 
+* @param {Page} Page Page to load the sounds from
 */
-EventManager.prototype.LoadMusic = function(Stage){
-	if(Stage != null){
+EventManager.prototype.LoadMusic = function(Page){
+	if(Page != null){
 		//Clean previous stage audio
 		this.AudioController.Clean();
 		//Load new Audio
-		this.LoadedAudio = this.ResourceManager.LoadPageAudio(Stage);
-		//First Element of the Music is the title music set to repeat
-		this.AudioController.PlayAudio("Music", 0, this.LoadedAudio, true);
+		this.AudioController.UpdateAudioClips(this.ResourceManager.LoadPageAudio(Page));
 	}
 }
 /**

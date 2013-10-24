@@ -509,7 +509,7 @@ Entity.prototype.setSpritesheet = function(src) {
 * Default Configuration -- Sets up an ambiguous Entity
 */
 Entity.prototype.DefaultConfiguration = function(){
-alert("Error: Default Entity Configuration Called");
+//alert("Error: Default Entity Configuration Called");
  try{
         this.HitPoints = 100; 
     	this.Speed = 0;

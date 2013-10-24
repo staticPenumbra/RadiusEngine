@@ -47,6 +47,11 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.MenuMode = false;
 	this.LoadedAudio = new Array();
 	this.EntityManager.SetResourceManager(this.ResourceManager);
+	//Fill Screen
+	//FrontCanvas.width = window.innerWidth;
+	//FrontCanvas.height = window.innerHeight;
+	//RearCanvas.width = window.innerWidth;
+	//RearCanvas.height = window.innerHeight;
 }
 //---------------------------------------------------------------------GET ACCESSORS--------------------------------------------------
 /**
@@ -87,6 +92,8 @@ EventManager.prototype.SetStartingInputs = function(){
 */
 EventManager.prototype.StartEngine = function(){
 	this.AudioController.SetAvailableChannels(this.AudioPlayers);
+	//Set the canvas to fit the screen
+	this.ScreenMap.Resize();
 	this.ChangeStage(1);
 	this.SetStartingInputs();
 }
@@ -149,6 +156,7 @@ EventManager.prototype.keyUp = function(e) {
 */
 EventManager.prototype.mouseClick = function(e){
 	this.AddMouseEvent(e, "Click");
+	this.AudioController.PlayAudio(0, false);
 }
 /**
 * Mousemove event handler
@@ -176,17 +184,15 @@ EventManager.prototype.OpenMenu = function(Stage){
 	this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
 }
 /**
-* Loads the current stage sound clips 
-* @param {Stage} Stage Stage object to load the music from
+* Loads the Indicated pages sound clips 
+* @param {Page} Page Page to load the sounds from
 */
-EventManager.prototype.LoadMusic = function(Stage){
-	if(Stage != null){
+EventManager.prototype.LoadMusic = function(Page){
+	if(Page != null){
 		//Clean previous stage audio
 		this.AudioController.Clean();
 		//Load new Audio
-		this.LoadedAudio = this.ResourceManager.LoadPageAudio(Stage);
-		//First Element of the Music is the title music set to repeat
-		this.AudioController.PlayAudio("Music", 0, this.LoadedAudio, true);
+		this.AudioController.UpdateAudioClips(this.ResourceManager.LoadPageAudio(Page));
 	}
 }
 /**
@@ -486,17 +492,22 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 									window.location = "http://www.youtube.com/user/C120vv";
 									break;
 									case 2:
-									window.location = "http://www.webavant.com";
-									break;
-									case 3:
 									window.location = "https://github.com/staticPenumbra/RadiusEngine";
 									break;
-									case 4:
-									this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
+									case 3:
+									alert("Game Code Coming soon!");
+									//this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
+									break;
+									case 13:
+									window.location = "http://html5test.com/";
+									break;
+									case 14:
+									window.location = "http://html5test.com/";
 									break;
 								}
 							}
 						}
+					this.Entities[0].ApplyVelocity(this.Entities[0].GetVelocity()[0], this.Entities[0].GetVelocity()[1] - 1);
 					break;
 					case "Move":
 						//Grab the canvas bounding rectangle and subtract the click area

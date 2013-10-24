@@ -48,6 +48,7 @@ Stage.prototype.ResetDatabase = function(){
 	this.Sprites = new Array();
 	this.Entities = new Array();
 	this.Triggers = new Array();
+	this.Sounds = new Array();
 	/*-------------------DATABASE CACHE---------------------------*/
 	this.CacheKeys = new Array();
 	this.CacheData = new Array();
@@ -405,10 +406,11 @@ Stage.prototype.Index = function(){
 	this.Entities.push("Ball");
 	this.Backgrounds.push("RadiusLogo.png");
 	this.Sprites.push("Spinny.png");
+	this.Sounds.push("Action.ogg");
 	//this.Triggers.push("CornerDialogueTrigger");
     /*----------------------------------------Music------------------------------------------------------------*/
-	this.AudioKeys.push("Installed.ogg");
-	this.AudioData.push(this.ResourceRoot + 'Audio/Music/Stage1/Installed.ogg');
+	this.AudioKeys.push("Action.ogg");
+	this.AudioData.push(this.ResourceRoot + 'sounds/Action.ogg');
 	/*--------------------------------------Backgrounds--------------------------------------------------------*/
 	this.ImageKeys.push("RadiusLogo.png");
 	this.ImageData.push(this.ResourceRoot + 'img/RadiusLogo.png');
@@ -433,29 +435,37 @@ Stage.prototype.Index = function(){
 	//Type, FireOnce, Position, Dimensions
 	//this.EntityData.push(new Array("dialogue", true, 200, 200, 50, 50));
 	/*------------------------------------Stage Menu Configuration---------------------------------------------*/
-	this.DOMKeys.push("Link1");
+	this.DOMKeys.push("Link0");
 	//Origin x, y, dimx, dimy, text, font
-	this.DOMData.push(new Array(50, 100, 100, 100, "Blog", "italic bold 24px Verdana", "black"));
+	this.DOMData.push(new Array(50, 100, 200, 25, "Blog", "italic bold 24px Verdana", "blue"));
+	this.DOMKeys.push("Link1");
+	this.DOMData.push(new Array(50, 150, 200, 25, "YouTube", "italic bold 24px Verdana", "red"));
 	this.DOMKeys.push("Link2");
-	this.DOMData.push(new Array(50, 150, 100, 100, "YouTube", "italic bold 24px Verdana", "black"));
+	this.DOMData.push(new Array(50, 200, 200, 25, "Git Repository", "italic bold 24px Verdana", "black"));
 	this.DOMKeys.push("Link3");
-	this.DOMData.push(new Array(50, 200, 100, 100, "Web Avant", "italic bold 24px Verdana", "black"));
+	this.DOMData.push(new Array(50, 250, 200, 25, "Games", "italic bold 24px Verdana", "orange"));
 	this.DOMKeys.push("Link4");
-	this.DOMData.push(new Array(50, 250, 100, 100, "Git Repository", "italic bold 24px Verdana", "black"));
-	this.DOMKeys.push("Link5");
-	this.DOMData.push(new Array(50, 450, 100, 100, "New Stuff:", "italic bold 20px Verdana", "black"));
-	this.DOMKeys.push("Text0");
-	this.DOMData.push(new Array(50, 300, 100, 100, "Games", "italic bold 24px Verdana", "black"));
-	this.DOMKeys.push("Text1");
-	this.DOMData.push(new Array(400, 50, 100, 100, "Welcome to the new codequest homepage", "italic bold 20px Verdana", "black"));
-	this.DOMKeys.push("Text2");
-	this.DOMData.push(new Array(800, 150, 100, 100, "NEWS AREA", "bold italic 20px Verdana", "black"));
-	this.DOMKeys.push("Text3");
-	this.DOMData.push(new Array(800, 200, 100, 100, "10/3/2013 - Webhost is hijacking the page.  The radius project is in the process of porting to a new hosting company due to the pop up ads that have been written into the page without permission.  There's no need to expect any delays or interruptions.  The process should be fairly seamless when everything switches over, thanks to everyone for your support!", "bold 12px Verdana", "black"));
-	this.DOMKeys.push("Text4");
-	this.DOMData.push(new Array(50, 500, 100, 100, "Memristors!", "italic bold 15px Verdana", "black"));
+	this.DOMData.push(new Array(50, 450, 100, 100, "Help:", "italic bold 20px Verdana", "black"));
 	this.DOMKeys.push("Text5");
-	this.DOMData.push(new Array(200, 500, 100, 100, "Cybernetics", "italic bold 15px Verdana", "black"));
+	this.DOMData.push(new Array(390, 50, 200, 150, "Welcome ", "italic bold 22px Verdana", "black"));
+	this.DOMKeys.push("Text6");
+	this.DOMData.push(new Array(530, 30, 200, 150, "to ", "italic bold 22px Verdana", "blue"));
+	this.DOMKeys.push("Text7");
+	this.DOMData.push(new Array(580, 70, 200, 150, "the ", "italic bold 22px Verdana", "red"));
+	this.DOMKeys.push("Text8");
+	this.DOMData.push(new Array(640, 30, 200, 150, "Radius ", "italic bold 22px Verdana", "green"));
+	this.DOMKeys.push("Text9");
+	this.DOMData.push(new Array(740, 50, 200, 150, "Project", "italic bold 22px Verdana", "black"));
+	this.DOMKeys.push("Text10");
+	this.DOMData.push(new Array(800, 150, 100, 100, "NEWS AREA", "bold italic 20px Verdana", "black"));
+	this.DOMKeys.push("Text11");
+	this.DOMData.push(new Array(800, 200, 100, 100, "10/7/2013 - Added Basic support for moving entities using the newest database. Left click on the screen somewhere to slow the moving sprite", "bold 14px Verdana", "white"));
+	this.DOMKeys.push("Text12");
+	this.DOMData.push(new Array(800, 280, 100, 100, "10/3/2013 - Webhost is hijacking the page.  The radius project is in the process of porting to a new hosting company due to the pop up ads that have been written into the page without permission.  There's no need to expect any delays or interruptions.  The process should be fairly seamless when everything switches over, thanks to everyone for your support!", "bold 12px Verdana", "black"));
+	this.DOMKeys.push("Text13");
+	this.DOMData.push(new Array(50, 500, 100, 100, "Check HTML5 Support", "italic bold 15px Verdana", "black"));
+	this.DOMKeys.push("Text14");
+	this.DOMData.push(new Array(500, 500, 100, 100, "Contact", "italic bold 15px Verdana", "black"));
 	/*------------------------------------Trigger Definitions--------------------------------------------------*/
 	//this.Triggers.push(new Trigger("dialogue", true, new Array(200, 200), new Array(50, 50)));
 	//this.Triggers.push(new Trigger("spawn", true, new Array(200, 200), new Array(50, 50)));

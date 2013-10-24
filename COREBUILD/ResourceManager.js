@@ -27,6 +27,7 @@ var ResourceManager = function(Root) {
 	this.Pages = new Array(new Stage("Index", Root));
 	this.Pages[0].Load();
 	this.ResourceRoot = Root;
+	this.GUIDTicker = 0;
 	/*-------------------DATABASE CACHE---------------------------*/
 	this.L2DOMCache = new Array();
 	this.L2ImageCache= new Array();
@@ -55,6 +56,17 @@ ResourceManager.prototype.CacheInit = function(PageIndex){
 ResourceManager.prototype.AddDOMElement = function(Value){
 	if(Value != null){
 		this.L2DOMCache.push(Value);
+	}
+}
+/**
+* Remove a DOM element from the L2 Application cache
+* @param {Array} Value The Array of DOM data for that element
+*/
+ResourceManager.prototype.RemoveDOMElement = function(Value){
+	if(Value != null){
+	//------------------------------------------------------STUB----------------------------------------
+		alert("DOM REMOVAL NOT YET IMPLEMENTED");
+	//--------------------------------------------------------------------------------------------------
 	}
 }
 /**
@@ -148,6 +160,27 @@ ResourceManager.prototype.IsTitleScreen = function(PageIndex){
 //----------------------------------------------------Set Accessors------------------------------------------------
 //Warning: DATABASE DEFAULT SHOULD BE READ ONLY!!
 //----------------------------------------------------UTILITY FUNCTIONS-------------------------------------------
+/**
+* Returns an audio object for the stage audio
+* @param {Integer} PageIndex Page number to load from 
+* @return {Array[]} Returns a loaded array of the starting page entities
+*/
+ResourceManager.prototype.LoadPageEntities = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		var toReturn = new Array();
+		//create an Audio object for each sound in the Page
+		for(var i =0; i < this.Pages[PageIndex-1].EntityKeys.length; i++){
+			var temp = this.Pages[PageIndex-1].CacheRetrieve("Entity", this.Pages[PageIndex-1].EntityKeys[i]);
+			//TVZ_CreatureType, TVZ_AIType, PosX, PosY, TVZ_Faction, GUID
+			var returnItem = new Entity("Default", "Default", temp[0], temp[1], "Default", this.GUIDTicker);
+			//Give the Entity a graphical representation
+			returnItem.setSpritesheet(this.Pages[0].CacheRetrieve("Image", "Spinny.png"));
+			toReturn.push(returnItem);
+			this.GUIDTicker++;
+		}
+		return(toReturn);
+	}
+}
 /**
 * Returns an audio object for the stage audio
 * @param {Integer} PageIndex Page number to load from 

@@ -65,8 +65,6 @@ Updater.prototype.ProcessCycle = function(EventManager, EntityManager, ScreenMap
 		if(time.getTime() > this.getMilliseconds() + this.ApplicationSpeedThrottle){
 			EventManager.RunEvents();
 			EntityManager.UpdateEntities();
-			//Clean up dead audio
-			AudioController.Maintain();
 			EventManager.RenderToScreen();
 			//Update the Cycle clock
 			this.Cycle = time;

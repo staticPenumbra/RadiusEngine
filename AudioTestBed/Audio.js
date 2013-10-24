@@ -31,7 +31,8 @@ var Audio = function(TVZ_AudioFile, TVZ_Repeating, TVZ_Volume, TVZ_Duration, TVZ
 	this.Volume = TVZ_Volume;
 	this.Duration = TVZ_Duration;
 	this.Format = TVZ_Format;
-	this.Controller = null;	
+	this.Controller = null;
+	this.Playing = false;
 }
 //-------------------------------------------------------------SET METHODS---------------------------
 /**

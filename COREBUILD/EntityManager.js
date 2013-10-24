@@ -75,50 +75,14 @@ EntityManager.prototype.Reset = function(){
 }
 /**
 * Function to Load stage entities from the resource manager
-* @param {Integer} Stage The stage number to load
+* @param {Integer} PageIndex The page number to load
 * @param {ResourceManager} ResourceManager A handle to the running instance of the resource manager
-* @param {Input[]} Inputs An array of the current player input devices
+* @return {Entity[]} A reference to an array of all the loaded entities
 */
-EntityManager.prototype.LoadEntities = function(StageIndex, ResourceManager, Inputs){
+EntityManager.prototype.LoadEntities = function(PageIndex, ResourceManager){
 	//Clear out the old Entity List
-	//this.Entities = new Array();
-	//var NPCs = ResourceManager.GetStage(StageIndex).NumNPCSprites();
-	//var Players = ResourceManager.GetStage(StageIndex).NumPlayerSprites();
-	//Retrieve the stage wall layout data
-	//var WallData = ResourceManager.GetStage(StageIndex).GetWallData();
-	//Retrieve the stage door layout data
-	//var DoorData = ResourceManager.GetStage(StageIndex).GetDoorData();
-	
-	/*if(NPCs != 0 && Players != 0){
-		//Load Player Sprites
-		for(var i = 0; i < Players; i++){
-			this.LoadEntity("Player", "none", Inputs[i], StageIndex, 0, i);
-		}
-		//Load NPC Sprites
-		for(var i = 0; i < NPCs; i++){
-			var NPos = ResourceManager.GetStartingPosition(StageIndex, i, "NPC");
-			this.LoadEntity("Zombie", "zombie", "none", StageIndex, 0, i);
-		}
-		//If there are Wall sprites load them
-		for(var i = 0; i < WallData.length; i++){
-			//WallData: ULXPosition, ULYPosition, width, height, ImageIndex
-			//Load the wall positions element 1 and 2 then the sprite index, element 4
-			var CreatedWall = this.LoadEntity("Wall", "Wall", "none", StageIndex, 0, i);
-			//Configure the Wall dimensions
-			CreatedWall.SetImageWidth(WallData[i][2]);
-			CreatedWall.SetImageHeight(WallData[i][3]);
-		}
-		//If there are Door sprites load them
-		for(var i = 0; i < DoorData.length; i++){
-			//DoorData: ULXPosition, ULYPosition, width, height, ImageIndex
-			//Load the door positions element 1 and 2 then the sprite index, element 4
-			//EntityType, AIType, Controller, StageIndex
-			var CreatedDoor = this.LoadEntity("Door", "Door", "none", StageIndex, 0, i);
-			//Configure the Wall dimensions
-			CreatedDoor.SetImageWidth(DoorData[i][2]);
-			CreatedDoor.SetImageHeight(DoorData[i][3]);
-		}
-	}*/
+	this.Entities = ResourceManager.LoadPageEntities(PageIndex);
+	return(this.Entities);
 }
 /**
 * Helper function for collision algorithm takes two point arrays
@@ -196,10 +160,6 @@ EntityManager.prototype.PlayerState = function(Entity, Facing){
 * @return {Entity} A handle to the loaded entity
 */
 EntityManager.prototype.LoadEntity = function(EntityType, AIType, Controller, StageIndex, ImageIndex, EntityIndex){
-	//this.LoadEntity("Player", "none", Inputs[i], StageIndex);
-	//this.LoadEntity("Zombie", "zombie", "none", StageIndex);
-	//this.LoadEntity("Wall", "Wall", "none", StageIndex);
-	//this.LoadEntity("Door", "Door", "none", StageIndex);
 	try{
 		if(EntityType != null && AIType != null && Controller != null && StageIndex != null){
 			switch(EntityType){

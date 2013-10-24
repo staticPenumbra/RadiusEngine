@@ -59,6 +59,17 @@ ResourceManager.prototype.AddDOMElement = function(Value){
 	}
 }
 /**
+* Remove a DOM element from the L2 Application cache
+* @param {Array} Value The Array of DOM data for that element
+*/
+ResourceManager.prototype.RemoveDOMElement = function(Value){
+	if(Value != null){
+	//------------------------------------------------------STUB----------------------------------------
+		alert("DOM REMOVAL NOT YET IMPLEMENTED");
+	//--------------------------------------------------------------------------------------------------
+	}
+}
+/**
 * Return the Current DOM
 * @param {Integer} PageIndex The page to load from
 * @return {Array[]} Returns an array of DOM elements
