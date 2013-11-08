@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--/*----------------------------------------------------------------------------------------------------------
+::“Copyright 2013 Clayton Burnett” 
+::This program is distributed under the terms of the GNU General Public License
+------------------------------------------------------------------------------------------------------------*/-->
+<html lang="en">
+
+<head>
+	<!-- Settings for Mobile Browsers / Disable Scaling Render at full size-->
+    <meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	
+	
+	
+    <link rel="stylesheet" type="text/css" href="SCREENMAP.css" />
+    <title>SCREENMAP TEST BED</title>
+    <script src="ScreenMap.js" charset="utf-8"></script>
+    <script>
+    window.onload = function(){
+	this.ScreenMap = new ScreenMap(1400, 600, GetFrontCanvasContext(), GetRearCanvasContext());
+	
+
+    //-----------Preloading Resources-----------------------------------------
+    this.FileRoot = location.href.substring(0,location.href.lastIndexOf("/")+1);
+    //Bind Event Handlers and Inputs
+    this.BindHandlers();
+    setInterval(TestLoop, 1000/30);
+    }
+    //The Main Game Loop function
+    function TestLoop(){
+	alert("RUNNING TEST SUITE\n");
+		//---------------SetBackgrounds TEST----------------------
+	alert("TESTING SetBackgrounds");	
+		var images = new Array(new Image(), new Image(), new Image());
+		images[0].src = this.FileRoot + "Computer.png";
+		images[1].src = this.FileRoot + "Gyro.png";
+		images[2].src = this.FileRoot + "OldGyro.png";
+		this.ScreenMap.SetBackgrounds(images);
+		//Rendercycle
+	alert("BACKGROUNDS SET SUCCESSFULLY");
+		//--------------Resize TEST--------------------------------
+	alert("TESTING Resize");
+		this.ScreenMap.Resize();
+	alert("Rendering");
+		for(var i=0; i< images.length; i++){
+			this.ScreenMap.bctx.drawImage(images[i], images[i].width, images[i].height);
+		}
+	alert("RESIZE OKAY?");
+	
+		
+		
+		
+		//--------------RenderCycle TEST---------------------------
+	//alert("TESTING RenderCycle");
+		//this.ScreenMap.RenderCycle();
+		
+	/*COVERAGE
+	Clear()
+	RenderCycle({Entity[]} EntityList Updated Entity List to process, {Array[]} DOMList Updated DOM List to process)
+	
+	
+	SetResolution({Integer} ResolutionX The value for the x component of the display resolution, {Integer} ResolutionY The value for the y component of the display resolution)
+	WriteText({String} Text The text string to write, {Array[]} Dimensions Integer Array specifying the Width[0] and Height[1] Integer values of the text box , {Array[]} Position The current X[0], Y[1] values for the upper left corner of the text box, {String} Style The style to apply to the text (eg: italic bold Verdana), {Integer} Size The size of the text, {String} Color The color of the text as a string (eg: black), {DOMEntity} DOMEntity Optional Argument specifying a current DOM entity to write)
+	Blit()
+	WrapText({CanvasContext} context the current Canvas context to display to, {String} text The text to display within the DOM element, {Integer} x The starting x position in pixels, {Integer} y The starting y position in pixels, {Integer} maxWidth The maximum width to use before wrap, {Integer} lineHeight The height of the display text)
+	RenderToCanvas()
+	DrawSprite({CanvasContext} bctx Canvas context reference to the background canvas, {Entity} Entity A reference to the entity to render)
+	CalculateSlots()@return {Integer} Returns the number of entity slots in the current ScreenMap
+	UpdateDOM({Array[]} DOMList Updates the list of DOM Elements)
+	UpdateEntities({TVZ_Entity[]} EntityList Updates the list of entities in the ScreenMap from a supplied Entity list)
+	Animate({String} Direction String indicating the walking animation direction, {Entity} Entity A reference to the entity to render, {Entity} bctx A reference to the background canvas context)
+	*/
+    }
+    function BindHandlers(){
+		//Keyboard
+		window.addEventListener('keydown', kDown, false);
+		window.addEventListener('keyup', kUp, false);  
+		//Mouse
+		GetFrontCanvas().addEventListener('mousemove', mMove, false);
+		GetRearCanvas().addEventListener('mousemove', mMove, false);
+		GetFrontCanvas().addEventListener('click', mClick, false);
+		GetRearCanvas().addEventListener('click', mClick, false);
+    }
+	function mClick(e){
+		//GameEngine.mouseClick(e);
+	}
+	function mMove(e){
+		//GameEngine.mouseMove(e);
+	}
+    function kDown(e){
+		//GameEngine.keyDown(e.keyCode);
+    }
+    function kUp(e){
+		//GameEngine.keyUp(e.keyCode);
+    }  
+	function GetAudioDevice(){
+		var a = document.getElementById('AudioController1');
+		var b = document.getElementById('AudioController2');
+		var c = document.getElementById('AudioController3');
+		var d = document.getElementById('AudioController4');
+		var e = document.getElementById('AudioController5');
+		var f = document.getElementById('AudioController6');
+		var ABC = new Array();
+		ABC.push(a);
+		ABC.push(b);
+		ABC.push(c);
+		ABC.push(d);
+		ABC.push(e);
+		ABC.push(f);
+		return(ABC);
+	}
+	function GetFrontCanvas(){
+		var c = document.getElementById('FrontScreen');
+		return(c);
+    }
+    function GetFrontCanvasContext(){
+		var ctx = GetFrontCanvas().getContext('2d');
+		return(ctx);
+    }    
+    function GetRearCanvas(){
+		var c = document.getElementById('RearScreen');
+		return(c);
+    }
+    function GetRearCanvasContext(){
+		var bctx = GetRearCanvas().getContext('2d');
+		return(bctx);
+    }     
+    </script>
+</head>
+   
+<body>
+	<audio id ="AudioController1" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController2" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+    <audio id ="AudioController3" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController4" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController5" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<audio id ="AudioController6" loop="loop">
+			Your browser does not support the audio element.
+	</audio>
+	<canvas id="FrontScreen" width="1400" height="600" style="visibility: hidden;">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+	<canvas id="RearScreen" width="1400" height="600">
+			Your browser doesn't include support for the canvas tag.
+    </canvas>
+</body>
+
+</html>

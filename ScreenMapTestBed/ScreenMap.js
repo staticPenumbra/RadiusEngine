@@ -31,40 +31,57 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.Entities = new Array();	//The Array of current Application entities
 	this.BackgroundImages = new Array(); //The Current array of background Images
 	this.ZoomLevel = null;		//Current screen magnification level 
-	this.MenuSystem = new Array(); //Array of Menu layouts for the stage
+	this.MenuSystem = null; //Array of Menu layouts for the stage
 	this.DOM = new Array();
+	//Window Data Stubs for bug fix DE6
+	this.WindowHeight = window.innerHeight;
+	this.WindowWidth = window.innerWidth;
+	//Entity Scaling Data
+	this.Scale = 2;
+	
 }
 //-----------------------------------------------------Get Methods-----------------------------------
+//EXP: TOO MUCH COUPLING
+//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO WATCH MENU CURSOR POSITIONS---------------
 /**
 * Function to get the state of the menu option pointer
-* @return {Integer} Returns an integer value for the state of the menu pointer
-*/	
+* @return {Integer} Returns an integer value for the state of the menu pointer or null otherwise
+
 ScreenMap.prototype.GetMenuPointerPosition = function(){
-	return(this.MenuSystem[0].GetCursorPosition());
-}
+	if(this.MenuSystem != null){
+		return(this.MenuSystem[0].GetCursorPosition());
+	}
+	return(null);
+}*/
+//EXP: TOO MUCH COUPLING
+//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO RETRIEVE STAGE MENUS---------------
 /**
 * Function to return the first Menu in the menu system
 * @return {ApplicationMenu} Returns the first menu in the list of current stage menus
-*/	
+	
 ScreenMap.prototype.GetMenu = function(){
 	if(this.MenuSystem[0] != null){
 		return(this.MenuSystem[0]);
 	}
-}
+}*/
 //-----------------------------------------------------Set Methods-----------------------------------
+//EXP: TOO MUCH COUPLING
+//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO SET MENU CURSOR POSITIONS---------------
 /**
 * Function to set the state of the menu option pointer
 * @param {Integer} Option The menu option to switch the cursor to
-*/
+
 ScreenMap.prototype.SetMenuPointerPosition = function(Option){
 	if(Option != null && Option >= 0 && Option < this.MenuSystem[0].MenuOptions.length){
 		this.MenuSystem[0].ChangeCursorPosition(Option);
 	}
-}
+}*/
+//EXP: FEATURE UPDATE
+//-----------TO BE CHANGED TO WORK WITH THE NEWEST DATABASE MODEL AND DISPLAY ALL VISIBLE MENU---------------
 /**
 * Sets the current Menu system
 * @param {ApplicationMenu} Menu Adds the specified menu to the menu system for the stage, if passed null stops displaying the menu
-*/
+
 ScreenMap.prototype.SetMenuSystem = function(Menu){
 	if(Menu != null){
 		this.MenuSystem = new Array();
@@ -73,10 +90,11 @@ ScreenMap.prototype.SetMenuSystem = function(Menu){
 	//Escape pressed again stop displaying menu
 		this.MenuSystem = new Array();
 	}
-}
+}*/
+
 /**
 * Sets the current screen background image
-* @param {Image} BG An instance of the background image to set
+* @param {Image[]} BG the array (in bottom of stack to top of stack order) of background images to display
 */
 ScreenMap.prototype.SetBackgrounds = function(BG){
 	if(BG != null){
@@ -109,6 +127,32 @@ ScreenMap.prototype.Resize = function() {
 	this.bctx.canvas.style.height = height+'px';
 	this.ctx.canvas.style.width = width+'px';
 	this.ctx.canvas.style.height = height+'px';
+	//Now Resize Entities
+	//Resize Font
+	//--------------Implement a write text to screen function that can dynamically change the font position or size
+}
+/**
+* Function to write text to an area of the screen
+* @param {String} Text The text string to write
+* @param {Array[]} Dimensions Integer Array specifying the Width[0] and Height[1] Integer values of the text box 
+* @param {Array[]} Position The current X[0], Y[1] values for the upper left corner of the text box
+* @param {String} Style The style to apply to the text (eg: italic bold Verdana)
+* @param {Integer} Size The size of the text
+* @param {String} Color The color of the text as a string (eg: black)
+* @param {DOMEntity} DOMEntity Optional Argument specifying a current DOM entity to write
+*/
+ScreenMap.prototype.WriteText = function(Text, Dimensions, Position, Style, Size, Color, DOMEntity) {
+	//Format the text as a DOM element
+	//width, height, , , font, style
+	if(Text != null && Dimensions != null && Position != null && Style != null && Size != null && Color != null){
+		if(DOMEntity != null){
+	
+		}
+		//new Array(50, 450, 100, 100, "Help:", "italic bold 20px Verdana", "black")
+		var font = Style + " " + Size*this.Scale + "px";
+		this.DOM.push(new Array(Dimensions[0], Dimensions[1], Position[0], Position[1], Text, font, Color));
+		return(0);
+	}
 }
 /**
 * Clears the current screen not needed with blitting
@@ -167,6 +211,8 @@ ScreenMap.prototype.RenderToCanvas = function(){
            //ALL LINKS FOR NOW
 		    this.bctx.fillStyle = this.DOM[i][6];
 			this.bctx.font = this.DOM[i][5];
+			this.ctx.fillStyle = this.DOM[i][6];
+			this.ctx.font = this.DOM[i][5];
 			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
 			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
         } 
@@ -201,7 +247,10 @@ ScreenMap.prototype.RenderToCanvas = function(){
 */
 ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
     this.Resize();
-	this.UpdateDOM(DOMList);
+	if(this.DOM == null || this.DOM.length == 0){
+		//Pulls the DOM list from the database if there is no loaded DOM otherwise no DB load
+		this.UpdateDOM(DOMList);
+	}
 	this.UpdateEntities(EntityList);
     this.RenderToCanvas();
 }
