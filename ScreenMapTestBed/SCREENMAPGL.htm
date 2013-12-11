@@ -16,7 +16,7 @@
 	
     <link rel="stylesheet" type="text/css" href="SCREENMAP.css" />
     <title>SCREENMAP TEST BED</title>
-    <script src="ScreenMap.js" charset="utf-8"></script>
+    <script src="ScreenMapGL.js" charset="utf-8"></script>
     <script>
     window.onload = function(){
 	this.ScreenMap = new ScreenMap(1400, 600, GetFrontCanvasContext(), GetRearCanvasContext());
@@ -38,24 +38,23 @@
 		images[1].src = this.FileRoot + "Gyro.png";
 		images[2].src = this.FileRoot + "OldGyro.png";
 		this.ScreenMap.SetBackgrounds(images);
-		//Rendercycle
-	alert("BACKGROUNDS SET SUCCESSFULLY");
+	//alert("BACKGROUNDS SET SUCCESSFULLY");
 		//--------------Resize TEST--------------------------------
-	alert("TESTING Resize");
+	//alert("TESTING Resize");
 		this.ScreenMap.Resize();
-	alert("TESTING RenderToCanvas");
-		this.ScreenMap.RenderToCanvas();
+	//alert("TESTING RenderToCanvas");
+		//this.ScreenMap.RenderToCanvas();
 		//for(var i=0; i< images.length; i++){
 			//this.ScreenMap.bctx.drawImage(images[i], images[i].width, images[i].height);
 		//}
-	alert("RESIZE and RENDER OKAY?");
-	alert("ATTEMPTING SCREEN CLEAR");
-		this.ScreenMap.Clear();
-	alert("CLEAR?");
+	//alert("RESIZE and RENDER OKAY?");
+	//alert("ATTEMPTING SCREEN CLEAR");
+		//this.ScreenMap.Clear();
+	//alert("CLEAR?");
 		//--------------RenderCycle TEST---------------------------
-	alert("TESTING RenderCycle with no DOM or Entity List");
-		this.ScreenMap.RenderCycle(new Array(), new Array());
-	alert("Did it Render?");
+	//alert("TESTING RenderCycle with no DOM or Entity List");
+		//this.ScreenMap.RenderCycle(new Array(), new Array());
+	//alert("Did it Render?");
 	
 	/*COVERAGE
 	SetResolution({Integer} ResolutionX The value for the x component of the display resolution, {Integer} ResolutionY The value for the y component of the display resolution)
@@ -113,7 +112,7 @@
 		return(c);
     }
     function GetFrontCanvasContext(){
-		var ctx = GetFrontCanvas().getContext('2d');
+		var ctx = GetFrontCanvas().getContext("webgl") || GetFrontCanvas().getContext("experimental-webgl");
 		return(ctx);
     }    
     function GetRearCanvas(){
@@ -121,7 +120,7 @@
 		return(c);
     }
     function GetRearCanvasContext(){
-		var bctx = GetRearCanvas().getContext('2d');
+		var bctx = GetRearCanvas().getContext("webgl") || GetRearCanvas().getContext("experimental-webgl");
 		return(bctx);
     }     
     </script>

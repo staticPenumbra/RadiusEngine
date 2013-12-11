@@ -5,17 +5,17 @@
 /**
  * @fileOverview
  *
- * This file contains the ScreenMap object a data representation of a screen
+ * This file contains the ScreenMap object a data representation of a screen with WebGL support
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
 /**
  * ###############################################################################################################
- *                                              ScreenMap
+ *                                              ScreenMapGL
  */
 /**
  * @class
- * Class modeling a current display frame and objects rendered to screen
+ * Class modeling a current display frame and interface to WebGL
  *
  * @description
  * An object describing all of the information about a display frame
@@ -38,60 +38,19 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.WindowWidth = window.innerWidth;
 	//Entity Scaling Data
 	this.Scale = 2;
-	
+	//Intitializing the front canvas as a WebGL canvas
+	this.glctx = this.bctx;
+	// Only continue if WebGL is available and working
+	if (this.glctx) {
+		this.glctx.clearColor(0.0, 0.0, 0.0, 1.0);                      // Set clear color to black, fully opaque
+		this.glctx.enable(this.glctx.DEPTH_TEST);                               // Enable depth testing
+		this.glctx.depthFunc(this.glctx.LEQUAL);                                // Near things obscure far things
+		this.glctx.clear(this.glctx.COLOR_BUFFER_BIT|this.glctx.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
+	}
+	else{
+		alert("Error with webGL initialization");
+	}
 }
-//-----------------------------------------------------Get Methods-----------------------------------
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO WATCH MENU CURSOR POSITIONS---------------
-/**
-* Function to get the state of the menu option pointer
-* @return {Integer} Returns an integer value for the state of the menu pointer or null otherwise
-
-ScreenMap.prototype.GetMenuPointerPosition = function(){
-	if(this.MenuSystem != null){
-		return(this.MenuSystem[0].GetCursorPosition());
-	}
-	return(null);
-}*/
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO RETRIEVE STAGE MENUS---------------
-/**
-* Function to return the first Menu in the menu system
-* @return {ApplicationMenu} Returns the first menu in the list of current stage menus
-	
-ScreenMap.prototype.GetMenu = function(){
-	if(this.MenuSystem[0] != null){
-		return(this.MenuSystem[0]);
-	}
-}*/
-//-----------------------------------------------------Set Methods-----------------------------------
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO SET MENU CURSOR POSITIONS---------------
-/**
-* Function to set the state of the menu option pointer
-* @param {Integer} Option The menu option to switch the cursor to
-
-ScreenMap.prototype.SetMenuPointerPosition = function(Option){
-	if(Option != null && Option >= 0 && Option < this.MenuSystem[0].MenuOptions.length){
-		this.MenuSystem[0].ChangeCursorPosition(Option);
-	}
-}*/
-//EXP: FEATURE UPDATE
-//-----------TO BE CHANGED TO WORK WITH THE NEWEST DATABASE MODEL AND DISPLAY ALL VISIBLE MENU---------------
-/**
-* Sets the current Menu system
-* @param {ApplicationMenu} Menu Adds the specified menu to the menu system for the stage, if passed null stops displaying the menu
-
-ScreenMap.prototype.SetMenuSystem = function(Menu){
-	if(Menu != null){
-		this.MenuSystem = new Array();
-		this.MenuSystem.push(Menu);
-	}else{
-	//Escape pressed again stop displaying menu
-		this.MenuSystem = new Array();
-	}
-}*/
-
 /**
 * Sets the current screen background image
 * @param {Image[]} BG the array (in bottom of stack to top of stack order) of background images to display
@@ -117,19 +76,7 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
 * Function to resize the canvas to fit the window
 */
 ScreenMap.prototype.Resize = function() {
-	this.ctx.textBaseline = 'top';
-	this.bctx.textBaseline = 'top';
-	var height = window.innerHeight;
-	//Using the canvas context to get the canvas element and change the style
-	var ratio = this.bctx.canvas.width/this.bctx.canvas.height;
-	var width = height * ratio;
-	this.bctx.canvas.style.width = width+'px';
-	this.bctx.canvas.style.height = height+'px';
-	this.ctx.canvas.style.width = width+'px';
-	this.ctx.canvas.style.height = height+'px';
-	//Now Resize Entities
-	//Resize Font
-	//--------------Implement a write text to screen function that can dynamically change the font position or size
+	this.glctx.viewport(0, 0, this.glctx.canvas.width, this.glctx.canvas.height);
 }
 /**
 * Function to write text to an area of the screen
@@ -141,6 +88,7 @@ ScreenMap.prototype.Resize = function() {
 * @param {String} Color The color of the text as a string (eg: black)
 * @param {DOMEntity} DOMEntity Optional Argument specifying a current DOM entity to write
 */
+/*
 ScreenMap.prototype.WriteText = function(Text, Dimensions, Position, Style, Size, Color, DOMEntity) {
 	//Format the text as a DOM element
 	//width, height, , , font, style
@@ -153,16 +101,17 @@ ScreenMap.prototype.WriteText = function(Text, Dimensions, Position, Style, Size
 		this.DOM.push(new Array(Dimensions[0], Dimensions[1], Position[0], Position[1], Text, font, Color));
 		return(0);
 	}
-}
+}*/
 /**
 * Clears the current screen not needed with blitting
 */
-ScreenMap.prototype.Clear = function(){
+/*ScreenMap.prototype.Clear = function(){
 	this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
-}
+}*/
 /**
 * Function to flip the displayed screens by swapping video buffer
 */
+/*
 ScreenMap.prototype.Blit = function(){
 	if(this.bctx != null && this.ctx != null){
 		this.bctx.canvas.height = this.WindowHeight;
@@ -172,7 +121,7 @@ ScreenMap.prototype.Blit = function(){
 		var offscreen_data = this.bctx.getImageData(0, 0, this.WindowHeight, this.WindowWidth);
 		this.ctx.putImageData(offscreen_data, 0, 0);
 	}
-}
+}*/
 /**
 * Function to wrap the loaded text
 * @param {CanvasContext} context the current Canvas context to display to
@@ -182,7 +131,7 @@ ScreenMap.prototype.Blit = function(){
 * @param {Integer} maxWidth The maximum width to use before wrap
 * @param {Integer} lineHeight The height of the display text
 */
-ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeight){
+/*ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeight){
 	var words = text.split(' ');
 	var line = '';
 	for(var n = 0; n < words.length; n++) {
@@ -199,50 +148,12 @@ ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeigh
 		}
 	}
 	context.fillText(line, x, y);
-}
+}*/
 /**
 * Function to render the map to the background canvas and blit
 */
 ScreenMap.prototype.RenderToCanvas = function(){
-	   this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
-	   if(this.BackgroundImages.length > 1){
-       this.bctx.drawImage(this.BackgroundImages[1], 0, 0);
-	   }
-       //Render Entities
-       //Make sure there are entities
-	   if(this.DOM != null){
-		 for(var i = 0; i <= this.DOM.length - 1; i++){
-           //ALL LINKS FOR NOW
-		    this.bctx.fillStyle = this.DOM[i][6];
-			this.bctx.font = this.DOM[i][5];
-			this.ctx.fillStyle = this.DOM[i][6];
-			this.ctx.font = this.DOM[i][5];
-			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
-			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
-        } 
-	   }
-	   
-       if(this.Entities != null){
-        for(var i = 0; i <= this.Entities.length - 1; i++){
-            if(this.Entities[i].SpriteSheet != null){
-                //We have an Image to display so show it
-                //Render Sprites
-                this.DrawSprite(this.bctx, this.Entities[i]);
-            }
-        }
-       }
-	   if(this.BackgroundImages.length > 2){
-       this.bctx.drawImage(this.BackgroundImages[2], 0, 0);
-	   }
-    //}
-	//Account for a closed menu and a freshly constructed system
-	if(this.MenuSystem != null && this.MenuSystem.length != 0){
-		for(var i = 0; i < this.MenuSystem.length; i++){
-			this.MenuSystem[i].Display(this.bctx);
-		}
-	}
-	//Blit the image to screen
-	this.Blit();
+	   //*****The Render is handled by WebGL dummy stub for compatibility*******
 }
 /**
 * Render Event; Updates Entities and renders to canvas
@@ -266,7 +177,7 @@ ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
 * @param {CanvasContext} bctx Canvas context reference to the background canvas
 * @param {Entity} Entity A reference to the entity to render
 */
-ScreenMap.prototype.DrawSprite = function(bctx, Entity){
+/*ScreenMap.prototype.DrawSprite = function(bctx, Entity){
      if(bctx != null && Entity != null){
 		//img,x,y,width,height
 		var position = Entity.GetPosition();
@@ -347,103 +258,20 @@ ScreenMap.prototype.DrawSprite = function(bctx, Entity){
 			break;
 		}
     }
-}
-//-----------------------------------------------Private Utility Functions-------------------------------
-//EXP: REMOVAL
-//-----------TO BE REMOVED SINCE THIS WAS INTENDED FOR A NON EXISTANT TILE BASED IMPLEMENTATION---------------
-/**
-* Function to caluculate the number of Entity positions on the map
-* @return {Integer} Returns the number of entity slots in the current ScreenMap
-	
-ScreenMap.prototype.CalculateSlots = function(){
-    if(this.NumCells != null && this.XResolution != null && this.YResolution != null){
-    this.EntitySlots = (this.XResolution*this.YResolution)/this.NumCells;
-    return(this.EntitySlots);
-    }
 }*/
 /**
 * @param {Array[]} DOMList Updates the list of DOM Elements
 */
-ScreenMap.prototype.UpdateDOM = function(DOMList){
+/*ScreenMap.prototype.UpdateDOM = function(DOMList){
 	if(DOMList != null){
 		this.DOM = DOMList;
 	}
-}
+}*/
 /**
 * @param {TVZ_Entity[]} EntityList Updates the list of entities in the ScreenMap from a supplied Entity list
 */
-ScreenMap.prototype.UpdateEntities = function(EntityList){
+/*ScreenMap.prototype.UpdateEntities = function(EntityList){
 	if(EntityList != null){
 		this.Entities = EntityList;
-	}
-}
-//EXP: FEATURE MODIFICATION
-//-----------LEGACY: TO BE UPDATED TO USE THE NEWEST DATABASE FORMAT AND DECOUPLED FROM NONEXISTANT FEATURES---------------
-/**
-* Function to animate an entity and draw the correct animation frame 
-* @param {String} Direction String indicating the walking animation direction
-* @param {Entity} Entity A reference to the entity to render
-* @param {Entity} bctx A reference to the background canvas context
-ScreenMap.prototype.Animate = function(Direction, Entity, bctx){
-	if(Direction != null && Entity != null && bctx != null){
-		var Cells = Entity.GetCells(Direction);
-		var position = Entity.GetPosition();
-		var xcord = position[0];
-		var ycord = position[1];
-		var Sprite = Entity.GetSpriteSheet();
-		var CurrentFrame = Entity.GetFrame();
-		var ID = Entity.GetImageDimensions();
-		var AnimationDelay = 80;
-		var CellOrder = Entity.GetCellOrder();
-		switch(Direction){
-				case 'n':
-					var Offset = 0;
-				break;
-				case 'ne':
-					var Offset = 1;
-				break;
-				case 'e':
-					var Offset = 2;
-				break;
-				case 'se':
-					var Offset = 3;
-				break;
-				case 's':
-					var Offset = 4;
-				break;
-				case 'sw':
-					var Offset = 5;
-				break;
-				case 'w':
-					var Offset = 6;
-				break;
-				case 'nw':
-					var Offset = 7;
-				break;
-		}
-		if(Entity.IsAnimating() == true){
-			if(CurrentFrame >= Cells){
-				Entity.SetFrame(0);
-			}
-			if(CurrentFrame < Cells){
-				bctx.drawImage(Sprite,CurrentFrame * ID[0], ID[1] * CellOrder[Offset], ID[0], ID[1], xcord, ycord, ID[0], ID[1]);
-				//Update the frame only if a certain amount of time has passed
-				var previous = Entity.GetTimestamp();
-				var next = Math.round(new Date().getTime());
-				if(previous + AnimationDelay < next){
-					CurrentFrame++;
-					if(CurrentFrame >= Cells){
-						Entity.SetFrame(0);
-						Entity.UpdateModified();
-					}else{
-						Entity.SetFrame(CurrentFrame);
-						Entity.UpdateModified();
-					}
-				}
-			}
-		}else{
-			Entity.SetFrame(0);
-			bctx.drawImage(Sprite,CurrentFrame * ID[0], ID[1] * CellOrder[Offset], ID[0], ID[1], xcord, ycord, ID[0], ID[1]);
-		}
 	}
 }*/
