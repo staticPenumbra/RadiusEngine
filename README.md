@@ -20,6 +20,7 @@ As of this writing Radius is still in a pre alpha phase, any testing or feedback
 QUICK START
 ==============
 Config Steps:
+
 1.) Download the zip or the latest revision and run the included BUILD.bat file to compile the runtime files into one folder called COREBUILD
 
 2.) Use a text editor to modify the file Stage.js.  The prototype function "index" describes the homepage that the user will first be taken to.  Play around with throwing images in the image path containers or DOM containers to change background image layers or text and links on the page:
