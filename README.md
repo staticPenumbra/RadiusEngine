@@ -4,6 +4,9 @@
 FOR PROJECT UPDATES AND DEV JOURNAL SEE:
 http://tvzdev.blogspot.com
 
+LIVE DEMO:
+http://www.codequest.co
+
 OVERVIEW
 =========
 
