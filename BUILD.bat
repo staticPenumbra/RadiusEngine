@@ -21,16 +21,16 @@ copy .\MenuTestBed\Menu.js COREBUILD
 ::RESOURCE_FILES
 copy .\ResourceTestBed\ResourceManager.js COREBUILD
 copy .\ResourceTestBed\Stage.js COREBUILD
-copy .\ResourceTestBed\Installed.png COREBUILD
 ::SCREENMAP_FILES
 copy .\ScreenMapTestBed\ScreenMap.js COREBUILD
 ::TRIGGER_FILES
 copy .\TriggerTestBed\Trigger.js COREBUILD
 ::UPDATER_FILES
 copy .\UpdaterTestBed\Updater.js COREBUILD
-::VIDEO_CONTROLLER
-copy .\VideoTestBed\VideoController.js COREBUILD
 ::INDEX
 copy .\INDEX.htm COREBUILD
 ::STYLE
 copy .\STYLE.css COREBUILD
+::RESOURCES
+XCOPY .\img COREBUILD /S
+XCOPY .\sounds COREBUILD /S

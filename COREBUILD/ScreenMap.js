@@ -33,6 +33,18 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.ZoomLevel = null;		//Current screen magnification level 
 	this.MenuSystem = new Array(); //Array of Menu layouts for the stage
 	this.DOM = new Array();
+	//Window Data Stubs for bug fix DE6
+	this.WindowHeight = window.innerHeight;
+	this.WindowWidth = window.innerWidth;
+	//Entity Scaling Data
+	this.Scale = 2;
+	
+	//Run On Engine Init
+	this.ctx.canvas.width = window.innerWidth;
+    this.ctx.canvas.height = window.innerHeight;
+	this.bctx.canvas.width = window.innerWidth;
+    this.bctx.canvas.height = window.innerHeight;
+	
 }
 //-----------------------------------------------------Get Methods-----------------------------------
 /**
@@ -99,6 +111,10 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
 * Function to resize the canvas to fit the window
 */
 ScreenMap.prototype.Resize = function() {
+	//this.ctx.canvas.width = window.innerWidth;
+    //this.ctx.canvas.height = window.innerHeight;
+	//this.bctx.canvas.width = window.innerWidth;
+    //this.bctx.canvas.height = window.innerHeight;
 	this.ctx.textBaseline = 'top';
 	this.bctx.textBaseline = 'top';
 	var height = window.innerHeight;
@@ -109,12 +125,39 @@ ScreenMap.prototype.Resize = function() {
 	this.bctx.canvas.style.height = height+'px';
 	this.ctx.canvas.style.width = width+'px';
 	this.ctx.canvas.style.height = height+'px';
+	//Now Resize Entities
+	//Resize Font
+	//--------------Implement a write text to screen function that can dynamically change the font position or size
+}
+/**
+* Function to write text to an area of the screen
+* @param {String} Text The text string to write
+* @param {Array[]} Origin Integer Array specifying the origin of the text box
+* @param {Array[]} Dimensions Integer array indicating the width and height of the box
+* @param {String} Style The style to apply to the text (eg: italic bold Verdana)
+* @param {Integer} Size The size of the text
+* @param {String} Color The color of the text as a string (eg: black)
+* @param {DOMEntity} DOMEntity Optional Argument specifying a current DOM entity to write
+*/
+ScreenMap.prototype.WriteText = function(Text, Origin, Dimensions, Style, Size, Color, DOMEntity) {
+	//Format the text as a DOM element
+	//width, height, , , font, style
+	if(Text != null && Dimensions != null && Origin != null && Style != null && Size != null && Color != null){
+		if(DOMEntity != null){
+	
+		}
+		this.DOM.push(new Array(Origin[0], Origin[1], Dimensions[0], Dimensions[1], Text, Style, Color));
+		return(0);
+	}
 }
 /**
 * Clears the current screen not needed with blitting
 */
 ScreenMap.prototype.Clear = function(){
-	this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
+	//--------------------------------------!!WARNING DEBUG MODE-------------------------------------------------------
+	//Clear does not properly clear the defined resolution using the single command below
+	//this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
+	this.bctx.clearRect(0, 0, 3000, 3000);
 }
 /**
 * Function to flip the displayed screens by swapping video buffer
@@ -150,16 +193,31 @@ ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeigh
 			line = testLine;
 		}
 	}
+	context.textAlign = "start";
+	//Account for display metrics
 	context.fillText(line, x, y);
+	//context.fillText(text, x, y);
 }
 /**
 * Function to render the map to the background canvas and blit
 */
 ScreenMap.prototype.RenderToCanvas = function(){
-       this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
+       for(var z=0; z<this.BackgroundImages.length; z++){
+       	if(this.BackgroundImages[z].length > 1){
+       		this.bctx.drawImage(this.BackgroundImages[z][0], this.BackgroundImages[z][1], this.BackgroundImages[z][2]);
+       	}else{
+       		this.bctx.drawImage(this.BackgroundImages[z][0], 0, 0);
+       	}
+       }
+       /*this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
 	   if(this.BackgroundImages.length > 1){
-       this.bctx.drawImage(this.BackgroundImages[1], 0, 0);
+       this.bctx.drawImage(this.BackgroundImages[1], 50, 200);
 	   }
+	    if(this.BackgroundImages.length > 2){
+       this.bctx.drawImage(this.BackgroundImages[2], 250, 350);
+	   this.bctx.drawImage(this.BackgroundImages[3], 850, 200);
+	   this.bctx.drawImage(this.BackgroundImages[4], -20, 60);
+	   }*/
        //Render Entities
        //Make sure there are entities
 	   if(this.DOM != null){
@@ -167,7 +225,9 @@ ScreenMap.prototype.RenderToCanvas = function(){
            //ALL LINKS FOR NOW
 		    this.bctx.fillStyle = this.DOM[i][6];
 			this.bctx.font = this.DOM[i][5];
-			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
+			this.ctx.fillStyle = this.DOM[i][6];
+			this.ctx.font = this.DOM[i][5];
+			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], this.DOM[i][2], this.DOM[i][3]);
 			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
         } 
 	   }
@@ -181,9 +241,6 @@ ScreenMap.prototype.RenderToCanvas = function(){
             }
         }
        }
-	   if(this.BackgroundImages.length > 2){
-       this.bctx.drawImage(this.BackgroundImages[2], 0, 0);
-	   }
     //}
 	//Account for a closed menu and a freshly constructed system
 	if(this.MenuSystem != null && this.MenuSystem.length != 0){
@@ -201,7 +258,10 @@ ScreenMap.prototype.RenderToCanvas = function(){
 */
 ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
     this.Resize();
-	this.UpdateDOM(DOMList);
+	if(this.DOM == null || this.DOM.length == 0){
+		//Pulls the DOM list from the database if there is no loaded DOM otherwise no DB load
+		this.UpdateDOM(DOMList);
+	}
 	this.UpdateEntities(EntityList);
     this.RenderToCanvas();
 }

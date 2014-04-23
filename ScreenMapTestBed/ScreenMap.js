@@ -31,7 +31,7 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	this.Entities = new Array();	//The Array of current Application entities
 	this.BackgroundImages = new Array(); //The Current array of background Images
 	this.ZoomLevel = null;		//Current screen magnification level 
-	this.MenuSystem = null; //Array of Menu layouts for the stage
+	this.MenuSystem = new Array(); //Array of Menu layouts for the stage
 	this.DOM = new Array();
 	//Window Data Stubs for bug fix DE6
 	this.WindowHeight = window.innerHeight;
@@ -39,49 +39,44 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	//Entity Scaling Data
 	this.Scale = 2;
 	
+	//Run On Engine Init
+	this.ctx.canvas.width = window.innerWidth;
+    this.ctx.canvas.height = window.innerHeight;
+	this.bctx.canvas.width = window.innerWidth;
+    this.bctx.canvas.height = window.innerHeight;
+	
 }
 //-----------------------------------------------------Get Methods-----------------------------------
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO WATCH MENU CURSOR POSITIONS---------------
 /**
 * Function to get the state of the menu option pointer
-* @return {Integer} Returns an integer value for the state of the menu pointer or null otherwise
-
+* @return {Integer} Returns an integer value for the state of the menu pointer
+*/	
 ScreenMap.prototype.GetMenuPointerPosition = function(){
-	if(this.MenuSystem != null){
-		return(this.MenuSystem[0].GetCursorPosition());
-	}
-	return(null);
-}*/
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO RETRIEVE STAGE MENUS---------------
+	return(this.MenuSystem[0].GetCursorPosition());
+}
 /**
 * Function to return the first Menu in the menu system
 * @return {ApplicationMenu} Returns the first menu in the list of current stage menus
-	
+*/	
 ScreenMap.prototype.GetMenu = function(){
 	if(this.MenuSystem[0] != null){
 		return(this.MenuSystem[0]);
 	}
-}*/
+}
 //-----------------------------------------------------Set Methods-----------------------------------
-//EXP: TOO MUCH COUPLING
-//-----------TO BE RELOCATED TO THE MENU LIBRARY(FUTURE RELEASE) AS ITS NOT THE SCREENMAPS RESPONSIBILITY TO SET MENU CURSOR POSITIONS---------------
 /**
 * Function to set the state of the menu option pointer
 * @param {Integer} Option The menu option to switch the cursor to
-
+*/
 ScreenMap.prototype.SetMenuPointerPosition = function(Option){
 	if(Option != null && Option >= 0 && Option < this.MenuSystem[0].MenuOptions.length){
 		this.MenuSystem[0].ChangeCursorPosition(Option);
 	}
-}*/
-//EXP: FEATURE UPDATE
-//-----------TO BE CHANGED TO WORK WITH THE NEWEST DATABASE MODEL AND DISPLAY ALL VISIBLE MENU---------------
+}
 /**
 * Sets the current Menu system
 * @param {ApplicationMenu} Menu Adds the specified menu to the menu system for the stage, if passed null stops displaying the menu
-
+*/
 ScreenMap.prototype.SetMenuSystem = function(Menu){
 	if(Menu != null){
 		this.MenuSystem = new Array();
@@ -90,11 +85,10 @@ ScreenMap.prototype.SetMenuSystem = function(Menu){
 	//Escape pressed again stop displaying menu
 		this.MenuSystem = new Array();
 	}
-}*/
-
+}
 /**
 * Sets the current screen background image
-* @param {Image[]} BG the array (in bottom of stack to top of stack order) of background images to display
+* @param {Image} BG An instance of the background image to set
 */
 ScreenMap.prototype.SetBackgrounds = function(BG){
 	if(BG != null){
@@ -117,6 +111,10 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
 * Function to resize the canvas to fit the window
 */
 ScreenMap.prototype.Resize = function() {
+	//this.ctx.canvas.width = window.innerWidth;
+    //this.ctx.canvas.height = window.innerHeight;
+	//this.bctx.canvas.width = window.innerWidth;
+    //this.bctx.canvas.height = window.innerHeight;
 	this.ctx.textBaseline = 'top';
 	this.bctx.textBaseline = 'top';
 	var height = window.innerHeight;
@@ -134,23 +132,21 @@ ScreenMap.prototype.Resize = function() {
 /**
 * Function to write text to an area of the screen
 * @param {String} Text The text string to write
-* @param {Array[]} Dimensions Integer Array specifying the Width[0] and Height[1] Integer values of the text box 
-* @param {Array[]} Position The current X[0], Y[1] values for the upper left corner of the text box
+* @param {Array[]} Origin Integer Array specifying the origin of the text box
+* @param {Array[]} Dimensions Integer array indicating the width and height of the box
 * @param {String} Style The style to apply to the text (eg: italic bold Verdana)
 * @param {Integer} Size The size of the text
 * @param {String} Color The color of the text as a string (eg: black)
 * @param {DOMEntity} DOMEntity Optional Argument specifying a current DOM entity to write
 */
-ScreenMap.prototype.WriteText = function(Text, Dimensions, Position, Style, Size, Color, DOMEntity) {
+ScreenMap.prototype.WriteText = function(Text, Origin, Dimensions, Style, Size, Color, DOMEntity) {
 	//Format the text as a DOM element
 	//width, height, , , font, style
-	if(Text != null && Dimensions != null && Position != null && Style != null && Size != null && Color != null){
+	if(Text != null && Dimensions != null && Origin != null && Style != null && Size != null && Color != null){
 		if(DOMEntity != null){
 	
 		}
-		//new Array(50, 450, 100, 100, "Help:", "italic bold 20px Verdana", "black")
-		var font = Style + " " + Size*this.Scale + "px";
-		this.DOM.push(new Array(Dimensions[0], Dimensions[1], Position[0], Position[1], Text, font, Color));
+		this.DOM.push(new Array(Origin[0], Origin[1], Dimensions[0], Dimensions[1], Text, Style, Color));
 		return(0);
 	}
 }
@@ -158,18 +154,17 @@ ScreenMap.prototype.WriteText = function(Text, Dimensions, Position, Style, Size
 * Clears the current screen not needed with blitting
 */
 ScreenMap.prototype.Clear = function(){
-	this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
+	//--------------------------------------!!WARNING DEBUG MODE-------------------------------------------------------
+	//Clear does not properly clear the defined resolution using the single command below
+	//this.bctx.clearRect(0, 0, this.XResolution, this.YResolution);
+	this.bctx.clearRect(0, 0, 3000, 3000);
 }
 /**
 * Function to flip the displayed screens by swapping video buffer
 */
 ScreenMap.prototype.Blit = function(){
 	if(this.bctx != null && this.ctx != null){
-		this.bctx.canvas.height = this.WindowHeight;
-		this.bctx.canvas.width = this.WindowWidth;
-		this.ctx.canvas.height = this.WindowHeight;
-		this.ctx.canvas.width = this.WindowWidth;
-		var offscreen_data = this.bctx.getImageData(0, 0, this.WindowHeight, this.WindowWidth);
+		var offscreen_data = this.bctx.getImageData(0, 0, this.XResolution, this.YResolution);
 		this.ctx.putImageData(offscreen_data, 0, 0);
 	}
 }
@@ -198,16 +193,31 @@ ScreenMap.prototype.WrapText = function(context, text, x, y, maxWidth, lineHeigh
 			line = testLine;
 		}
 	}
+	context.textAlign = "start";
+	//Account for display metrics
 	context.fillText(line, x, y);
+	//context.fillText(text, x, y);
 }
 /**
 * Function to render the map to the background canvas and blit
 */
 ScreenMap.prototype.RenderToCanvas = function(){
-	   this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
+       for(var z=0; z<this.BackgroundImages.length; z++){
+       	if(this.BackgroundImages[z].length > 1){
+       		this.bctx.drawImage(this.BackgroundImages[z][0], this.BackgroundImages[z][1], this.BackgroundImages[z][2]);
+       	}else{
+       		this.bctx.drawImage(this.BackgroundImages[z][0], 0, 0);
+       	}
+       }
+       /*this.bctx.drawImage(this.BackgroundImages[0], 0, 0);
 	   if(this.BackgroundImages.length > 1){
-       this.bctx.drawImage(this.BackgroundImages[1], 0, 0);
+       this.bctx.drawImage(this.BackgroundImages[1], 50, 200);
 	   }
+	    if(this.BackgroundImages.length > 2){
+       this.bctx.drawImage(this.BackgroundImages[2], 250, 350);
+	   this.bctx.drawImage(this.BackgroundImages[3], 850, 200);
+	   this.bctx.drawImage(this.BackgroundImages[4], -20, 60);
+	   }*/
        //Render Entities
        //Make sure there are entities
 	   if(this.DOM != null){
@@ -217,7 +227,7 @@ ScreenMap.prototype.RenderToCanvas = function(){
 			this.bctx.font = this.DOM[i][5];
 			this.ctx.fillStyle = this.DOM[i][6];
 			this.ctx.font = this.DOM[i][5];
-			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], 500, 20);
+			this.WrapText(this.bctx, this.DOM[i][4], this.DOM[i][0], this.DOM[i][1], this.DOM[i][2], this.DOM[i][3]);
 			//this.bctx.fillText(this.DOM[i][4], this.DOM[i][0], this.DOM[i][1]);
         } 
 	   }
@@ -231,9 +241,6 @@ ScreenMap.prototype.RenderToCanvas = function(){
             }
         }
        }
-	   if(this.BackgroundImages.length > 2){
-       this.bctx.drawImage(this.BackgroundImages[2], 0, 0);
-	   }
     //}
 	//Account for a closed menu and a freshly constructed system
 	if(this.MenuSystem != null && this.MenuSystem.length != 0){
@@ -251,9 +258,6 @@ ScreenMap.prototype.RenderToCanvas = function(){
 */
 ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
     this.Resize();
-	//update window dimensions
-	this.WindowHeight = window.innerHeight;
-	this.WindowWidth = window.innerWidth;
 	if(this.DOM == null || this.DOM.length == 0){
 		//Pulls the DOM list from the database if there is no loaded DOM otherwise no DB load
 		this.UpdateDOM(DOMList);
@@ -349,41 +353,34 @@ ScreenMap.prototype.DrawSprite = function(bctx, Entity){
     }
 }
 //-----------------------------------------------Private Utility Functions-------------------------------
-//EXP: REMOVAL
-//-----------TO BE REMOVED SINCE THIS WAS INTENDED FOR A NON EXISTANT TILE BASED IMPLEMENTATION---------------
 /**
 * Function to caluculate the number of Entity positions on the map
 * @return {Integer} Returns the number of entity slots in the current ScreenMap
-	
+*/	
 ScreenMap.prototype.CalculateSlots = function(){
     if(this.NumCells != null && this.XResolution != null && this.YResolution != null){
     this.EntitySlots = (this.XResolution*this.YResolution)/this.NumCells;
     return(this.EntitySlots);
     }
-}*/
+}
 /**
 * @param {Array[]} DOMList Updates the list of DOM Elements
 */
 ScreenMap.prototype.UpdateDOM = function(DOMList){
-	if(DOMList != null){
-		this.DOM = DOMList;
-	}
+    this.DOM = DOMList;
 }
 /**
 * @param {TVZ_Entity[]} EntityList Updates the list of entities in the ScreenMap from a supplied Entity list
 */
 ScreenMap.prototype.UpdateEntities = function(EntityList){
-	if(EntityList != null){
-		this.Entities = EntityList;
-	}
+    this.Entities = EntityList;
 }
-//EXP: FEATURE MODIFICATION
-//-----------LEGACY: TO BE UPDATED TO USE THE NEWEST DATABASE FORMAT AND DECOUPLED FROM NONEXISTANT FEATURES---------------
 /**
 * Function to animate an entity and draw the correct animation frame 
 * @param {String} Direction String indicating the walking animation direction
 * @param {Entity} Entity A reference to the entity to render
 * @param {Entity} bctx A reference to the background canvas context
+*/
 ScreenMap.prototype.Animate = function(Direction, Entity, bctx){
 	if(Direction != null && Entity != null && bctx != null){
 		var Cells = Entity.GetCells(Direction);
@@ -446,4 +443,4 @@ ScreenMap.prototype.Animate = function(Direction, Entity, bctx){
 			bctx.drawImage(Sprite,CurrentFrame * ID[0], ID[1] * CellOrder[Offset], ID[0], ID[1], xcord, ycord, ID[0], ID[1]);
 		}
 	}
-}*/
+}

@@ -4,30 +4,308 @@ html {
 	min-height: 320px;
 }
 body { 
-	margin: 0px; 
-	padding: 0px;
+	margin:0px; 
+	padding:0px;
 	height: 100%;
 	overflow: hidden;
-	font-family: Arial, Tahoma, sans-serif;
-	font-size: 12px;
 	color: black;
+	height:100%;
+	width:100%;
+	color: #333333;
+    font-family: minion-pro,serif;
+    font-size: 18px;
+    line-height: 1.75;
+    margin-bottom: 50px;
+    text-rendering: optimizelegibility;
 }
-canvas {
+#FrontScreen {
 	position:absolute;
-	top:0;
-	left:0; 
+	top:0px;
+	left:0px; 
 	visibility: visible;
-	z-index: 30;
+	z-index: 10;
 	display: block;
 	margin: 0 auto;
 }
-video{
-	z-index: 50;
+#RearScreen {
 	position:absolute;
-	top:0;
-	left:0;
-	opacity:1.0;
-	height: 100%;
-	width:100%;
-	
+	top:0px;
+	left:0px; 
+	visibility: visible;
+	z-index: 10;
+	display: block;
+	margin: 0 auto;
 }
+#content { 
+	position:relative;
+	padding:5px; 
+	background:#ddd; 
+	border-radius:5px; 
+	overflow-y: scroll;
+	border:1px solid #CCC; 
+	margin-top:10px; 
+	height: 160px;
+	z-index: 20;
+}
+#input { 
+	position:relative;
+	border-radius:2px; 
+	border:1px solid #ccc;
+	margin-top:10px; 
+	padding:5px; 
+	width:400px;
+	z-index: 20; 
+}
+#status { 
+	position:relative;
+	width:88px; 
+	display:block; 
+	float:left; 
+	margin-top:15px;
+	z-index: 20; 
+}
+.nes {
+	position:relative;
+    text-align: center;
+    z-index: 20;
+    visibility: hidden;
+}
+.nes-screen {
+	position:relative;
+    display: block;
+    margin: 0 auto 1em;
+    z-index: 20;
+}
+.nes-roms, .nes-controls {
+	position:relative;
+    margin-bottom: 1em;
+    z-index: 20;
+    left:900px;
+	top:20px;
+}
+.nes-controls input {
+    margin-right: 0.25em;
+    visibility: hidden;
+}
+.nes-status {
+	position:absolute;
+    color:blue;
+    z-index: 20;
+    left:50px;
+	top:20px;
+}
+html {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #000000;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset, img {
+    border: 0 none;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style: normal;
+    font-weight: normal;
+}
+li {
+    list-style: none outside none;
+}
+caption, th {
+    text-align: left;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+q:before, q:after {
+    content: "";
+}
+abbr, acronym {
+    border: 0 none;
+    font-variant: normal;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+input, textarea, select {
+}
+legend {
+    color: #000000;
+}
+del, ins {
+    text-decoration: none;
+}
+.container {
+    max-width: 1280px;
+}
+.container:after {
+    clear: both;
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+.aside {
+    float: left;
+    margin-right: 100px;
+    width: 33%;
+}
+.content {
+    float: left;
+    margin-top: 220px;
+    max-width: 50%;
+}
+h1 {
+    margin-bottom: 41px;
+}
+h1 a {
+    background: none repeat scroll 0 0 #DFDBC7;
+    color: #FFFFFF;
+    display: block;
+    height: 300px;
+    letter-spacing: 1px;
+    position: relative;
+}
+h1, h2, h3 {
+    font-family: sax-mono,sans-serif;
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 61px;
+    text-transform: uppercase;
+}
+h1 span {
+    bottom: 20px;
+    position: absolute;
+    right: 50px;
+    text-align: right;
+}
+h2 {
+    margin-bottom: 36px;
+}
+h2.title {
+    margin-bottom: 60px;
+}
+h3 {
+    margin-bottom: 18px;
+}
+p {
+    margin-bottom: 18px;
+}
+hr.spacer {
+    border: 0 none;
+    margin-bottom: 78px;
+}
+a {
+    color: #9C977E;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+abbr, acronym {
+    border-bottom: 1px dotted #000000;
+    cursor: help;
+}
+em {
+    font-style: italic;
+}
+strong {
+    font-weight: bold;
+}
+table {
+    margin-bottom: 18px;
+}
+th, td {
+    padding: 0.2em 0.8em;
+}
+th {
+    border-bottom: 1px solid #333333;
+}
+td, th {
+    border-left: 1px solid #333333;
+}
+td:first-child, th:first-child {
+    border-left: 0 none;
+}
+th {
+    font-weight: bold;
+    text-align: center;
+}
+.contact {
+    margin-right: 50px;
+    text-align: right;
+}
+.nes {
+    text-align: center;
+}
+.nes-screen {
+    display: block;
+    margin: 0 auto 1em;
+}
+.nes-roms, .nes-controls {
+    margin-bottom: 1em;
+}
+.nes-controls input {
+    margin-right: 0.25em;
+}
+.nes-status {
+    color: #AAAAAA;
+}
+h2 .fb_iframe_widget, h2 .twitter-share-button {
+    display: block !important;
+    float: right !important;
+    height: 20px;
+    position: relative;
+    top: -44px;
+}
+h2 .fb_iframe_widget span {
+    position: relative;
+    top: -22px;
+}
+@media only screen and (max-width: 959px) {
+.aside {
+}
+h1, h2 {
+    font-size: 25px;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+}
+@media only screen and (max-width: 767px) {
+.aside {
+    width: 100%;
+}
+.content {
+    margin: 25px 30px;
+    max-width: 100%;
+}
+h1 span {
+    right: 30px;
+}
+h1 {
+    margin-bottom: 40px;
+}
+h2 {
+    margin-bottom: 1em;
+}
+}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
+@media only screen and (max-width: 479px) {
+}
+

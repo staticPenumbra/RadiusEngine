@@ -42,16 +42,18 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.DeathStage = 2;
 	this.AudioController = new AudioController();
 	this.CurrentMenu = null;
-	
 	this.CurrentStage = null;
 	this.MenuMode = false;
 	this.LoadedAudio = new Array();
 	this.EntityManager.SetResourceManager(this.ResourceManager);
 	//Fill Screen
-	//FrontCanvas.width = window.innerWidth;
-	//FrontCanvas.height = window.innerHeight;
-	//RearCanvas.width = window.innerWidth;
-	//RearCanvas.height = window.innerHeight;
+	this.FrontCanvasWidth = window.innerWidth;
+	this.FrontCanvasHeight = window.innerHeight;
+	this.RearCanvasHidth = window.innerWidth;
+	this.RearCanvasHeight = window.innerHeight;
+	this.OldDimensionsW = this.FrontCanvasWidth;
+	this.OldDimensionsH = this.FrontCanvasHeight;
+	this.StageIndex = 1;
 }
 //---------------------------------------------------------------------GET ACCESSORS--------------------------------------------------
 /**
@@ -74,17 +76,23 @@ EventManager.prototype.SetUserInputs = function(Inputs) {
 	}
 }
 /**
-* Sets the current controls for the specified stage
+* Initializes the application Controls
 */
 EventManager.prototype.SetStartingInputs = function(){
 	//PLAYER1 INPUT CONFIG
-	var Player1 = new Input("WASD");
-	//PLAYER2 INPUT CONFIG
-	var Player2 = new Input("IJKL");
-	//MOUSE INPUT CONFIG
-	var MouseControl = new Input("Mouse");
+	var InputSchemes = this.ResourceManager.GetPageInputs(1);
+	if(InputSchemes.length > 0){
 	//Now set the UserInput handling in the Event Manager
-	this.UserInputs = new Array(Player1, Player2, MouseControl);
+	this.UserInputs.push(new Input(InputSchemes[0]));
+	}
+	//PLAYER2 INPUT CONFIG
+	if(InputSchemes.length > 1){
+	this.UserInputs.push(new Input(InputSchemes[1]));
+	}
+	//MOUSE INPUT CONFIG
+	if(InputSchemes.length > 2){
+	this.UserInputs.push(new Input(InputSchemes[2]));
+	}
 }
 //---------------------------------------------------------------------UTILITY FUNCTIONS----------------------------------------------
 /**
@@ -94,7 +102,10 @@ EventManager.prototype.StartEngine = function(){
 	this.AudioController.SetAvailableChannels(this.AudioPlayers);
 	//Set the canvas to fit the screen
 	this.ScreenMap.Resize();
-	this.ChangeStage(1);
+	//We need to cache the Database
+
+	
+	this.ChangeStage(this.StageIndex);
 	this.SetStartingInputs();
 }
 /**
@@ -126,6 +137,12 @@ EventManager.prototype.ChangeStage = function(EntryNumber){
 	}
 	//Set Background
 	this.ScreenMap.SetBackgrounds(this.ResourceManager.LoadBackgrounds(EntryNumber));
+	//Load DOM
+	this.ResourceManager.CacheInit(EntryNumber);
+	//Pipe the DOM to the Screenmap
+	this.ScreenMap.UpdateDOM(this.ResourceManager.GetDOM(EntryNumber));
+	//this.ResourceManager
+	
 	this.LoadMusic(EntryNumber);
 }
 /**
@@ -156,7 +173,6 @@ EventManager.prototype.keyUp = function(e) {
 */
 EventManager.prototype.mouseClick = function(e){
 	this.AddMouseEvent(e, "Click");
-	this.AudioController.PlayAudio(0, false);
 }
 /**
 * Mousemove event handler
@@ -170,6 +186,12 @@ EventManager.prototype.mouseMove = function(e){
 */
 EventManager.prototype.keyDown = function(e){
     this.AddKeyEvent(e, "keyDown");
+    if(this.StageIndex + 1 > 13){
+		this.StageIndex = 1;
+	}else{
+		this.StageIndex++;
+	}
+	this.ChangeStage(this.StageIndex);
 }
 /**
 * Opens the In-application menu
@@ -228,19 +250,19 @@ EventManager.prototype.Codes = function(Player, Type, UpOrDown, KeyCode){
 		case 'WASD':
 			var iswasd = WASDControl.indexOf(KeyCode);
 			if(iswasd != -1){
-				this.AddEvent(new TVZ_Event(UpOrDown, Player + " " + KeyMapping[iswasd]));
+				this.AddEvent(new EngineEvent(UpOrDown, Player + " " + KeyMapping[iswasd]));
 			}
 		break;
 		case 'Arrow':
 			var isarrow = ArrowControl.indexOf(KeyCode);
 			if(isarrow != -1){
-				this.AddEvent(new TVZ_Event(UpOrDown, Player + " " + KeyMapping[isarrow]));
+				this.AddEvent(new EngineEvent(UpOrDown, Player + " " + KeyMapping[isarrow]));
 			}
 		break;
 		case 'IJKL':
 			var isijkl = IJKLControl.indexOf(KeyCode);
 			if(isijkl != -1){
-				this.AddEvent(new TVZ_Event(UpOrDown, Player + " " + KeyMapping[isijkl]));
+				this.AddEvent(new EngineEvent(UpOrDown, Player + " " + KeyMapping[isijkl]));
 			}
 		break;
 		default:
@@ -408,10 +430,10 @@ EventManager.prototype.RunEvents = function() {
 /**
 * Creates a fired trigger event and returns a handle
 * @param {Trigger} Trigger Reference to the trigger tripped
-* @return {TVZ_Event} Created Event
+* @return {EngineEvent} Created Event
 */
 EventManager.prototype.CreateTriggerEvent = function(Trigger){
-	var CreatedEvent = new TVZ_Event("trigger", Trigger);
+	var CreatedEvent = new EngineEvent("trigger", Trigger);
 	return(CreatedEvent);
 }
 /**
@@ -458,25 +480,84 @@ EventManager.prototype.Preprocess = function(){
 */
 EventManager.prototype.RunCycle = function(){
 	if(this.Updater != null){
+		//For Resize events
 		this.Updater.ProcessCycle(this, this.EntityManager, this.ScreenMap, this.ResourceManager, this.AudioController);
 	}
 }
 /**
+* Recalculates screen elements based on window resolution
+* @return {Array[]} returns the list of recalculated elements
+* @param {Array[]} NewRes Array of 2 elements indicating the new XResolution and the new YResolution respectively
+*/
+EventManager.prototype.RecalcElements = function(e){
+	var ReturnList = new Array();
+	var NewRes = new Array(this.WindowHandle.innerWidth, this.WindowHandle.innerHeight);
+	var elements = this.ResourceManager.GetDOM(this.CurrentStage);
+	for(var i=0; i<elements.length; i++){
+		var eletemp = elements[i];
+		//Get the four corners of the element
+		var elePoints = new Array(new Array(eletemp[0], eletemp[1]), new Array(eletemp[0]+eletemp[2], eletemp[1]), new Array(eletemp[0], eletemp[1]+eletemp[3]), new Array(eletemp[0]+eletemp[2], eletemp[1]+eletemp[3]));
+		//screen resolution
+		var Wdt = this.OldDimensionsW;
+		var Hgt = this.OldDimensionsH;
+		//element dimensions(scale)(changes)
+		/////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!////////////////////
+		//
+		//WORK HERE! new X = ((OLD ELX * NEW XRES))/OLD XRES)
+		//elepoints[0] Point1 [0] XCoordinate
+		//
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		var ScaleX = Math.round((elePoints[0][0] * NewRes[0]) / Wdt);
+		var ScaleY = Math.round((elePoints[0][1] * NewRes[1]) / Hgt);
+		var EleWidth = Math.round((NewRes[0] * eletemp[2]) / Wdt );
+		var EleHeight = Math.round((NewRes[1] * eletemp[3]) / Hgt);
+		//var ScaleX = Wdt / NewRes[0];
+		//var ScaleY = Hgt / NewRes[1];
+		var PT1 = new Array(ScaleX, ScaleY);
+		var PT2 = new Array(ScaleX + EleWidth, ScaleY);
+		var PT3 = new Array(ScaleX, ScaleY + EleHeight);
+		var PT4 = new Array(ScaleX + EleWidth, ScaleY + EleHeight);
+		//Set new element Values
+		ReturnList.push(new Array(PT1[0], PT1[1], EleWidth, EleHeight, eletemp[4], eletemp[5], eletemp[6]));	
+	}
+	this.ResourceManager.SetDOM(ReturnList);
+	//this.ScreenMap.UpdateDOM(ReturnList);
+	this.OldDimensionsW = this.WindowHandle.innerWidth;
+	this.OldDimensionsH = this.WindowHandle.innerHeight;
+}
+/**
+* Function to fire an elements selected event
+* @param {DOMElement} element The element to call the selected function from
+*/
+EventManager.prototype.ElementSelected = function(element){
+	// 7 is the url string but it may only be text
+	if(element != null && element.length > 7){
+		window.location = element[7];
+	}
+}
+									
+/**
 * Function to package a mouse event into an event object
 * @param {Integer} KeyCode Mouse Event object code passed
 * @param {String} Type Either Click or Move
+* @param {Array} modPos Optional argument for move events indicates mouse position relative to canvas 
 */
-EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
+EventManager.prototype.AddMouseEvent = function(KeyCode, Type, modPos){
 	if(this.UserInputs){
 		for(var i = 0; i < this.UserInputs.length; i++){
 		//Iterate through user inputs and find the mouse events
 			if(this.UserInputs[i].GetControlType() == "Mouse"){
 				switch(Type){
 					case "Click":
+						//this.AudioController.PlayAudio(0, false);
+						//Slideshow
+						if(this.StageIndex + 1 > 13){
+							this.StageIndex = 1;
+						}else{
+							this.StageIndex++;
+						}
+						this.ChangeStage(this.StageIndex);
 						var MousePos = this.UserInputs[i].GetMousePosition();
-						//AudioController.prototype.PlayAudio = function(Type, Track, AudioElements, Repeat){
-						//this.AudioController.PlayAudio("Sound", 0, this.LoadedAudio, false);
-						//alert("X: " + MousePos[0] + " Y: " + MousePos[1]);
 						var elements = this.ResourceManager.GetDOM(this.CurrentStage);
 						for(var i=0; i<=elements.length-1; i++){
 							var eletemp = elements[i];
@@ -484,35 +565,16 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type){
 							var text = new Array(new Array(eletemp[0], eletemp[1]), new Array(eletemp[0]+eletemp[2], eletemp[1]), new Array(eletemp[0], eletemp[1]+eletemp[3]), new Array(eletemp[0]+eletemp[2], eletemp[1]+eletemp[3]));
 							//UL,UR,LL, LR
 							if(this.EntityManager.CollisionCheck(mouse, text) == true){
-								switch(i){
-									case 0:
-									window.location = "http://tvzdev.blogspot.com";
-									break;
-									case 1:
-									window.location = "http://www.youtube.com/user/C120vv";
-									break;
-									case 2:
-									window.location = "https://github.com/staticPenumbra/RadiusEngine";
-									break;
-									case 3:
-									alert("Game Code Coming soon!");
-									//this.ResourceManager.AddDOMElement(new Array(400, 400, 500, 100, "LOADING GITHUB", "italic bold 24px Verdana", "black"));
-									break;
-									case 13:
-									window.location = "http://html5test.com/";
-									break;
-									case 14:
-									window.location = "http://html5test.com/";
-									break;
-								}
+								this.ElementSelected(elements[i]);
 							}
 						}
 					this.Entities[0].ApplyVelocity(this.Entities[0].GetVelocity()[0], this.Entities[0].GetVelocity()[1] - 1);
 					break;
 					case "Move":
-						//Grab the canvas bounding rectangle and subtract the click area
-						var rect = this.FrontCanvas.getBoundingClientRect();
-						this.UserInputs[i].SetMousePosition(KeyCode.clientX - rect.left, KeyCode.clientY - rect.top);
+						var XP, YP;
+						XP = KeyCode.pageX //- modPos[0] - this.RearCanvas.offsetLeft; //+ KeyCode.rangeOffset;
+						YP = KeyCode.pageY //- modPos[1] - this.RearCanvas.offsetTop;
+						this.UserInputs[i].SetMousePosition(XP, YP);
 					break;
 					default:
 						alert("Unknown mouse event type");
@@ -594,37 +656,37 @@ EventManager.prototype.AddKeyEvent = function(KeyCode, UpOrDown){
 }
 /**
 * Function to add an event to the event queue
-* @param {TVZ_Event} TVZ_Event The event to add to the event processing queue
+* @param {EngineEvent} EngineEvent The event to add to the event processing queue
 */
-EventManager.prototype.AddEvent = function(TVZ_Event) {
+EventManager.prototype.AddEvent = function(EngineEvent) {
     //Check for a valid event
-    if(TVZ_Event != null){
+    if(EngineEvent != null){
         //First test to see if we are in a pause state
         if(this.Updater.IsPaused() == true){
             //If we're paused we can only add certain events for processing
             //Allowed: key events, menu events, interrupt events,
-            var EvType = TVZ_Event.GetType();
+            var EvType = EngineEvent.GetType();
             switch(EvType){
             case "keyUp":
-            this.CurrentEvents.push(TVZ_Event);
+            this.CurrentEvents.push(EngineEvent);
             break;
             case "keyDown":
-            this.CurrentEvents.push(TVZ_Event);
+            this.CurrentEvents.push(EngineEvent);
             break;
             case "pauseinterrupt":
-            this.CurrentEvents.push(TVZ_Event);
+            this.CurrentEvents.push(EngineEvent);
             break;
             case "unpauseinterrupt":
-            this.CurrentEvents.push(TVZ_Event);
+            this.CurrentEvents.push(EngineEvent);
             break;
             case "displaymenu":
-            this.CurrentEvents.push(TVZ_Event);
+            this.CurrentEvents.push(EngineEvent);
             break;   
             }
         }
         else{
         //Were not in a paused state so we can add anything
-        this.CurrentEvents.push(TVZ_Event);
+        this.CurrentEvents.push(EngineEvent);
         }
     }
 }

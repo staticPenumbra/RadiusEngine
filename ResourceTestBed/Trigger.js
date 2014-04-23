@@ -25,11 +25,10 @@
  * @constructor
  */
 var Trigger = function(Type, FireOnce, Position, Dimensions) {
-    //Default Constructor
 	this.Dimensions = Dimensions; //Dimension dimension array for the trigger (width, height)
 	this.Position = Position; //Position array for the trigger (x, y)
 	this.FireOnce = FireOnce; //Fireonce boolean flag true=once false=infinite
-	this.Type = Type; //Text string for the trigger type
+	this.Type = Type; //Text string for the trigger typep
 	this.TrippedBy = null;
 	this.UL = Position;
 	this.UR = new Array(this.UL[0] + this.Dimensions[0], this.UL[1]);
@@ -37,8 +36,8 @@ var Trigger = function(Type, FireOnce, Position, Dimensions) {
 	this.LR = new Array(this.UL[0] + this.Dimensions[0], this.UL[1] + this.Dimensions[1]);
 }
 //------------------------------------------------------GET ACCESSORS-----------------------------------------------
-//Returns the last entity to trip the trigger
 /**
+* Returns the last entity to trip the trigger
 * @returns {Entity} The entity that last tripped the trigger
 */
 Trigger.prototype.GetTrippedBy = function(){
@@ -46,15 +45,15 @@ Trigger.prototype.GetTrippedBy = function(){
 		return(this.TrippedBy);
 	}
 }
-//Returns an array of the triggers 4 corner points
 /**
+* Returns an array of the triggers 4 corner points
 * @returns {Array[]} An array of 4 points, one for each corner of the Trigger
 */
 Trigger.prototype.GetCorners = function(){
 	return(new Array(this.UL, this.UR, this.LL, this.LR));
 }
-//Returns the current type of the trigger
 /**
+* Returns the current type of the trigger
 * @returns {String} The current type of the trigger
 */
 Trigger.prototype.GetType = function(){
@@ -62,8 +61,8 @@ Trigger.prototype.GetType = function(){
 		return(this.Type);
 	}
 }
-//Returns the whether the current trigger is fire once or not
 /**
+* Returns the whether the current trigger is fire once or not
 * @returns {Boolean} The current trigger state (true) fire once or (false) trigger resets
 */
 Trigger.prototype.GetFireOnce = function(){
@@ -71,8 +70,8 @@ Trigger.prototype.GetFireOnce = function(){
 		return(this.FireOnce);
 	}
 }
-//Returns the upper left hand position of the trigger
 /**
+* Returns the upper left hand position of the trigger
 * @returns {Array[]} The point Array X/Y for the upper left hand position
 */
 Trigger.prototype.GetPosition = function(){
@@ -80,8 +79,8 @@ Trigger.prototype.GetPosition = function(){
 		return(this.Position);
 	}
 }
-//Gets the current trigger dimensions
 /**
+* Gets the current trigger dimensions
 * @returns {Array[]} The point Array width/height indicating the current trigger dimensions
 */
 Trigger.prototype.GetDimensions = function(){
@@ -90,8 +89,8 @@ Trigger.prototype.GetDimensions = function(){
   }
 }
 //---------------------------------------------------------------SET ACCESSORS------------------------------------------
-//Sets the current trigger to fire once(true) or resets(false)
 /**
+* Sets the current trigger to fire once(true) or resets(false)
 * @param {Boolean} Boolean true or false , fire once or reset to fire again
 */
 Trigger.prototype.SetFireOnce = function(Boolean){
@@ -99,8 +98,8 @@ Trigger.prototype.SetFireOnce = function(Boolean){
 		this.FireOnce = Boolean;
 	}
 }
-//Sets the upper left hand point position for the current trigger
 /**
+* Sets the upper left hand point position for the current trigger
 * @param {Array[]} Position Array with position information X/Y
 */
 Trigger.prototype.SetPosition = function(Position){
@@ -108,8 +107,8 @@ Trigger.prototype.SetPosition = function(Position){
 		this.Position = Position;
 	}
 }
-//Sets trigger dimensions
 /**
+* Sets trigger dimensions
 * @param {Array[]} Dimensions Array with width/height information
 */
 Trigger.prototype.SetDimensions = function(Dimensions){
@@ -119,8 +118,8 @@ Trigger.prototype.SetDimensions = function(Dimensions){
 }
 
 //-------------------------------------------------------------UTILITY FUNCTIONS-------------------------------------------
-//Sets the triggering entity and returns a reference to the current trigger
 /**
+* Sets the triggering entity and returns a reference to the current trigger
 * @param {Entity} Entity reference to the tripping Entity
 * @returns {Trigger} The current Trigger
 */

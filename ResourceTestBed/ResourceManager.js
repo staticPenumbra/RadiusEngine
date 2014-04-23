@@ -24,17 +24,35 @@
  * @constructor
  */
 var ResourceManager = function(Root) {
-	this.Pages = new Array(new Stage("Index", Root));
-	this.Pages[0].Load();
 	this.ResourceRoot = Root;
 	this.GUIDTicker = 0;
 	/*-------------------DATABASE CACHE---------------------------*/
+	this.SiteDirectory = new Array("index","page2","page3","page4","page5","page6","page7", "page8", "page9","page10","page11","page12");
+	this.Pages = this.Init();
 	this.L2DOMCache = new Array();
 	this.L2ImageCache= new Array();
 	this.L2AudioCache = new Array();
 	this.CacheInit(1);
 }
 //-----------------------------------------------------Get Accessors----------------------------------------------
+/**
+* Initialize the list of site pages
+* @return {Array[]} Returns an array of Loaded Pages
+*/
+ResourceManager.prototype.Init = function(){
+	if(this.SiteDirectory != null){
+	var Loaded = new Array();
+		for(var i=0; i<this.SiteDirectory.length;i++){
+			var temp = new Stage(this.SiteDirectory[i], this.ResourceRoot);
+			temp.Load();
+			Loaded.push(temp);
+		}
+		return(Loaded);
+	}else{
+		console.log("Could not load Pages, are they defined in Resource Manager Site Directory?");
+	}
+}
+
 /**
 * Initialize or Reset the L2 Cache to Page defaults
 * @param {Integer} PageIndex The page to load from
@@ -120,6 +138,16 @@ ResourceManager.prototype.GetPageDimensions = function(PageIndex){
 	}
 }
 /**
+* Return the Input controls for the specified page
+* @param {Integer} PageIndex The page to load from
+* @return {String[]} Returns a text string of inputs
+*/
+ResourceManager.prototype.GetPageInputs = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.Pages[PageIndex-1].Inputs);
+	}
+}
+/**
 * Load all page triggers from the database and return an array of them
 * @param {Integer} PageIndex The page to load from
 * @return {Array[]} Returns an array of Triggers
@@ -158,7 +186,14 @@ ResourceManager.prototype.IsTitleScreen = function(PageIndex){
 	}
 }
 //----------------------------------------------------Set Accessors------------------------------------------------
-//Warning: DATABASE DEFAULT SHOULD BE READ ONLY!!
+//Warning: DATABASE DEFAULT SHOULD BE READ ONLY!! (UNLESS ADDRESSING L2 CACHE FOR RESIZE)
+/**
+* Set the Current DOM
+* @param {Array[]} DOM The DOM elements to set in the cache
+*/
+ResourceManager.prototype.SetDOM = function(DOM){
+		this.L2DOMCache = DOM;
+}
 //----------------------------------------------------UTILITY FUNCTIONS-------------------------------------------
 /**
 * Returns an audio object for the stage audio
@@ -215,15 +250,20 @@ ResourceManager.prototype.LoadBackgrounds = function(PageNumber){
 }
 /**
 * Takes an array of filenames and returns the corresponding array of Image objects
-* @param {String[]} FilenameArray The array of filename strings to load
-* @return {Image[]} Returns a reference to the loaded Images in array format
+* @param {Array[]} ImageArray The array of filename strings to load
+* @return {Array[]} Returns a Loaded Image object
 */
-ResourceManager.prototype.ImageLoader = function(FilenameArray){
-    if(FilenameArray != null){
+ResourceManager.prototype.ImageLoader = function(ImageArray){
+    if(ImageArray != null){
         var ReturnArray = new Array();
-        for(var i = 0; i < FilenameArray.length; i++){
-                ReturnArray.push(new Image());
-                ReturnArray[i].src = FilenameArray[i];
+        for(var i = 0; i < ImageArray.length; i++){
+                var temp = new Image();
+                temp.src = ImageArray[i][0];
+                if(ImageArray[i].length > 1){
+                	ReturnArray.push(new Array(temp, ImageArray[i][1], ImageArray[i][2]));
+                }else{
+                	ReturnArray.push(new Array(temp, 0, 0));
+                }
         }
         return(ReturnArray);
     }
