@@ -5,7 +5,7 @@
 /**
  * @fileOverview
  *
- * This file contains the game Resource Manager
+ * This file contains the Application Resource Manager
  *
  * @author Clayton Burnett <clay@codequest.co>
  */
@@ -27,11 +27,13 @@ var ResourceManager = function(Root) {
 	this.ResourceRoot = Root;
 	this.GUIDTicker = 0;
 	/*-------------------DATABASE CACHE---------------------------*/
-	this.SiteDirectory = new Array("index","page2","page3","page4","page5","page6","page7", "page8", "page9","page10","page11","page12");
+	this.SiteDirectory = new Array("index","page2","page3","page4","page5","page6","page7", "page8", "page9","page10","page11","page12","page13","page14","page15","page16","page17","page18", "page19", "page20","page21","page22","page23","page24","page25","page26","page27","page28","page29", "page30", "page31","page32","page33","page34","page35","page36","page37","page38","page39","page40", "page41", "page42","page43","page44","page45","page46","page47","page48","page49","page50","page51", "page52", "page53","page54");
 	this.Pages = this.Init();
 	this.L2DOMCache = new Array();
 	this.L2ImageCache= new Array();
 	this.L2AudioCache = new Array();
+	this.L2MetaCache = new Array();
+	this.L2VideoCache = new Array();
 	this.CacheInit(1);
 }
 //-----------------------------------------------------Get Accessors----------------------------------------------
@@ -65,6 +67,8 @@ ResourceManager.prototype.CacheInit = function(PageIndex){
 		this.L2ImageCache = this.LoadBackgrounds(PageIndex);
 	//Init Audio
 		this.L2AudioCache = this.LoadPageAudio(PageIndex);
+	//Init MetaData
+		this.L2MetaCache = this.GetMetaDefault(PageIndex);
 	}
 }
 /**
@@ -98,6 +102,16 @@ ResourceManager.prototype.GetDOM = function(PageIndex){
 	}
 }
 /**
+* Return the Current Meta Info
+* @param {Integer} PageIndex The page to load from
+* @return {Array[]} Returns an array of Meta elements
+*/
+ResourceManager.prototype.GetMeta = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.L2MetaCache);
+	}
+}
+/**
 * Return the Current Images
 * @param {Integer} PageIndex The page to load from
 * @return {Image[]} Returns an array of Image elements
@@ -118,13 +132,33 @@ ResourceManager.prototype.GetAudio = function(PageIndex){
 	}
 }
 /**
-* Return the starting position of the specified DOM Entity of the specified type
+* Return the DOM for the current page
 * @param {Integer} PageIndex The page to load from
-* @return {Integer[]} Returns an array of DOM elements
+* @return {Array[]} Returns an array of DOM elements
 */
 ResourceManager.prototype.GetDOMDefault = function(PageIndex){
 	if(PageIndex != null && PageIndex > 0){
 		return(this.Pages[PageIndex-1].DOMData);
+	}
+}
+/**
+* Return the current videos
+* @param {Integer} PageIndex The page to load from
+* @return {Image[]} Returns an array of Image elements
+*/
+ResourceManager.prototype.GetVideos= function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(this.L2VideoCache);
+	}
+}
+/**
+* Return the Meta data for the current page
+* @param {Integer} PageIndex The page to load from
+* @return {Array[]} Returns an array of Meta data arrays keys[0] values[1]
+*/
+ResourceManager.prototype.GetMetaDefault = function(PageIndex){
+	if(PageIndex != null && PageIndex > 0){
+		return(new Array(this.Pages[PageIndex-1].MetaVars, this.Pages[PageIndex-1].MetaData));
 	}
 }
 /**
@@ -251,7 +285,7 @@ ResourceManager.prototype.LoadBackgrounds = function(PageNumber){
 /**
 * Takes an array of filenames and returns the corresponding array of Image objects
 * @param {Array[]} ImageArray The array of filename strings to load
-* @return {Array[]} Returns a Loaded Image object
+* @return {Array[]} Returns an array of loaded Image objects
 */
 ResourceManager.prototype.ImageLoader = function(ImageArray){
     if(ImageArray != null){
@@ -266,5 +300,26 @@ ResourceManager.prototype.ImageLoader = function(ImageArray){
                 }
         }
         return(ReturnArray);
+    }
+}
+/**
+* Takes an array of filenames and returns the corresponding array of Video objects
+* @param {Array[]} VideoArray The array of filename strings to load
+* @return {Array[]} Returns an array of loaded Video objects
+*/
+ResourceManager.prototype.VideoLoader = function(VideoArray){
+    if(VideoArray != null){
+       // var ReturnArray = new Array();
+       // for(var i = 0; i < VideoArray.length; i++){
+	//------------------------------------------------------------------IMPLEMENT VIDEO LOADER HERE!!!!!!!!!------------------------------------------
+               /* var temp = new Image();
+                temp.src = ImageArray[i][0];
+                if(ImageArray[i].length > 1){
+                	ReturnArray.push(new Array(temp, ImageArray[i][1], ImageArray[i][2]));
+                }else{
+                	ReturnArray.push(new Array(temp, 0, 0));
+                }*/
+        //}
+       // return(ReturnArray);
     }
 }

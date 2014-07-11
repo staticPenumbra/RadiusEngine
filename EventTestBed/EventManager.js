@@ -24,6 +24,7 @@
  * @constructor
  */
 var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCanvasContext, ResourceRoot, AudioDevice, Window) {
+	this.TestHandler = new Test("EventManager");	
 	this.WindowHandle = Window;
 	this.FrontCanvas = FrontCanvas;
 	this.FrontCanvasContext = FrontCanvasContext;
@@ -42,7 +43,7 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.DeathStage = 2;
 	this.AudioController = new AudioController();
 	this.CurrentMenu = null;
-	this.CurrentStage = null;
+	this.CurrentStage = 1;
 	this.MenuMode = false;
 	this.LoadedAudio = new Array();
 	this.EntityManager.SetResourceManager(this.ResourceManager);
@@ -54,6 +55,44 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 	this.OldDimensionsW = this.FrontCanvasWidth;
 	this.OldDimensionsH = this.FrontCanvasHeight;
 	this.StageIndex = 1;
+	this.DebugOn = 1; //Turns on and off  the test Framework
+}
+//---------------------------------------------------------------------TEST CODE-------------------------------------------------------------
+/**
+* Registers test functions
+*/
+EventManager.prototype.RegisterTestFunctions = function(){
+	if(this.DebugOn == 1){
+		//EventManager Calls
+		this.TestHandler.RegisterFunction("ChangeStage");
+		this.TestHandler.RegisterFunction("GetCurrentStage");
+		this.TestHandler.RegisterFunction("SetUserInputs");
+		this.TestHandler.RegisterFunction("SetStartingInputs");
+		this.TestHandler.RegisterFunction("StartEngine");
+		this.TestHandler.RegisterFunction("CloseMenu");
+		this.TestHandler.RegisterFunction("ShowTitleMenu");
+		this.TestHandler.RegisterFunction("keyUp");
+		this.TestHandler.RegisterFunction("mouseClick");
+		this.TestHandler.RegisterFunction("mouseMove");
+		this.TestHandler.RegisterFunction("keyDown");
+		this.TestHandler.RegisterFunction("OpenMenu");
+		this.TestHandler.RegisterFunction("LoadMusic");
+		this.TestHandler.RegisterFunction("CacheTriggers");
+		this.TestHandler.RegisterFunction("LoadSounds");
+		this.TestHandler.RegisterFunction("Codes");
+		this.TestHandler.RegisterFunction("MenuHandler");
+		this.TestHandler.RegisterFunction("RenderToScreen");
+		this.TestHandler.RegisterFunction("RunEvents");
+		this.TestHandler.RegisterFunction("CreateTriggerEvent");
+		this.TestHandler.RegisterFunction("Preprocess");
+		this.TestHandler.RegisterFunction("RunCycle");
+		this.TestHandler.RegisterFunction("RecalcElements");
+		this.TestHandler.RegisterFunction("ElementSelected");
+		this.TestHandler.RegisterFunction("AddMouseEvent");
+		this.TestHandler.RegisterFunction("AddKeyEvent");
+		this.TestHandler.RegisterFunction("AddEvent");
+		this.TestHandler.RegisterFunction("DeleteEvent");
+	}			
 }
 //---------------------------------------------------------------------GET ACCESSORS--------------------------------------------------
 /**
@@ -61,6 +100,9 @@ var EventManager = function(FrontCanvas, FrontCanvasContext, RearCanvas, RearCan
 * @return {Stage} Returns a reference to the current stage
 */
 EventManager.prototype.GetCurrentStage = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("GetCurrentStage");
+	}	
 	if(this.CurrentStage != null){
 		return(this.CurrentStage);
 	}
@@ -71,6 +113,9 @@ EventManager.prototype.GetCurrentStage = function(){
 * @param {Input[]} Inputs Array of user Inputs to apply
 */
 EventManager.prototype.SetUserInputs = function(Inputs) {
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("SetUserInputs");
+	}	
 	if(Inputs){
 		this.UserInputs = Inputs;
 	}
@@ -79,6 +124,9 @@ EventManager.prototype.SetUserInputs = function(Inputs) {
 * Initializes the application Controls
 */
 EventManager.prototype.SetStartingInputs = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("SetStartingInputs");
+	}	
 	//PLAYER1 INPUT CONFIG
 	var InputSchemes = this.ResourceManager.GetPageInputs(1);
 	if(InputSchemes.length > 0){
@@ -99,9 +147,13 @@ EventManager.prototype.SetStartingInputs = function(){
 * When all parameters are set then attempt to start the application with this function
 */
 EventManager.prototype.StartEngine = function(){
+	this.RegisterTestFunctions();
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("StartEngine");
+	}	
 	this.AudioController.SetAvailableChannels(this.AudioPlayers);
 	//Set the canvas to fit the screen
-	this.ScreenMap.Resize();
+	//this.ScreenMap.ScaleCanvas();
 	//We need to cache the Database
 
 	
@@ -113,13 +165,13 @@ EventManager.prototype.StartEngine = function(){
 * @param {Integer} EntryNumber Stage number to change to
 */
 EventManager.prototype.ChangeStage = function(EntryNumber){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("ChangeStage");
+	}	
 	this.CurrentStage = EntryNumber;
 	//Change Canvas Screen Resolution
 	var Dimension = this.ResourceManager.GetPageDimensions(EntryNumber);
-	this.FrontCanvas.style.width = Dimension[0] + "px";
-	this.RearCanvas.style.width = Dimension[0] + "px";
-	this.FrontCanvas.style.height = Dimension[1] + "px";
-	this.RearCanvas.style.height = Dimension[1] + "px";
+	this.ScreenMap.ScaleCanvas(Dimension, new Array(window.innerWidth, window.innerHeight));
 	//Clear the screen
 	this.ScreenMap.Clear();
 	//Load Stage Triggers
@@ -149,6 +201,9 @@ EventManager.prototype.ChangeStage = function(EntryNumber){
 * Removes the Menu Layer
 */
 EventManager.prototype.CloseMenu = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("CloseMenu");
+	}	
 	this.MenuMode = false;
 	this.ScreenMap.SetMenuSystem(null);
 	this.Updater.SetPaused(false);
@@ -157,6 +212,9 @@ EventManager.prototype.CloseMenu = function(){
 * Function to display the current system menu
 */
 EventManager.prototype.ShowTitleMenu = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("ShowTitleMenu");
+	}	
 	this.MenuMode = true;
 	this.ScreenMap.SetMenuSystem(this.ResourceManager.LoadMainMenu())
 	this.Updater.SetPaused(true);
@@ -166,18 +224,28 @@ EventManager.prototype.ShowTitleMenu = function(){
 * @param {KeyEvent} e KeyEvent object passed by the event handler 
 */
 EventManager.prototype.keyUp = function(e) {
-    this.AddKeyEvent(e, "keyUp");
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("keyUp");
+	}	
+    	this.AddKeyEvent(e, "keyUp");
 }
 /**
 * Mouseclick event handler
 */
 EventManager.prototype.mouseClick = function(e){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("mouseClick");
+	}	
 	this.AddMouseEvent(e, "Click");
+	this.TestHandler.DisplayResults();
 }
 /**
 * Mousemove event handler
 */
 EventManager.prototype.mouseMove = function(e){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("mouseMove");
+	}	
 	this.AddMouseEvent(e, "Move");
 }
 /**
@@ -185,19 +253,19 @@ EventManager.prototype.mouseMove = function(e){
 * @param {KeyEvent} e KeyEvent object passed by the event handler 
 */
 EventManager.prototype.keyDown = function(e){
-    this.AddKeyEvent(e, "keyDown");
-    if(this.StageIndex + 1 > 13){
-		this.StageIndex = 1;
-	}else{
-		this.StageIndex++;
-	}
-	this.ChangeStage(this.StageIndex);
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("keyDown");
+	}	
+   	 this.AddKeyEvent(e, "keyDown");
 }
 /**
 * Opens the In-application menu
 * @param {Stage} Stage Stage object to open the menu from
 */
 EventManager.prototype.OpenMenu = function(Stage){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("OpenMenu");
+	}	
 	this.CurrentMenu = this.ResourceManager.LoadApplicationMenu(Stage);
 	this.CurrentMenu.ChangeCursorPosition(0);
 	this.ScreenMap.SetMenuSystem(this.CurrentMenu);
@@ -210,6 +278,9 @@ EventManager.prototype.OpenMenu = function(Stage){
 * @param {Page} Page Page to load the sounds from
 */
 EventManager.prototype.LoadMusic = function(Page){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("LoadMusic");
+	}	
 	if(Page != null){
 		//Clean previous stage audio
 		this.AudioController.Clean();
@@ -222,6 +293,9 @@ EventManager.prototype.LoadMusic = function(Page){
 * @param {Stage} Stage Stage object to load the triggers from
 */
 EventManager.prototype.CacheTriggers = function(Stage){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("CacheTriggers");
+	}	
 	if(Stage != null){
 		this.Triggers = this.ResourceManager.LoadTriggers(Stage);
 	}else{
@@ -232,6 +306,9 @@ EventManager.prototype.CacheTriggers = function(Stage){
 * Function to load Sound effects
 */
 EventManager.prototype.LoadSounds = function(Stage){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("LoadSounds");
+	}	
 }
 /**
 * Helper function to add keymappings
@@ -241,6 +318,9 @@ EventManager.prototype.LoadSounds = function(Stage){
 * @param {String} KeyCode KeyCode pressed
 */
 EventManager.prototype.Codes = function(Player, Type, UpOrDown, KeyCode){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("Codes");
+	}	
      var WASDControl = new Array(87, 83, 65, 68, 69, 27, 67, 13); //up, down. left, right, shoot, menu, chweapon, select
      var ArrowControl = new Array(38, 40, 37, 39, 17, 600, 78); //up, down. left, right, shoot, menu, chweapon
 	 var IJKLControl = new Array(73, 75, 74, 76, 85, 600, 78);
@@ -275,6 +355,9 @@ EventManager.prototype.Codes = function(Player, Type, UpOrDown, KeyCode){
 * @param {Menu} Menu Reference to the current Menu 
 */
 EventManager.prototype.MenuHandler = function(PointerPosition, Menu) {
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("MenuHandler");
+	}	
 	if(PointerPosition != null && Menu != null){
 		switch(PointerPosition){
 			case 0:
@@ -299,6 +382,9 @@ EventManager.prototype.MenuHandler = function(PointerPosition, Menu) {
 * Function to take application parameters and call the appropriate rendering routine
 */
 EventManager.prototype.RenderToScreen = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("RenderToScreen");
+	}	
 	//ScreenMap, EntityManager, EventManager.GetCurrentStage()
 	//ScreenMap.Clear();
 	//this.ScreenMap.SetBackgrounds(GetCurrentBackgrounds(this.CurrentStage));
@@ -310,9 +396,18 @@ EventManager.prototype.RenderToScreen = function(){
 * Cycles through the list of events and tries running each of the procedures then removes them from the update list
 */
 EventManager.prototype.RunEvents = function() {
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("RunEvents");
+	}	
         //Make sure to preprocess event priorities and pause updates prior to running
         this.Preprocess();
         //this.UpdateEntities();
+        if(this.StageIndex + 1 > 54){
+			//this.StageIndex = 1;
+	}else{
+			this.StageIndex++;
+			this.ChangeStage(this.StageIndex);
+		}
         //Make sure there are events to process
         if(this.CurrentEvents != null && this.CurrentEvents.length != 0){
             //Iterate through the list of events to process, they will be processed in the order recieved
@@ -433,6 +528,9 @@ EventManager.prototype.RunEvents = function() {
 * @return {EngineEvent} Created Event
 */
 EventManager.prototype.CreateTriggerEvent = function(Trigger){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("CreateTriggerEvent");
+	}	
 	var CreatedEvent = new EngineEvent("trigger", Trigger);
 	return(CreatedEvent);
 }
@@ -440,6 +538,9 @@ EventManager.prototype.CreateTriggerEvent = function(Trigger){
 * Preprocess the list of current updates to fix backup/interrupt and priority changes
 */
 EventManager.prototype.Preprocess = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("Preprocess");
+	}	
 	//Check triggers
 	var FiredTriggers = this.EntityManager.CheckTriggers(this.Triggers);
 	//Create events for each trigger
@@ -479,6 +580,9 @@ EventManager.prototype.Preprocess = function(){
 * Runs the main application loop
 */
 EventManager.prototype.RunCycle = function(){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("RunCycle");
+	}	
 	if(this.Updater != null){
 		//For Resize events
 		this.Updater.ProcessCycle(this, this.EntityManager, this.ScreenMap, this.ResourceManager, this.AudioController);
@@ -490,6 +594,11 @@ EventManager.prototype.RunCycle = function(){
 * @param {Array[]} NewRes Array of 2 elements indicating the new XResolution and the new YResolution respectively
 */
 EventManager.prototype.RecalcElements = function(e){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("RecalcElements");
+	}	
+	var Dimension = this.ResourceManager.GetPageDimensions(this.CurrentStage);
+	this.ScreenMap.ScaleCanvas(Dimension, new Array(window.innerWidth, window.innerHeight));
 	var ReturnList = new Array();
 	var NewRes = new Array(this.WindowHandle.innerWidth, this.WindowHandle.innerHeight);
 	var elements = this.ResourceManager.GetDOM(this.CurrentStage);
@@ -530,6 +639,9 @@ EventManager.prototype.RecalcElements = function(e){
 * @param {DOMElement} element The element to call the selected function from
 */
 EventManager.prototype.ElementSelected = function(element){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("ElementSelected");
+	}	
 	// 7 is the url string but it may only be text
 	if(element != null && element.length > 7){
 		window.location = element[7];
@@ -543,6 +655,9 @@ EventManager.prototype.ElementSelected = function(element){
 * @param {Array} modPos Optional argument for move events indicates mouse position relative to canvas 
 */
 EventManager.prototype.AddMouseEvent = function(KeyCode, Type, modPos){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("AddMouseEvent");
+	}	
 	if(this.UserInputs){
 		for(var i = 0; i < this.UserInputs.length; i++){
 		//Iterate through user inputs and find the mouse events
@@ -551,13 +666,13 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type, modPos){
 					case "Click":
 						//this.AudioController.PlayAudio(0, false);
 						//Slideshow
-						if(this.StageIndex + 1 > 13){
-							this.StageIndex = 1;
-						}else{
-							this.StageIndex++;
-						}
-						this.ChangeStage(this.StageIndex);
-						var MousePos = this.UserInputs[i].GetMousePosition();
+						//if(this.StageIndex + 1 > 54){
+						//	this.StageIndex = 1;
+						//}else{
+						//	this.StageIndex++;
+						//}
+						//this.ChangeStage(this.StageIndex);
+						/*var MousePos = this.UserInputs[i].GetMousePosition();
 						var elements = this.ResourceManager.GetDOM(this.CurrentStage);
 						for(var i=0; i<=elements.length-1; i++){
 							var eletemp = elements[i];
@@ -567,8 +682,8 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type, modPos){
 							if(this.EntityManager.CollisionCheck(mouse, text) == true){
 								this.ElementSelected(elements[i]);
 							}
-						}
-					this.Entities[0].ApplyVelocity(this.Entities[0].GetVelocity()[0], this.Entities[0].GetVelocity()[1] - 1);
+						}*/
+					//this.Entities[0].ApplyVelocity(this.Entities[0].GetVelocity()[0], this.Entities[0].GetVelocity()[1] - 1);
 					break;
 					case "Move":
 						var XP, YP;
@@ -590,6 +705,9 @@ EventManager.prototype.AddMouseEvent = function(KeyCode, Type, modPos){
 * @param {String} UpOrDown keyUp or keyDown event type passed by the event handler 
 */
 EventManager.prototype.AddKeyEvent = function(KeyCode, UpOrDown){
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("AddKeyEvent");
+	}	
     //First find out if this is a valid key
     //Even though this is a subclass it is run with window being the current object? this = Window
     if(this.UserInputs){
@@ -659,6 +777,9 @@ EventManager.prototype.AddKeyEvent = function(KeyCode, UpOrDown){
 * @param {EngineEvent} EngineEvent The event to add to the event processing queue
 */
 EventManager.prototype.AddEvent = function(EngineEvent) {
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("AddEvent");
+	}	
     //Check for a valid event
     if(EngineEvent != null){
         //First test to see if we are in a pause state
@@ -695,6 +816,9 @@ EventManager.prototype.AddEvent = function(EngineEvent) {
 * @param {Integer} EventIndex The integer index of the item to be removed
 */
 EventManager.prototype.DeleteEvent = function(EventIndex) {
+	if(this.DebugOn == 1){
+		this.TestHandler.IncrementFunctionCall("DeleteEvent");
+	}	
     if(this.CurrentEvents != null && this.CurrentEvents.length != 0){
         this.CurrentEvents.splice(EventIndex, 1);
     }	

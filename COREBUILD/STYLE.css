@@ -18,6 +18,13 @@ body {
     margin-bottom: 50px;
     text-rendering: optimizelegibility;
 }
+.yui3-hd{
+	position:absolute;
+	top:0px;
+	left:1000px; 
+	visibility: visible;
+	z-index: 20;
+}
 #FrontScreen {
 	position:absolute;
 	top:0px;
@@ -35,34 +42,6 @@ body {
 	z-index: 10;
 	display: block;
 	margin: 0 auto;
-}
-#content { 
-	position:relative;
-	padding:5px; 
-	background:#ddd; 
-	border-radius:5px; 
-	overflow-y: scroll;
-	border:1px solid #CCC; 
-	margin-top:10px; 
-	height: 160px;
-	z-index: 20;
-}
-#input { 
-	position:relative;
-	border-radius:2px; 
-	border:1px solid #ccc;
-	margin-top:10px; 
-	padding:5px; 
-	width:400px;
-	z-index: 20; 
-}
-#status { 
-	position:relative;
-	width:88px; 
-	display:block; 
-	float:left; 
-	margin-top:15px;
-	z-index: 20; 
 }
 .nes {
 	position:relative;

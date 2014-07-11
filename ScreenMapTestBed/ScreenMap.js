@@ -41,9 +41,9 @@ var ScreenMap = function(ResolutionX, ResolutionY, FrontCanvasContext, RearCanva
 	
 	//Run On Engine Init
 	this.ctx.canvas.width = window.innerWidth;
-    this.ctx.canvas.height = window.innerHeight;
+    	this.ctx.canvas.height = window.innerHeight;
 	this.bctx.canvas.width = window.innerWidth;
-    this.bctx.canvas.height = window.innerHeight;
+    	this.bctx.canvas.height = window.innerHeight;
 	
 }
 //-----------------------------------------------------Get Methods-----------------------------------
@@ -108,23 +108,41 @@ ScreenMap.prototype.SetResolution = function(ResolutionX, ResolutionY){
 }
 //----------------------------------------------------Render Functions----------------------------------
 /**
-* Function to resize the canvas to fit the window
+* Function to resize the canvas and zoom elements to fit the window maintains aspect ratio
+* @param {Array} PageDimensions Array of XY corresponding to the pages native pixel dimensions
+* @param {Array} WindowDimensions Array of XY corresponding to the current window dimensions
 */
-ScreenMap.prototype.Resize = function() {
-	//this.ctx.canvas.width = window.innerWidth;
-    //this.ctx.canvas.height = window.innerHeight;
-	//this.bctx.canvas.width = window.innerWidth;
-    //this.bctx.canvas.height = window.innerHeight;
-	this.ctx.textBaseline = 'top';
-	this.bctx.textBaseline = 'top';
-	var height = window.innerHeight;
+ScreenMap.prototype.ScaleCanvas = function(PageDimensions, WindowDimensions) {
+	//------------------------------------------------------FULL SCREEN MODE ONLY SO FAR-------------------------	
+	//Save the canvas before performing transformation
+	this.ctx.save();
+	this.bctx.save();
+	//if the upper left is 0,0
+	var ratiox = (WindowDimensions[0] * 100) / PageDimensions[0] ;//WindowDimensions[0] - PageDimensions[0];
+	var ratioy = (WindowDimensions[1] * 100) / PageDimensions[1];
+	ratioy = +ratioy.toFixed(2);
+	ratiox = +ratiox.toFixed(2);
+	ratioy = ratioy / 100;
+	ratiox = 75.57 / 100;
+	//if were not scaled correctly	
+	if(ratiox != 100 || ratioy != 100){
+				this.ctx.scale(.50, .50);
+				this.bctx.scale(.50, .50);
+
+	}
+	this.ctx.restore();
+	this.bctx.restore();
+	//-------------------------------LEGACY CODE 6-26-2014----------------------------------------
+	//this.ctx.textBaseline = 'top';
+	//this.bctx.textBaseline = 'top';
+	//var height = window.innerHeight;
 	//Using the canvas context to get the canvas element and change the style
-	var ratio = this.bctx.canvas.width/this.bctx.canvas.height;
-	var width = height * ratio;
-	this.bctx.canvas.style.width = width+'px';
-	this.bctx.canvas.style.height = height+'px';
-	this.ctx.canvas.style.width = width+'px';
-	this.ctx.canvas.style.height = height+'px';
+	//var ratio = this.bctx.canvas.width/this.bctx.canvas.height;
+	//var width = height * ratio;
+	//this.bctx.canvas.style.width = width+'px';
+	//this.bctx.canvas.style.height = height+'px';
+	//this.ctx.canvas.style.width = width+'px';
+	//this.ctx.canvas.style.height = height+'px';
 	//Now Resize Entities
 	//Resize Font
 	//--------------Implement a write text to screen function that can dynamically change the font position or size
@@ -257,7 +275,7 @@ ScreenMap.prototype.RenderToCanvas = function(){
 * @param {Array[]} DOMList Updated DOM List to process
 */
 ScreenMap.prototype.RenderCycle = function(EntityList, DOMList) {
-    this.Resize();
+   // this.Resize();
 	if(this.DOM == null || this.DOM.length == 0){
 		//Pulls the DOM list from the database if there is no loaded DOM otherwise no DB load
 		this.UpdateDOM(DOMList);
