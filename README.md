@@ -5,7 +5,7 @@ FOR PROJECT UPDATES AND DEV JOURNAL SEE:
 http://tvzdev.blogspot.com
 
 LIVE DEMO:
-http://www.codequest.co
+http://www.penumbra.systems (Moved from the old site at codequest.co)
 
 OVERVIEW
 =========
