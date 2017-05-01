@@ -1,7 +1,8 @@
 Welcome to the Radius Project!
 ==============================	
 
-FOR PROJECT UPDATES AND DEV JOURNAL AS WELL AS LIVE DEMO SEE:
+Development Journal and Live Demo:
+
 www.penumbra.systems
 
 (old blog here)
