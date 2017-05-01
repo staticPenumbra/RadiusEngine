@@ -1,11 +1,11 @@
 Welcome to the Radius Project!
 ==============================	
 
-FOR PROJECT UPDATES AND DEV JOURNAL SEE:
-http://tvzdev.blogspot.com
+FOR PROJECT UPDATES AND DEV JOURNAL AS WELL AS LIVE DEMO SEE:
+www.penumbra.systems
 
-LIVE DEMO:
-http://www.penumbra.systems (Moved from the old site at codequest.co)
+(old blog here)
+http://tvzdev.blogspot.com
 
 OVERVIEW
 =========
