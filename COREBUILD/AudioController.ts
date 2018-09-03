@@ -195,7 +195,7 @@ export class AudioController{
 	//*Add Channel to the list of playing Channels
 	public PlayAudio(ClipName: String, ClipIndex: Number){
 		//Get a free channel remember to release when done
-		let Channel: HTMLAudioElement = this.GetFreeChannel;
+		let Channel: HTMLAudioElement = this.GetFreeChannel();
 		//0 indicates no channels free
 		if(Channel){
 			for(let i of this.ClipCache){
