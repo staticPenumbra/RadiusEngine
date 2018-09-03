@@ -28,19 +28,24 @@ import { RadiusAudio } from "./RadiusAudio";
  */
 export class AudioController{
 	private PlayingAudio: RadiusAudio[];
-	private Channels: HTMLAudioElement[];
+	private Channels: NodeListOf<HTMLAudioElement>;
 	private FreeChannels: HTMLAudioElement[];
 	private UsedChannels: HTMLAudioElement[];
 	private ClipTimeout: number;
 	private ClipCache: RadiusAudio[];
+	private Matches: RadiusAudio[];
 
-    constructor(){
-	    this.PlayingAudio = new Array();
-	    this.Channels = null;
+    constructor(ADChannels: NodeListOf<HTMLAudioElement>){
+		this.PlayingAudio = new Array();
+		//Have to Convert the NodeList to an Array here
+		const Elem = document.querySelectorAll(`.audio`);
+	    //this.Channels = Array.prototype.slice.call(Elem);
 		this.FreeChannels = new Array();
 		this.UsedChannels = new Array();
 	    this.ClipTimeout = null;
-        this.ClipCache = new Array();
+		this.ClipCache = new Array();
+		this.Matches = new Array();
+		this.Channels = ADChannels;
     }
     //----------------------------------------------SET METHODS--------------------------------------------------
     /**
@@ -52,23 +57,28 @@ export class AudioController{
     }
     /**
     * Sets the list of available page audio channels that the controller should manage and binds event handlers
-    * @param {Array[]} Channels An array of Audio tag channels from the current page
+    * @param {NodeListOf<HTMLAudioElement>} Channels The Nodelist of Audio Channels to Manage
     */
-    set SetAvailableChannels(Channels: HTMLAudioElement[]){
-		    let Audio = this.PlayingAudio;
-		    let Free = this.FreeChannels;
-		    this.Channels = Channels;
-		    let instance = this;
-		    //We need to set free channels to a clone of Channels so that changes do not affect Channels(Value not reference)
-		    this.FreeChannels = new Array();
-		    for(let i of Channels){
-			    this.FreeChannels.push(i);
-			    //Bind channel event listeners (Capture mode disabled for possible future support of Jquery)
-			    i.onended = function Test(e){instance.AudioEnded(instance, e)};
-		    }
-    }
+    set SetAvailableChannels(Channels: NodeListOf<HTMLAudioElement>){
+		   if(Channels){
+				this.Channels = Channels;
+				let CurrentController = this;
+				for(let i = 0; i < Channels.length; i++){
+					//Bind channel event listeners (Capture mode disabled for possible future support of Jquery)
+					Channels[i].onended = function Test(e){CurrentController.AudioEnded(this, e)};
+	}
+		   }
+	}
+	//----------------------------------------------EVENT HANDLERS HERE------------------------------------------------
+	 /**
+    * Get the Array of playing audio channels
+    * @returns {Array[]} Returns the Array of playing Audio Channels
+    */
+  	private AudioEnded(Ele: HTMLElement, Ev: Event){
+		//Dont do anything?
+	}
     //----------------------------------------------GET METHODS-------------------------------------------------
-    /**
+	/**
     * Get the Array of playing audio channels
     * @returns {Array[]} Returns the Array of playing Audio Channels
     */
@@ -77,36 +87,51 @@ export class AudioController{
     }
     /**
     * Retrieve a free channel from the pool and then set it to in use
-    * @returns {AudioChannel} Free channel
-    */
-    get GetFreeChannel(){
-	    if(this.FreeChannels.length > 0){
-			let temp = this.FreeChannels[0];
-			this.UsedChannels.push(temp);
-		    this.FreeChannels.shift();
-		    return(temp);
-	    }
-    }
-    //-------------------------------------------------------------CHANNEL MANAGEMENT(PRIVATE FUNCTIONS)---------------------------------------
-	 /**
+    * @returns {AudioChannel} Free channel 
     * Scan and find out if the Audio element is playing on a channel
-    * @param {RadiusAudio} Audio A reference to an audio element
-    * @returns {Boolean} true or false playing or not playing
+   	* @param {String} ClipName The name of the clip
+	* @param {Number} ClipIndex A unique clip index for playing the same clip simultaneously
     */
-   private GetPlaying(Audio: RadiusAudio){
-	for(let i of this.PlayingAudio){
-		if(Audio == i){
-			return(true);
+   	private RemovePlaying(ClipName: String, ClipIndex: Number){
+		let Playing = this.PlayingAudio;
+		for(let i in Playing){
+			if(Playing[i].GetFilePath == ClipName && Playing[i].GetClipIdentifier == ClipIndex){
+				//We have a match; remove it
+				this.PlayingAudio.splice(Number(i), 1);	
+			}
 		}
-		return(false);
+	}	
+	/**
+    * Scan and find out if the Audio element is playing on a channel
+   	* @param {String} ClipName The name of the clip
+	* @param {Number} ClipIndex A unique clip index
+	* @typedef RadiusAudio[]
+	* @type {Set}
+	* @property {RadiusAudio}
+    * @returns {RadiusAudio[]} A list of playing items matching the filters
+    */
+   	private GetPlayingItems(ClipName: String, ClipIndex: Number){
+		let Playing = this.GetPlayingAudio;
+		this.Matches = new Array();
+		for(let i of Playing){
+			if(i.GetFilePath == ClipName && i.GetClipIdentifier == ClipIndex){
+				//We have a match; add to matches
+				this.Matches.push(i);	
+			}
 		}
+		//After creating match db tally up matches
+		if(this.Matches.length == 0){
+			//No Matches Found
+			console.log("No matches found in GetPlayingItems");
+		}
+		return(this.Matches);
 	}	
 	/**
     * Event listener for an audio clip ending
     * @param {AudioController} instance A pointer to the running AudioController instance
     * @param {DOMElement[]} Channels A reference to the array of Audio channels from DOM
     */
-    private AudioEnded(instance: AudioController, Channels: HTMLAudioElement[]){
+    /*private AudioEnded(instance: AudioController, Channels: HTMLAudioElement[]){
 	    if(instance != null){
 		    let Audio = instance.PlayingAudio;
 		    let Free = instance.FreeChannels;
@@ -120,20 +145,35 @@ export class AudioController{
 			    }
 		    }
 	    }
-	}
+	}*/
 	/**
 	* Stop all playing audio and reset the Audio Controller to a neutral state
 	*/
 	private Clean(){
 		//Stop all playing Audio
-		for(let i of this.PlayingAudio){
-			i.Pause();
+		for(let i of this.UsedChannels){
+			i.pause();
 		}
 		this.PlayingAudio = new Array();
-		//Free all channels
-		this.FreeChannels = this.Channels;
-		//Clear the clip cache
-		this.ClipCache = new Array();
+	    this.Channels = null;
+		this.FreeChannels = new Array();
+		this.UsedChannels = new Array();
+	    this.ClipTimeout = null;
+        this.ClipCache = new Array();
+	}
+	/**
+	* checks to make sure there is a free channel and reserves it
+	* @returns {HTMLAudioElement} Returns a reference to a free Audio Element
+	*/
+	private GetFreeChannel(){
+		if(this.FreeChannels.length > 0){
+			//There Are channels available, allocate
+			let channel = this.FreeChannels.pop();
+			this.UsedChannels.push(channel);
+			return(channel);
+		}else{
+			console.log("Allocation Error: No more free channels")
+		}
 	}
 	/**
 	* Add the RadiusAudio element to the array of playing Audio
@@ -155,7 +195,7 @@ export class AudioController{
 	//*Add Channel to the list of playing Channels
 	public PlayAudio(ClipName: String, ClipIndex: Number){
 		//Get a free channel remember to release when done
-		let Channel = this.GetFreeChannel;
+		let Channel: HTMLAudioElement = this.GetFreeChannel;
 		//0 indicates no channels free
 		if(Channel){
 			for(let i of this.ClipCache){
@@ -163,14 +203,14 @@ export class AudioController{
 				//We found it so assign it 
 					i.SetClipIdentifier(Number);
 					this.AddToPlaying(i);
-					Channel.src = i.GetFilePath;
-					Channel.play;
+					Channel.src = i.GetFilePath.toString();
+					Channel.play();
 				}else{
 				//There was no clip matching ClipName
 				}
 			}
 		}else{
-			alert("No free channels")
+			alert("Out of free channels")
 			//No free channels
 		}
 	}
@@ -185,20 +225,47 @@ export class AudioController{
 	//*If we find it then stop the track and set the start time to Value
 	//*Set the channel to play
 	public SkipTo(ClipName: String, ClipIndex: Number, Value: number) {
-		document.getElementById(this.Controller).currentTime = Value;
+		let Playing = this.GetPlayingAudio;
+		let Matches = Array();
+		for(let i of Playing){
+			if(i.GetFilePath == ClipName && i.GetClipIdentifier == ClipIndex){
+				//We have a match; add to matches
+				Matches.push(i);
+				//set seek
+				i.SetTrackPos(Value);
+			}
+		}
+		//After creating match db tally up matches
+		if(Matches.length == 0){
+			//No Matches Found
+			console.log("No matches found in SkipTo");
+		}
 	}
 	/**
 	* Stops audio associated with the object on the associated controller
 	* @param {String} ClipName The name of the clip
 	* @param {Number} ClipIndex A unique clip index
-	* @param {AudioTagHandle} Controller Handle to the current HTML5 audio element 
 	*/
 	//LOGIC FLOW
 	//*Search the list of playing channels for the name and index
 	//*Stop the specified controller
 	//*Remove the channel from the list of playing channels
-	public Stop(Controller: AudioController) {
-		document.getElementById(Controller).pause();
+	public Stop(ClipName: String, ClipIndex: Number) {
+		let PlayingChannels = this.UsedChannels;
+		let PlayingAudio = this.GetPlayingItems(ClipName, ClipIndex);
+		//Only stop if there are matches
+		if(PlayingAudio.length > 0){
+			for(let i of PlayingChannels){
+				//Make sure the audio is registered to a channel and playing
+				if(i.src == ClipName && i.paused != true){
+					i.pause;
+					this.RemovePlaying(ClipName, ClipIndex);
+					console.log("stopped one audio track");
+				}
+			}
+		}else{
+			console.log("Could Not Stop audio clip because there were no matches");
+		}
 	}
 	/**
 	* Sets the specified audio clip to repeat
@@ -209,7 +276,23 @@ export class AudioController{
 	//LOGIC FLOW
 	//*Search the list of playing channels for the name and index
 	//*If we find it then set the repeating flag
-	public Repeat(Controller: AudioController){
-    	document.getElementById(Controller).currentTime = 0;
+	public SetRepeating(ClipName: String, ClipIndex: Number, Flag: boolean){
+		let Channels = this.UsedChannels;
+		let AudioOBJ = this.GetPlayingItems;
+
+		if(this.Matches.length > 0){
+				//we have a match so 
+			for(let i of this.Matches){
+				i.SetRepeating(Flag);
+				//Search the running Channels for the first instance
+				let instance = Channels.filter(Running => Running.src === ClipName)[0];
+				//Set the flag
+				instance.loop = Flag;	
+			}
+
+		}else{
+			//No matches
+			console.log("Cant Set Repeating flag: unknown clipname or index");
+		}
 	}
 }

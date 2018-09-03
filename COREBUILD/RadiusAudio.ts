@@ -29,18 +29,18 @@ export class RadiusAudio{
     private RepeatingFlag: boolean;
     private Volume: number;
     private Duration: number;
-    private Format: string;
+    private Format: String;
     private Playing: boolean;
     private SavedTrack: number;
     private ID: number;
 
-    constructor(readonly TVZ_AudioFile: string, readonly TVZ_Repeating: boolean, readonly TVZ_Volume: number, readonly TVZ_Duration: number,  readonly TVZ_Format: string){
+    constructor(readonly TVZ_AudioFile: string, readonly TVZ_Volume: number, readonly TVZ_Duration: number,  readonly TVZ_Format: string){
         //Default Constructor
 	    this.AudioFile = new String(TVZ_AudioFile);
-	    this.RepeatingFlag = TVZ_Repeating;
+	    this.RepeatingFlag = false;
 	    this.Volume = TVZ_Volume;
 	    this.Duration = TVZ_Duration;
-	    this.Format = TVZ_Format;
+	    this.Format = new String(TVZ_Format);
         this.Playing = false;
         this.SavedTrack = 0.0;
         this.ID = 0.0;
@@ -75,6 +75,13 @@ export class RadiusAudio{
         this.ID = ID;
     }
     //----------------------------------------------------------GET METHODS-------------------------------
+     /**
+    * Sets the unique instance ID of the Audio object for playing the same clip simultaneously
+    * @returns {Number} The unique number ID
+    */
+    get GetClipIdentifier(){
+        return(Number(this.ID));
+    }
     /**
     * Gets the current playtime value in seconds given by "Value"
     * @returns {Float} The current track position in seconds
@@ -94,7 +101,7 @@ export class RadiusAudio{
     * @returns {String} Returns the AudioFile path contained in the audio object
     */
     get GetFilePath(){
-        return(this.AudioFile.toString());
+        return(this.AudioFile);
     }
       //-----------------------------------------------------------UTILITY METHODS----------------------------------   
     /**
