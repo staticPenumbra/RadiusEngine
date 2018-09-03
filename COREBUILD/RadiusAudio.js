@@ -26,20 +26,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 * @constructor
 */
 var RadiusAudio = /** @class */ (function () {
-    function RadiusAudio(TVZ_AudioFile, TVZ_Repeating, TVZ_Volume, TVZ_Duration, TVZ_Format) {
+    function RadiusAudio(TVZ_AudioFile, TVZ_Volume, TVZ_Duration, TVZ_Format) {
         this.TVZ_AudioFile = TVZ_AudioFile;
-        this.TVZ_Repeating = TVZ_Repeating;
         this.TVZ_Volume = TVZ_Volume;
         this.TVZ_Duration = TVZ_Duration;
         this.TVZ_Format = TVZ_Format;
         //Default Constructor
         this.AudioFile = new String(TVZ_AudioFile);
-        this.RepeatingFlag = TVZ_Repeating;
+        this.RepeatingFlag = false;
         this.Volume = TVZ_Volume;
         this.Duration = TVZ_Duration;
-        this.Format = TVZ_Format;
+        this.Format = new String(TVZ_Format);
         this.Playing = false;
         this.SavedTrack = 0.0;
+        this.ID = 0.0;
     }
     Object.defineProperty(RadiusAudio.prototype, "SetRepeating", {
         //-------------------------------------------------------------SET METHODS---------------------------
@@ -75,8 +75,30 @@ var RadiusAudio = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RadiusAudio.prototype, "GetTrackPos", {
+    Object.defineProperty(RadiusAudio.prototype, "SetClipIdentifier", {
+        /**
+        * Sets the unique instance ID of the Audio object for playing the same clip simultaneously
+        * @param {number} ID A unique number ID
+        */
+        set: function (ID) {
+            this.ID = ID;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RadiusAudio.prototype, "GetClipIdentifier", {
         //----------------------------------------------------------GET METHODS-------------------------------
+        /**
+       * Sets the unique instance ID of the Audio object for playing the same clip simultaneously
+       * @returns {Number} The unique number ID
+       */
+        get: function () {
+            return (Number(this.ID));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RadiusAudio.prototype, "GetTrackPos", {
         /**
         * Gets the current playtime value in seconds given by "Value"
         * @returns {Float} The current track position in seconds
@@ -104,7 +126,7 @@ var RadiusAudio = /** @class */ (function () {
         * @returns {String} Returns the AudioFile path contained in the audio object
         */
         get: function () {
-            return (this.AudioFile.toString());
+            return (this.AudioFile);
         },
         enumerable: true,
         configurable: true
@@ -112,20 +134,3 @@ var RadiusAudio = /** @class */ (function () {
     return RadiusAudio;
 }());
 exports.RadiusAudio = RadiusAudio;
-/**
-* Stops audio associated with the object on the associated controller
-* @param {AudioTagHandle} Controller Handle to the current HTML5 audio element
-*/
-/*Audio.prototype.Stop = function(Controller) {
-    if(this.Controller != null){
-    document.getElementById(this.Controller).pause();
-    }
-}*/
-/**
-* Restarts the playing audio associated with the object on the current controller
-*/
-/*Audio.prototype.Repeat = function() {
-    if(this.Controller != null){
-    document.getElementById(this.Controller).currentTime = 0;
-    }
-}*/

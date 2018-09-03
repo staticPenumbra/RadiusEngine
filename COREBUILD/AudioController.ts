@@ -63,20 +63,24 @@ export class AudioController{
 		   if(Channels){
 				this.Channels = Channels;
 				let CurrentController = this;
+				//----------BEGIN DELETE--------------------
+				//Bind channel event listeners(THIS CAN BE DELETED IF NOT USED)
 				for(let i = 0; i < Channels.length; i++){
-					//Bind channel event listeners (Capture mode disabled for possible future support of Jquery)
+					//Bind channel event listeners(THIS CAN BE DELETED IF NOT USED)
 					Channels[i].onended = function Test(e){CurrentController.AudioEnded(this, e)};
-	}
+				}
+				//----------END DELETE---------------------
 		   }
 	}
-	//----------------------------------------------EVENT HANDLERS HERE------------------------------------------------
-	 /**
-    * Get the Array of playing audio channels
-    * @returns {Array[]} Returns the Array of playing Audio Channels
+	//----------------------------------------------PLACE EVENT HANDLERS HERE(OR DELETE THIS SECTION)------------------------------------------------
+	//---------------BEGIN DELETE------------------------
+	/**
+    * AudioEnded Event Handler for the Channels(CAN BE DELETED)
     */
   	private AudioEnded(Ele: HTMLElement, Ev: Event){
 		//Dont do anything?
 	}
+	//--------------END DELETE-----------------------------
     //----------------------------------------------GET METHODS-------------------------------------------------
 	/**
     * Get the Array of playing audio channels
